@@ -1,5 +1,5 @@
-# Agile-Wed-Dev-Project
-Forum Project for Agile Wed Dev
+# Agile-Web-Dev-Project
+Forum Project for Agile Web Dev
 
 a description of the purpose of the application, explaining the its design and use.
 
