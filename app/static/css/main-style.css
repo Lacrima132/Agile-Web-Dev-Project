@@ -20,7 +20,7 @@ body {
 
 .intro-section {
   height: 1000px;
-  background-image: url("../imgs/bg.png");
+  background-image: url("/static/images/bg.png");
   background-size: cover;
   background-attachment: fixed;
   color: #f4f4f6;
@@ -38,7 +38,7 @@ p {
 
 .form-section {
   height: 1000px;
-  background-image: url("../imgs/bg.png");
+  background-image: url("/static/images/bg.png");
   background-size: cover;
   background-attachment: fixed;
   color: #f4f4f6;
