@@ -1,6 +1,6 @@
 function growNav() {
   document.querySelector(".sidebar").style.width =
-    "13%";
+    "15%";
 }
 function shrinkNav() {
   document.querySelector(".sidebar").style.width =
