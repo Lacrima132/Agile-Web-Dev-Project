@@ -28,6 +28,7 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/main-style.css') }}"
     />
+    <script src="{{ url_for('static', filename='js/indexpage.js') }}"></script>
   </head>
   <body>
     <nav
@@ -36,18 +37,21 @@
       onmouseleave="shrinkNav()"
     >
       <div class="logo">
-        <a href="#"> BOUNTIFY </a>
+        <a href="{{ url_for('index') }}"> BOUNTIFY </a>
       </div>
       <div class="main-menu">
         <ul>
           <li>
-            <a href="#">Home</a>
+            <a href="{{ url_for('index') }}">Home</a>
           </li>
           <li>
-            <a href="#">Browse</a>
+            <a href="{{ url_for('browse') }}">Browse</a>
           </li>
           <li>
-            <a href="#">Submit</a>
+            <a href="{{ url_for('submit') }}">Submit</a>
+          </li>
+          <li>
+            <a href="{{ url_for('ranking') }}">Ranking</a>
           </li>
         </ul>
       </div>
@@ -66,7 +70,7 @@
       <h2>Useful Links</h2>
       <ul>
         <li>
-          <a href="faq.html">FAQ</a>
+          <a href="{{ url_for('faq') }}">FAQ</a>
         </li>
         <li>
           <a
@@ -76,6 +80,5 @@
         </li>
       </ul>
     </div>
-      <script scr="{{ url_for('static', filename='js/indexpage.js') }}"></script>
   </body>
 </html>
