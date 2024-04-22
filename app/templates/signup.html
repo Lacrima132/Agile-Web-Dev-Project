@@ -72,45 +72,53 @@
       </div>
     </nav>
     <div class="form-section">
-      <div class="form-input-bubble">
-        <form action="">
-          <h2 class="form-header">Login</h2>
-          <label class="sr-text" for="uname"
-            >Username:</label
-          ><br />
-          <input
-            type="text"
-            placeholder="Username"
-            id="uname"
-            name="uname"
-            required
-          /><br />
-          <label class="sr-text" for="pwd"
-            >Password:</label
-          ><br />
-          <input
-            type="text"
-            placeholder="Password"
-            id="pwd"
-            name="pwd"
-            required
-          /><br />
-          <input
-            class="btn-submit"
-            type="submit"
-            value="submit"
-          />
-        </form>
-      </div>
+      <form action="">
+        <label class="sr-text" for="email"
+          >Email:</label
+        ><br />
+        <input
+          type="text"
+          placeholder="Email"
+          id="email"
+          name="email"
+          required
+        /><br />
+        <label class="sr-text" for="uname"
+          >Username:</label
+        ><br />
+        <input
+          type="text"
+          placeholder="Username"
+          id="uname"
+          name="uname"
+          required
+        /><br />
+        <label class="sr-text" for="pwd"
+          >Password:</label
+        ><br />
+        <input
+          type="text"
+          placeholder="Password"
+          id="pwd"
+          name="pwd"
+          required
+        /><br />
+        <label class="sr-text" for="bio"
+          >Bio:</label
+        ><br />
+        <input
+          type="text"
+          placeholder="Write a description here."
+          id="bio"
+          name="bio"
+        /><br />
+        <input
+          class="btn-submit"
+          type="submit"
+          value="submit"
+        />
+      </form>
     </div>
-    <p>
-      Not a member?
-      <span>
-        <a href="{{ url_for('faq') }}"
-          >Sign up</a
-        ></span
-      >
-    </p>
     <div class="footer">
       <h2>Useful Links</h2>
       <ul>
