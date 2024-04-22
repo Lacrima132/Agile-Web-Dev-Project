@@ -63,6 +63,11 @@
               >Ranking</a
             >
           </li>
+          <li>
+            <a href="{{ url_for('profile') }}"
+              >Profile</a
+            >
+          </li>
         </ul>
       </div>
       <div class="login">
@@ -73,8 +78,13 @@
     </nav>
     <div class="form-section">
       <form action="">
-        <label for="target">Target:</label><br />
+        <h2 class="form-header">Submit a post</h2>
+        <label class="sr-text" for="target"
+          >Target:</label
+        >
         <input
+          placeholder="Target Name"
+          class="form-input-bubble"
           type="text"
           id="target"
           name="target"
@@ -82,19 +92,26 @@
         <label for="image">Upload Image:</label>
         <br />
         <input
+          class="form-input-bubble"
           type="file"
           name="image"
           id="image"
         /><br />
-        <label for="tinfo"
+        <label class="sr-text" for="tinfo"
           >Target Information:</label
-        ><br />
+        >
         <input
+          placeholder="Target Information"
+          class="form-input-bubble"
           type="text"
           id="tinfo"
           name="tinfo"
-        /><br /><br />
-        <input type="submit" value="submit" />
+        /><br />
+        <input
+          class="btn-submit"
+          type="submit"
+          value="submit"
+        />
       </form>
     </div>
     <div class="footer">

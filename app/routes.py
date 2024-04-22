@@ -33,3 +33,12 @@ def submit():
     name = 'User'
     return render_template('submit.html', name=name)
 
+@app.route('/signup')
+def signup():
+    name = 'User'
+    return render_template('signup.html', name=name)
+
+@app.route('/profile')
+def profile():
+    name = 'User'
+    return render_template('profile.html', name=name)
