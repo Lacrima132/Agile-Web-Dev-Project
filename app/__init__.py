@@ -1,5 +1,10 @@
 from flask import Flask
+from .routes import main_bp
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'your_secret_key'
 
-from app import routes
+    app.register_blueprint(main_bp)
+
+    return app  

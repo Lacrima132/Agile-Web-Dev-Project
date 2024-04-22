@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Bountify</title>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,900;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main-style.css') }}"
+    />
+    <script src="{{ url_for('static', filename='js/indexpage.js') }}"></script>
+  </head>
+  <body>
+    <nav
+      class="sidebar"
+      onmouseover="growNav()"
+      onmouseleave="shrinkNav()"
+    >
+      <div class="logo">
+        <a href="{{ url_for('main.index') }}">
+          BOUNTIFY
+        </a>
+      </div>
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="{{ url_for('main.index') }}"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('main.browse') }}"
+              >Browse</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('main.submit') }}"
+              >Submit</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('main.ranking') }}"
+              >Ranking</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('main.profile') }}"
+              >Profile</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="login">
+        <a href="{{ url_for('main.login') }}">
+          Login
+        </a>
+      </div>
+    </nav>
+    <div class="intro-section"> 
+      <h1>Nya</h1>
+      <p>On its way!!!</p>
+    </div>
+    <div class="footer">
+      <h2>Useful Links</h2>
+      <ul>
+        <li>
+          <a href="{{ url_for('main.faq') }}">FAQ</a>
+        </li>
+        <li>
+          <a
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            >About Us</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
