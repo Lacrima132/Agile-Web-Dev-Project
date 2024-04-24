@@ -1,1 +1,57 @@
 {%extends "base.html"%}
+{% block title %}Sign-Up{% endblock %}
+{% block content %}
+<div class="form-section">
+    <form action="">
+      <h2 class="form-header">Sign Up</h2>
+      <label class="sr-text" for="email"
+        >Email:</label
+      >
+      <input
+        class="form-input-bubble"
+        type="text"
+        placeholder="Email"
+        id="email"
+        name="email"
+        required
+      /><br />
+      <label class="sr-text" for="uname"
+        >Username:</label
+      >
+      <input
+        class="form-input-bubble"
+        type="text"
+        placeholder="Username"
+        id="uname"
+        name="uname"
+        required
+      /><br />
+      <label class="sr-text" for="pwd"
+        >Password:</label
+      >
+      <input
+        class="form-input-bubble"
+        type="text"
+        placeholder="Password"
+        id="pwd"
+        name="pwd"
+        required
+      /><br />
+      <label class="sr-text" for="bio"
+        >Bio:</label
+      >
+      <input
+        class="form-input-bubble"
+        type="text"
+        placeholder="Write a description here."
+        id="bio"
+        name="bio"
+      /><br />
+      <br />
+      <input
+        class="btn-submit"
+        type="submit"
+        value="submit"
+    />
+</form>
+{% endblock %}
