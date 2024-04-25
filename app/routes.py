@@ -4,9 +4,9 @@ from flask import render_template, url_for
 @app.route('/')
 @app.route('/index')
 @app.route('/user/<name>')
-def index():
+def home():
     name = 'User'
-    return render_template('index.html', name=name)
+    return render_template('home.html', name=name)
 
 @app.route('/browse')
 def browse():
@@ -42,3 +42,8 @@ def signup():
 def profile():
     name = 'User'
     return render_template('profile.html', name=name)
+
+@app.route('/aboutus')
+def aboutus():
+    name = 'User'
+    return render_template('about-us.html', name=name)
