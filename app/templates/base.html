@@ -6,7 +6,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>{% block title %}Bountify{% endblock %}</title>
+    <title>
+      {% block title %}Bountify{% endblock %}
+    </title>
     <link
       rel="preconnect"
       href="https://fonts.googleapis.com"
@@ -28,88 +30,127 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/main-style.css') }}"
     />
-
-    <!-- <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    /> -->
-
-    <!-- <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      crossorigin="anonymous"
-    /> -->
-
     <script src="{{ url_for('static', filename='js/indexpage.js') }}"></script>
-    <link rel="icon" href="{{ url_for('static', filename='images/icon.webp') }}"
+    <link
+      rel="icon"
+      href="{{ url_for('static',
+    filename='images/icon.webp') }}"
+    />
   </head>
   <body>
     <!-- Web Page Nav Bar -->
-    <nav class="sidebar" onmouseover="growNav()" onmouseleave="shrinkNav()">
+    <nav
+      class="sidebar"
+      onmouseover="growNav()"
+      onmouseleave="shrinkNav()"
+    >
       <div class="logo">
-        <a href="{{ url_for('routes.home') }}"> BOUNTIFY </a>
+        <a href="{{ url_for('routes.home') }}">
+          BOUNTIFY
+        </a>
       </div>
       <div class="main-menu">
         {% if user.is_authenticated %}
         <ul>
           <li>
-            <a href="{{ url_for('routes.home') }}">Home</a>
+            <a href="{{ url_for('routes.home') }}"
+              >Home</a
+            >
           </li>
           <li>
-            <a href="{{ url_for('routes.browse') }}">Browse</a>
+            <a
+              href="{{ url_for('routes.browse') }}"
+              >Browse</a
+            >
           </li>
           <li>
-            <a href="{{ url_for('routes.submit') }}">Submit</a>
+            <a
+              href="{{ url_for('routes.submit') }}"
+              >Submit</a
+            >
           </li>
           <li>
-            <a href="{{ url_for('routes.ranking') }}">Ranking</a>
+            <a
+              href="{{ url_for('routes.ranking') }}"
+              >Ranking</a
+            >
           </li>
           <li>
-            <a href="{{ url_for('routes.profile') }}">Profile</a>
+            <a
+              href="{{ url_for('routes.profile') }}"
+              >Profile</a
+            >
           </li>
         </ul>
         {% endif %}
       </div>
       <div class="login">
         {% if user.is_authenticated %}
-        <a href="{{ url_for('auth.logout') }}">Log Out</a>
+        <a href="{{ url_for('auth.logout') }}"
+          >Log Out</a
+        >
         {% else %}
-        <a href="{{ url_for('auth.login') }}">Login</a>
-        <a href="{{ url_for('auth.sign_up') }}">Sign Up</a>
+        <a href="{{ url_for('auth.login') }}"
+          >Login</a
+        >
+        <a href="{{ url_for('auth.sign_up') }}"
+          >Sign Up</a
+        >
         {% endif %}
       </div>
     </nav>
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %} {% for category, message in messages %} {% if category ==
-      'error' %}
-      <div class="alert alert-danger alter-dismissable fade show" role="alert">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      {% else %}
-      <div class="alert alert-success alter-dismissable fade show" role="alert">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      {% endif %} {% endfor %} {% endif %} {% endwith %}
-  
-      <!-- Base block for other inheriting html files to display content -->
-    <div class="container">{% block content %} {% endblock %}</div>
-  
+    {% with messages =
+    get_flashed_messages(with_categories=true) %}
+    {% if messages %} {% for category, message in
+    messages %} {% if category == 'error' %}
+    <div
+      class="alert alert-danger alter-dismissable fade show"
+      role="alert"
+    >
+      {{ message }}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% else %}
+    <div
+      class="alert alert-success alter-dismissable fade show"
+      role="alert"
+    >
+      {{ message }}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {%
+    endwith %}
+
+    <!-- Base block for other inheriting html files to display content -->
+    <div class="container">
+      {% block content %} {% endblock %}
+    </div>
+
     <div class="footer">
       <h2>Useful Links</h2>
       <ul>
         <li>
-          <a href="{{ url_for('routes.faq') }}">FAQ</a>
+          <a href="{{ url_for('routes.faq') }}"
+            >FAQ</a
+          >
         </li>
         <li>
-          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">About Us</a>
+          <a
+            href="{{ url_for('routes.aboutus') }}"
+            >About Us</a
+          >
         </li>
       </ul>
     </div>

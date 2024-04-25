@@ -1,8 +1,65 @@
-{%extends "base.html"%}
-{% block title %}Browse{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %} Browse
+{% endblock %} {% block content %}
 <div class="intro-section">
-    <h1>Browsing~</h1>
-    <p>On its way!!!</p>
+  <h1 class="pagetitle">Browsing~</h1>
+  <div class="searchbar">
+    <form action="">
+      <label class="sr-text" for="query"
+        >Search:</label
+      >
+      <input
+        class="form-input-bubble"
+        type="text"
+        placeholder="Search"
+        id="query"
+        name="query"
+      />
+    </form>
+  </div>
+  <div class="forum-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="postbubble">
+            <div class="posttitle">Test post</div>
+            <div class="postcontent">
+              Fried chicken slaps but i need a hit
+              on Colonel Sanders TvT
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="postbubble">
+            <div class="posttitle">
+              Test post 2
+            </div>
+            <div class="postcontent">
+              Please work i swear..
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="postbubble">
+            <div class="posttitle">
+              Test post 3
+            </div>
+            <div class="postcontent">
+              Please work i swear..
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="postbubble">
+            <div class="posttitle">
+              Test post 4
+            </div>
+            <div class="postcontent">
+              Please work i swear..
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

@@ -36,3 +36,8 @@ def submit():
 def profile():
     name = 'User'
     return render_template('profile.html', name=name, user=current_user)
+
+@app.route('/aboutus')
+def aboutus():
+    name = 'User'
+    return render_template('about-us.html', name=name)
