@@ -35,7 +35,7 @@ def submit():
 @routes.route('/profile')
 def profile():
     name = 'User'
-return render_template('profile.html', name=name, user=current_user)
+    return render_template('profile.html', name=name, user=current_user)
 
 @app.route('/aboutus')
 def aboutus():
