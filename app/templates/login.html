@@ -1,27 +1,27 @@
 {%extends "base.html"%} {% block title %}Log In{%
 endblock %} {% block content %}
 <div class="form-section">
-  <form action="">
+  <form method="POST">
     <h2 class="form-header">Login</h2>
-    <label class="sr-text" for="uname"
-      >Username:</label
+    <label class="sr-text" for="email"
+      >Email:</label
     ><br />
     <input
       class="form-input-bubble"
       type="email"
-      placeholder="Username"
+      placeholder="Email"
       id="email"
       name="email"
       placeholder="Enter email"
       required
     />
     <br />
-    <label class="sr-text" for="pwd"
+    <label class="sr-text" for="password"
       >Password:</label
     >
     <input
       class="form-input-bubble"
-      type="text"
+      type="password"
       placeholder="Password"
       id="password"
       name="password"
@@ -37,7 +37,7 @@ endblock %} {% block content %}
     <p>
       Not a member?
       <span>
-        <a href="{{ url_for('signup') }}"
+        <a href="{{ url_for('auth.sign_up') }}"
           >Sign up</a
         ></span
       >
