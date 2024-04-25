@@ -1,1 +1,42 @@
 {%extends "base.html"%}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="form-section">
+    <form action="">
+      <h2 class="form-header">Profile</h2>
+      <label class="sr-text" for="uname"
+        >Username:</label
+      >
+      <input
+        class="form-input-bubble"
+        type="text"
+        placeholder="Current Username"
+        id="uname"
+        name="uname"
+        required
+      /><br />
+      <label class="sr-text" for="pwd"
+        >Password:</label
+      >
+      <input
+        class="form-input-bubble"
+        type="text"
+        placeholder="Current Password"
+        id="pwd"
+        name="pwd"
+        required
+      /><br />
+      <label class="sr-text" for="pwd"
+        >Bio:</label
+      >
+      <input
+        class="form-input-bubble"
+        type="text"
+        placeholder="Current Description"
+        id="bio"
+        name="bio"
+      /><br />
+    </form>
+</div>
+{% endblock %}
+{%extends "base.html"%}
