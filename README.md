@@ -1,6 +1,8 @@
 $ python3 -m venv tmp-env
 $ source tmp-env/bin/activate
 $ pip install flask
+$ pip install flask-login
+$ pip install flask-sqlalchemy
 $ python3 -m flask run
 
 

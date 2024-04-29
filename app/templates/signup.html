@@ -1,47 +1,55 @@
-{%extends "base.html"%} {% block content %}
-<form method="POST">
-  <h3 align="center">Sign Up</h3>
-  <div class="form-group">
-    <label for="email">Email Address</label>
+{% extends "base.html" %} {% block title %} Sign
+Up {% endblock %} {% block content %}
+<div class="form-section">
+  <form method="POST">
+    <h2 class="form-header">Sign Up</h2>
+    <label class="sr-text" for="email"
+      >Email:</label
+    >
     <input
-      type="email"
-      class="form-control"
+      class="form-input-bubble"
+      type="text"
+      placeholder="Email"
       id="email"
       name="email"
-      placeholder="Enter email"
-    />
-  </div>
-  <div class="form-group">
-    <label for="firstName">First Name</label>
+      required
+    /><br />
+    <label class="sr-text" for="firstName"
+      >First name:</label
+    >
     <input
+      class="form-input-bubble"
       type="text"
-      class="form-control"
+      placeholder="Username"
       id="firstName"
       name="firstName"
-      placeholder="Enter first name"
-    />
-  </div>
-  <div class="form-group">
-    <label for="password1">Password</label>
+      required
+    /><br />
+    <label class="sr-text" for="password1"
+      >Password:</label
+    >
     <input
+      class="form-input-bubble"
       type="password"
-      class="form-control"
+      placeholder="Password"
       id="password1"
       name="password1"
-      placeholder="Enter password"
-    />
-  </div>
-  <div class="form-group">
-    <label for="password2">Password (Confirm)</label>
+      required
+    /><br />
+    <label class="sr-text" for="password2">Bio:</label>
     <input
+      class="form-input-bubble"
       type="password"
-      class="form-control"
+      placeholder="Write a description here."
       id="password2"
       name="password2"
-      placeholder="Confirm password"
+    /><br />
+    <br />
+    <input
+      class="btn-submit"
+      type="submit"
+      value="submit"
     />
-  </div>
-  <br />
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+  </form>
+</div>
 {% endblock %}

@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block title %}
-Profile {% endblock %} {% block content %}
+{% extends "base.html" %} 
+{% block title %}{{ user.firstName }}{% endblock %} 
+{% block content %}
 <div class="form-section">
   <div class="info-bubble">
     <div class="profile-pic">
@@ -45,4 +46,3 @@ Profile {% endblock %} {% block content %}
   </div>
 </div>
 {% endblock %}
-{%extends "base.html"%}
