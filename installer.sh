@@ -15,4 +15,4 @@ pip install flask-sqlalchemy
 # Run Flask application
 python3 -m flask run --debug
 
-#run file using ./installer.sh
+#run file using ./setup_and_run.sh

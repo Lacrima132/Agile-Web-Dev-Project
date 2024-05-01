@@ -16,14 +16,14 @@ body {
   font-size: 16px;
   line-height: 1.5;
   background: #fff;
-  cursor: url('../images/lightsaber.png'),auto;
+  cursor: url("../images/lightsaber.png"), auto;
 }
 
 .intro-section {
   width: 100%;
   height: 200vh;
   overflow-x: hidden;
-  background-image: url("bg.png");
+  background-image: url("../images/bg.png");
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -39,7 +39,7 @@ p {
 
 .form-section {
   height: 768px;
-  background-image: url("bg.png");
+  background-image: url("../images/bg.png");
   background-size: cover;
   background-attachment: fixed;
   color: #f4f4f6;
@@ -367,7 +367,7 @@ ul {
 /*  profile  */
 
 .info-bubble {
-  display:grid;
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 5px;
   align-items: center;
@@ -387,11 +387,11 @@ ul {
 }
 
 .profile-name {
-  font-size:3rem
+  font-size: 3rem;
 }
 
 .select-view {
-  display:grid;
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 4px;
   align-items: center;
@@ -415,9 +415,9 @@ ul {
   background-color: transparent;
   color: #fff;
   font-size: 1.5rem;
-  width:100%;
-  height:100%;
-  border:transparent;
+  width: 100%;
+  height: 100%;
+  border: transparent;
 }
 
 /*  footer  */
