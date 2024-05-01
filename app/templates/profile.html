@@ -4,16 +4,17 @@
 <div class="form-section">
   <div class="info-bubble">
     <div class="profile-pic">
-      <img src="../static/images/profile.png" class="avatar" alt="avatar">
+      <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
     </div>
     <div class="profile-box2">
       <h2 class="profile-name">{{user.firstName}}</h2>
       <br>
-      <form>
+      <form action="{{ url_for('routes.editprofile') }}">
         <input
         class="btn-submit"
         type="submit"
         value="Edit Profile"
+        
         />
       </form>
     </div>
@@ -28,18 +29,18 @@
       <button class="view-button" onclick="currentPosts()">Current Posts</button>
     </div>
     <div class="select2">
-      <button class="view-button" onclick="workingPosts()">Working On</button>
+      <button class="view-button" onclick="savedPosts()">Saved</button>
     </div>
     <div class="select3">
-      <button class="view-button" onclick="previousPosts()">Previous posts</button>
+      <button class="view-button" onclick="previousPosts()">Previous Posts</button>
     </div>
   </div>
   <br>
   <div class="current" id="current">
     <h3 style="text-align:center">Current Posts Here~</h3>
   </div>
-  <div class="working" id="working" style="display:none">
-    <h3 style="text-align:center">Working On Now~</h3>
+  <div class="saved" id="working" style="display:none">
+    <h3 style="text-align:center">Saved Posts~</h3>
   </div>
   <div class="previous" id="previous" style="display:none"> 
     <h3 style="text-align:center">Previous Posts Here~</h3>

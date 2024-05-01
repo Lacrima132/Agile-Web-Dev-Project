@@ -8,27 +8,27 @@ function shrinkNav() {
 }
 function currentPosts() {
   var curr = document.getElementById("current");
-  var work = document.getElementById("working");
+  var save = document.getElementById("saved");
   var prev = document.getElementById("previous");
   curr.style.display = "grid";
-  work.style.display = "none";
+  save.style.display = "none";
   prev.style.display = "none";
 }
 
-function workingPosts() {
+function savedPosts() {
   var curr = document.getElementById("current");
-  var work = document.getElementById("working");
+  var save = document.getElementById("saved");
   var prev = document.getElementById("previous");
   curr.style.display = "none";
-  work.style.display = "grid";
+  save.style.display = "grid";
   prev.style.display = "none";
 }
 
 function previousPosts() {
   var curr = document.getElementById("current");
-  var work = document.getElementById("working");
+  var save = document.getElementById("saved");
   var prev = document.getElementById("previous");
   curr.style.display = "none";
-  work.style.display = "none";
+  save.style.display = "none";
   prev.style.display = "grid";
 }

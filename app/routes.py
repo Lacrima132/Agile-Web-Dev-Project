@@ -31,6 +31,10 @@ def submit():
 def profile():
     return render_template('profile.html', user=current_user)
 
+@routes.route('/editprofile')
+def editprofile():
+    return render_template('edit-profile.html', user=current_user)
+
 @routes.route('/aboutus')
 def aboutus():
     return render_template('about-us.html')
