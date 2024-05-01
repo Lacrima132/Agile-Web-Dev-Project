@@ -56,62 +56,78 @@
     <!-- Web Page Nav Bar -->
     <nav
       class="sidebar"
-      onmouseover="growNav()"
-      onmouseleave="shrinkNav()"
+      onmouseover="growNav(); revealHidden();"
+      onmouseleave="shrinkNav(); hideHidden();"
     >
       <div class="logo">
         <a href="{{ url_for('routes.home') }}">
-          BOUNTIFY
-        </a>
+          B<span class="hidden">OUNTIFY</span> </a>
+      </div>
       </div>
       <div class="main-menu">
         {% if user.is_authenticated %}
         <ul>
           <li>
-            <a href="{{ url_for('routes.home') }}"
-              >Home</a
-            >
+            <a href="{{ url_for('routes.home') }}">
+              <i class="fa fa-home fa-lg"></i>
+              <span class="hidden"> Home</span>
+            </a>
           </li>
           <li>
             <a
               href="{{ url_for('routes.browse') }}"
-              >Browse</a
-            >
+              ><i class="fa fa-search fa-lg"></i>
+              <span class="hidden"> Browse</span>
+            </a>
           </li>
           <li>
             <a
               href="{{ url_for('routes.submit') }}"
-              >Submit</a
-            >
+              ><i class="fa fa-plus fa-lg"></i>
+              <span class="hidden"> Submit</span>
+            </a>
           </li>
           <li>
             <a
               href="{{ url_for('routes.ranking') }}"
-              >Ranking</a
-            >
-          </li>
-          <li>
-            <a
-              href="{{ url_for('routes.profile') }}"
-              >Profile</a
-            >
+              ><i class="fa fa-trophy fa-lg"></i>
+              <span class="hidden"> Ranking</span>
+            </a>
           </li>
         </ul>
         {% endif %}
       </div>
       <div class="login">
+        <ul>
         {% if user.is_authenticated %}
+        <li>
+          <a
+            href="{{ url_for('routes.profile') }}"
+            ><i class="fa fa-user-circle-o fa-lg"></i>
+            <span class="hidden"> Profile</span>
+          </a>
+        </li>
+        <li>
         <a href="{{ url_for('auth.logout') }}"
-          >Log Out</a
-        >
+          ><i class="fa fa-sign-out fa-lg"></i>
+          <span class="hidden"> Log Out</span>
+        </a>
+      </li>
         {% else %}
+        <li>
         <a href="{{ url_for('auth.login') }}"
-          >Login</a
-        >
+          ><i class="fa fa-sign-in fa-lg"></i>
+          <span class="hidden"> Log In</span>
+        </a>
+        </li>
+        <li>
         <a href="{{ url_for('auth.sign_up') }}"
-          >Sign Up</a
-        >
+          ><i class="fa fa-pencil-square-o fa-lg"></i>
+          <span class="hidden"> Sign In</span>
+        </a>
+        </li>
         {% endif %}
+        </ul>
       </div>
     </nav>
     {% with messages =
