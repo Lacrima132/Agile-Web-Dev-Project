@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Create virtual environment
-
 python3 -m venv tmp-env
 
 # Activate virtual environment
