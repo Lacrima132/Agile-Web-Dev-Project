@@ -1,43 +1,49 @@
-{% extends "base.html" %} {% block title %}
-Profile {% endblock %} {% block content %}
+{% extends "base.html" %} 
+{% block title %}{{ user.firstName }}{% endblock %} 
+{% block content %}
 <div class="form-section">
-  <form action="">
-    <img
-      class="avatar"
-      src="../static/images/bbyoda.png"
-      alt="avatar"
-    />
-    <h2 class="form-header">Profile</h2>
-    <label class="sr-text" for="uname"
-      >Username:</label
-    >
-    <input
-      class="form-input-bubble"
-      type="text"
-      placeholder="Current Username"
-      id="uname"
-      name="uname"
-      required
-    /><br />
-    <label class="sr-text" for="pwd"
-      >Password:</label
-    >
-    <input
-      class="form-input-bubble"
-      type="text"
-      placeholder="Current Password"
-      id="pwd"
-      name="pwd"
-      required
-    /><br />
-    <label class="sr-text" for="pwd">Bio:</label>
-    <input
-      class="bio-bubble"
-      type="text"
-      placeholder="Current Description"
-      id="bio"
-      name="bio"
-    /><br />
-  </form>
+  <div class="info-bubble">
+    <div class="profile-pic">
+      <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
+    </div>
+    <div class="profile-box2">
+      <h2 class="profile-name">{{user.firstName}}</h2>
+      <br>
+      <form action="{{ url_for('routes.editprofile') }}">
+        <input
+        class="btn-submit"
+        type="submit"
+        value="Edit Profile"
+        
+        />
+      </form>
+    </div>
+    <div class="rank">
+      <h2>Rank: 3</h2>
+    </div>
+    
+  </div>
+  <br>
+  <div class="select-view">
+    <div class="select1">
+      <button class="view-button" onclick="currentPosts()">Current Posts</button>
+    </div>
+    <div class="select2">
+      <button class="view-button" onclick="savedPosts()">Saved</button>
+    </div>
+    <div class="select3">
+      <button class="view-button" onclick="previousPosts()">Previous Posts</button>
+    </div>
+  </div>
+  <br>
+  <div class="current" id="current">
+    <h3 style="text-align:center">Current Posts Here~</h3>
+  </div>
+  <div class="saved" id="working" style="display:none">
+    <h3 style="text-align:center">Saved Posts~</h3>
+  </div>
+  <div class="previous" id="previous" style="display:none"> 
+    <h3 style="text-align:center">Previous Posts Here~</h3>
+  </div>
 </div>
 {% endblock %}
