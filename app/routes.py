@@ -35,6 +35,10 @@ def profile():
 def editprofile():
     return render_template('edit-profile.html', user=current_user)
 
+@routes.route('/changepassword')
+def changepassword():
+    return render_template('change-password.html', user=current_user)
+
 @routes.route('/aboutus')
 def aboutus():
     return render_template('about-us.html')

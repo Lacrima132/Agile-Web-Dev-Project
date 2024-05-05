@@ -135,7 +135,7 @@
     {% if messages %} {% for category, message in
     messages %} {% if category == 'error' %}
     <div
-      class="alert alert-danger alter-dismissable fade show"
+      class="alert-error"
       role="alert"
     >
       {{ message }}
@@ -149,7 +149,7 @@
     </div>
     {% else %}
     <div
-      class="alert alert-success alter-dismissable fade show"
+      class="alert-success"
       role="alert"
     >
       {{ message }}
