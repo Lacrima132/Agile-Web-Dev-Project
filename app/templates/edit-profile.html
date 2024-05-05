@@ -2,7 +2,7 @@
 {% block title %}Edit profile{% endblock %} 
 {% block content %}
 <div class="form-section">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <h2 class="form-header">Edit Profile</h2>
         <label class="sr-text" for="username"
           >Change username:</label
@@ -26,7 +26,7 @@
         <br>
         <label class="sr-text" for="change-image">Select new profile photo:</label>
         <input 
-            type="image" 
+            type="file" 
             alt="Select image"
             id="change-image"
             name="change-image"

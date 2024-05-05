@@ -10,6 +10,8 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'your_secret_key'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['AVATARS_FOLDER'] = 'static/images/profilepics'  # Define the upload folder path
+    print(app.root_path)
     db.init_app(app)
 
     from .routes import routes

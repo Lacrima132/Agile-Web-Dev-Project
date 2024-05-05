@@ -1,7 +1,9 @@
-# from app import app
 from flask import Blueprint, render_template, url_for, request, flash, redirect
 from flask_login import login_required, current_user
 from . import db
+from .models import User
+from werkzeug.utils import secure_filename
+import os
 
 routes = Blueprint('routes', __name__)
 @routes.route('/')
@@ -31,8 +33,19 @@ def submit():
 def profile():
     return render_template('profile.html', user=current_user)
 
-@routes.route('/editprofile')
+@routes.route('/editprofile', methods =['GET', 'POST'])
 def editprofile():
+    if request.method == 'POST':
+        avatar = request.files.get('change-image')
+        if avatar:
+            filename = secure_filename(avatar.filename)
+            save_path = os.path.join('app\static\images\profilepics', filename)
+            print(save_path)
+            current_user.avatar = filename
+            db.session.commit()
+            flash('Post Uploaded!', category='success')
+            avatar.save(save_path)
+            
     return render_template('edit-profile.html', user=current_user)
 
 @routes.route('/aboutus')
