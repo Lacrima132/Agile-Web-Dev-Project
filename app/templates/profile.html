@@ -1,5 +1,5 @@
 {% extends "base.html" %} 
-{% block title %}{{ user.firstName }}{% endblock %} 
+{% block title %}{{ user.username }}{% endblock %} 
 {% block content %}
 <div class="form-section">
   <div class="info-bubble">
@@ -7,7 +7,7 @@
       <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
     </div>
     <div class="profile-box2">
-      <h2 class="profile-name">{{user.firstName}}</h2>
+      <h2 class="profile-name">{{user.username}}</h2>
       <br>
       <form action="{{ url_for('routes.editprofile') }}">
         <input

@@ -37,4 +37,4 @@ def editprofile():
 
 @routes.route('/aboutus')
 def aboutus():
-    return render_template('about-us.html')
+    return render_template('about-us.html', user=current_user)
