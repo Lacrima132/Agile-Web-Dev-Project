@@ -26,22 +26,17 @@
   <div class="forum-section">
     <div class="post-container">
       <div class="row">
+
+        {% for post in posts %}
         <div class="col-md-3">
           <div class="postbubble">
             <div class="posttext">
-              <div class="posttitle">Title</div>
+              <div class="posttitle"> {{ post.title }}</div>
+              <div class="postimages">
+                <img src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}" width="250" height="250" alt="Post" >
+              </div>
               <div class="postcontent">
-                Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit, sed
-                do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi
-                ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor
-                in reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat
-                nulla pariatur.
+                {{ post.desc}}
               </div>
             </div>
             <div class="reactbar">
@@ -87,7 +82,9 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        {% endfor %}
+
+        <!-- <div class="col-md-3">
           <div class="postbubble">
             <div class="posttitle">
               Test post 2
@@ -97,6 +94,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-3">
           <div class="postbubble">
             <div class="posttitle">
@@ -117,6 +115,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-3">
           <div class="postbubble">
             <div class="posttitle">
@@ -136,7 +135,8 @@
               Please work i swear..
             </div>
           </div>
-        </div>
+        </div> -->
+
       </div>
     </div>
   </div>

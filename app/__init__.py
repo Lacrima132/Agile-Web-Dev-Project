@@ -6,10 +6,14 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
+ALLOWED_EXTENSIONS = set(['png','jpg','jpeg'])
+
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'your_secret_key'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['POST_FOLDER'] = 'static/posts'
+    app.config['PROFILE_PIC_FOLDER'] = 'static/profilepics'
     db.init_app(app)
 
     from .routes import routes
@@ -37,3 +41,6 @@ def create_database(app):
         with app.app_context():
             db.create_all()
         print('Created Database!')
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS

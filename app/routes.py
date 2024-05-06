@@ -1,7 +1,9 @@
-# from app import app
 from flask import Blueprint, render_template, url_for, request, flash, redirect
 from flask_login import login_required, current_user
-from . import db
+from . import db, allowed_file, ALLOWED_EXTENSIONS
+import os
+from .models import Post
+from werkzeug.utils import secure_filename
 
 routes = Blueprint('routes', __name__)
 @routes.route('/')
@@ -12,7 +14,8 @@ def home():
 
 @routes.route('/browse')
 def browse():
-    return render_template('browse.html', user=current_user)
+    posts = Post.query.all()
+    return render_template('browse.html', user=current_user, posts=posts)
 
 @routes.route('/faq')
 def faq():
@@ -22,10 +25,29 @@ def faq():
 def ranking():
     return render_template('ranking.html', user=current_user)
 
-@routes.route('/submit')
+@routes.route('/submit', methods=['GET', 'POST'])
 def submit():
-    return render_template('submit.html', user=current_user)
+    if request.method == 'POST':
+        print('hello')
+        title = request.form.get('target')
+        img = request.files.get('image')
+        desc = request.form.get('tinfo')
+        user_id = current_user.get_id()
 
+        if img and allowed_file(img.filename):
+            filename = secure_filename(img.filename)
+            save_path = os.path.join('app\static\images\posts', filename)
+            img.save(save_path)
+
+            new_image = Post(title=title,desc=desc,uid=user_id,img_filename=filename, img_filepath=save_path)
+            db.session.add(new_image)
+            db.session.commit()
+            flash('Post Uploaded!', category='success')
+            return redirect(url_for('routes.browse'))
+        else:
+            flash("Invalid file format. PNG,JPG,JPEG accepted", category='error')
+
+    return render_template('submit.html', user=current_user)
 
 @routes.route('/profile')
 def profile():
