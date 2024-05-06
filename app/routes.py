@@ -29,7 +29,6 @@ def ranking():
 @routes.route('/submit', methods=['GET', 'POST'])
 def submit():
     if request.method == 'POST':
-        print('hello')
         title = request.form.get('target')
         img = request.files.get('image')
         desc = request.form.get('tinfo')
@@ -39,7 +38,6 @@ def submit():
             filename = secure_filename(img.filename)
             save_path = os.path.join('app\static\images\posts', filename)
             img.save(save_path)
-
             new_image = Post(title=title,desc=desc,uid=user_id,img_filename=filename, img_filepath=save_path)
             db.session.add(new_image)
             db.session.commit()
@@ -64,7 +62,6 @@ def editprofile():
         if avatar and allowed_file(avatar.filename) and allowed_size(avatar): 
             filename = secure_filename(avatar.filename)
             save_path = os.path.join(r'app\static\images\profilepics', filename)
-            print(save_path)
             current_user.avatar = filename
             db.session.commit()
             flash('Profile picture Uploaded!', category='success')
