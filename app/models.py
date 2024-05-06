@@ -19,6 +19,8 @@ class Post(db.Model):
     pid = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey('user.uid'))
     title = db.Column(db.String(100))
+    img_filepath = db.Column(db.String(100), nullable=False)
+    img_filename = db.Column(db.String(100), nullable=False)
     desc = db.Column(db.String(1000))
     executed = db.Column(db.Boolean, default=False)
     exec_by_id = db.Column(db.Integer)
