@@ -2,9 +2,22 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+import os
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
+
+ALLOWED_EXTENSIONS = set(['png','jpg','jpeg'])
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
+
+def allowed_size(file):
+    max_size = 10 * 1024 * 1024  # 10MB
+    file.seek(0, os.SEEK_END)
+    file_size = file.tell()
+    file.seek(0)
+    return file_size <= max_size
 
 def create_app():
     app = Flask(__name__)
