@@ -15,7 +15,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                flash('Logged in successful!', category='success')
+                flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('routes.home'))
             else:
@@ -31,31 +31,33 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
-@auth.route('/sign-up', methods=['GET', 'POST'])
+@auth.route('/sign-up', methods=['GET','POST'])
 def sign_up():
     if request.method == 'POST':
         email = request.form.get('email')
-        firstName = request.form.get('firstName')
+        username = request.form.get('username')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
         user = User.query.filter_by(email=email).first()
         if user:
-            flash('Email already exist', category='error')
-        elif len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
-        elif len(firstName) < 2:
-            flash('First name must be graeter than 1 character', category='error')
+            flash('Email already in use.', category='error')
+        elif len(email) < 4 or '@' not in email:
+            flash('Invalid email.', category='error')
+        elif len(username) < 6:
+            flash('Username must be longer than 5 characters.', category='error')
         elif password1 != password2:
-            flash('Password does not match', category='error')
+            flash('Passwords do not match.', category='error')
         elif len(password1) < 7:
-            flash('Password must be at least 7 characters', category='error')
+            flash('Invalid password: must be at least 7 characters.', category='error')
         else:
             password_hash=generate_password_hash(password1, method='pbkdf2:sha256')
-            new_user = User(email=email, firstName=firstName, password=password_hash)
+            new_user = User(email=email, username=username, password=password_hash, avatar='profile.png')
             db.session.add(new_user)
             db.session.commit()
             flash('Account created!', category='success')
+            login_user(new_user, remember=True)
             return redirect(url_for('routes.home'))
+
         
     return render_template("signup.html", user=current_user)
