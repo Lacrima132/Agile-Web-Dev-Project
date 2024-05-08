@@ -2,61 +2,57 @@
 {% block title %}Edit profile{% endblock %} 
 {% block content %}
 <div class="intro-section">
-  <div class="intro-section">
-    <h1 class="pagetitle-edit">Edit Profile</h1>
-    <form action="{{ url_for('routes.changepassword') }}">
-      <div class="edit">
-      <input
-      class="btn-submit"
-      type="submit"
-      value="Change Password"
-      
-      />
-    </div>
-    <br>
-    </form>
-      <form method="POST">
-        <div class="edit">
-          
-          <label class="sr-text" for="username"
-            >Change username:</label
-          >
-          <input
-            class="form-input-bubble"
-            type="text"
-            placeholder="Username"
-            id="username"
-            name="username"
-          />
-          <br>
-          
-          <label class="sr-text" for="bio">Change Bio:</label>
-          <input
-            class="bio-bubble"
-            type="text"
-            placeholder="Enter new bio."
-            id="bio"
-            name="bio"
-          />
-          <br>
-          <label class="sr-text" for="avatar">Select new profile photo:</label>
-          <input 
-              class="choose-file"
-              type="file" 
-              alt="Select image"
-              id="avatar"
-              name="avatar"
-          />
-          <br><br>
-          <input
-            class="btn-submit"
-            type="submit"
-            value="submit"
-          />
-        </div>
-      </form>
-  
-      
+  <h1 class="pagetitle-edit">Edit Profile</h1>
+  <form action="{{ url_for('routes.changepassword') }}">
+    <div class="edit">
+    <input
+    class="btn-submit"
+    type="submit"
+    value="Change Password"
+    
+    />
   </div>
+  <br>
+  </form>
+    <form method="POST">
+      <div class="edit">
+        
+        <label class="sr-text" for="username"
+          >Change username:</label
+        >
+        <input
+          class="form-input-bubble"
+          type="text"
+          placeholder="Username"
+          id="username"
+          name="username"
+        />
+        <br>
+        
+        <label class="sr-text" for="bio">Change Bio:</label>
+        <input
+          class="bio-bubble"
+          type="text"
+          placeholder="Enter new bio."
+          id="bio"
+          name="bio"
+        />
+        <br>
+        <label class="sr-text" for="avatar">Select new profile photo:</label>
+        <input 
+            class="choose-file"
+            type="file" 
+            alt="Select image"
+            id="avatar"
+            name="avatar"
+        />
+        <br><br>
+        <input
+          class="btn-submit"
+          type="submit"
+          value="submit"
+        />
+      </div>
+    </form>
 </div>
 {% endblock %}
