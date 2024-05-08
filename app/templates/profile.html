@@ -1,49 +1,166 @@
 {% extends "base.html" %} 
 {% block title %}{{ user.username }}{% endblock %} 
 {% block content %}
-<div class="form-section">
-  <div class="info-bubble">
-    <div class="profile-pic">
-      <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
-    </div>
-    <div class="profile-box2">
-      <h2 class="profile-name">{{user.username}}</h2>
-      <br>
-      <form action="{{ url_for('routes.editprofile') }}">
-        <input
-        class="btn-submit"
-        type="submit"
-        value="Edit Profile"
+<div class="intro-section">
+    <div >
+      <div class="info-bubble">
+        <div class="profile-pic">
+          <!--<img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">-->
+          <img src="../static/images/profilepics/profile.png" class="avatar" alt="avatar">
+        </div>
+        <div class="profile-box2">
+          <div class="profile-box3">
+            <h2 class="profile-name">{{ user.firstName }} <img src="../static/images/ranks/6.png" class="rank-img"></h2>
+          
+          
+          <form action="{{ url_for('routes.editprofile') }}">
+            <input
+              class="btn-edit"
+              type="submit"
+              value="Edit Profile"
+            />
+          </form>
+          </div>
+          <br>
+          <p>Bio text goes here </p>
+          <br>
+          <p>Posts: 12     Likes: 27</p>
+        </div>
+     
+          
         
-        />
-      </form>
+      </div>
+      <br>
+      <div class="select-view">
+        <div class="select">
+          <button class="view-button" onclick="currentPosts()">Current Posts</button>
+        </div>
+        <div class="select">
+          <button class="view-button" onclick="savedPosts()">Saved</button>
+        </div>
+        <div class="select">
+          <button class="view-button" onclick="previousPosts()">Previous Posts</button>
+        </div>
+      </div>
+      <br>
+      <div class="current" id="current">
+        <div>
+          <div class="post-container">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="postbubble">
+                  <div class="posttext">
+                    <div class="posttitle">Post Title</div>
+                    <div class="postcontent">
+                      Content goes here
+                    </div>
+                  </div>
+                  <div class="reactbar">
+                    <button
+                      id="likeButton"
+                      class="reactbutton"
+                      onclick="incrementLike()"
+                    >
+                      <i
+                        class="fa fa-heart-o fa-lg"
+                      ></i>
+                    </button>
+                    <span
+                      id="likeCount"
+                      class="reactnumber"
+                    >
+                      0
+                    </span>
+                    <button class="reactbutton">
+                      <i
+                        class="fa fa-commenting-o fa-lg"
+                        class="reactnumber"
+                      ></i>
+                    </button>
+                    <span
+                      id="commentCount"
+                      class="reactnumber"
+                    >
+                      0
+                    </span>
+                    <button class="reactbutton">
+                      <i
+                        class="fa fa-eye fa-lg"
+                        class="reactnumber"
+                      ></i>
+                    </button>
+                    <span
+                      id="viewCount"
+                      class="reactnumber"
+                    >
+                      0
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="postbubble">
+                  <div class="posttitle">
+                    Test post 2
+                  </div>
+                  <div class="postcontent">
+                    Please work i swear..
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="postbubble">
+                  <div class="posttitle">
+                    Test post 3
+                  </div>
+                  <div class="postcontent">
+                    Please work i swear..
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="postbubble">
+                  <div class="posttitle">
+                    Test post 4
+                  </div>
+                  <div class="postcontent">
+                    Please work i swear..
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="postbubble">
+                  <div class="posttitle">
+                    Test post 3
+                  </div>
+                  <div class="postcontent">
+                    Please work i swear..
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="postbubble">
+                  <div class="posttitle">
+                    Test post 4
+                  </div>
+                  <div class="postcontent">
+                    Please work i swear..
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="saved" id="working" style="display:none">
+        <h3 style="text-align:center">Saved Posts~</h3>
+      </div>
+      <div class="previous" id="previous" style="display:none"> 
+        <h3 style="text-align:center">Previous Posts Here~</h3>
+      </div>
     </div>
-    <div class="bio">
-      <h2>{{ user.bio }}</h2>
-    </div>
-    
-  </div>
+  
   <br>
-  <div class="select-view">
-    <div class="select1">
-      <button class="view-button" onclick="currentPosts()">Current Posts</button>
-    </div>
-    <div class="select2">
-      <button class="view-button" onclick="savedPosts()">Saved</button>
-    </div>
-    <div class="select3">
-      <button class="view-button" onclick="previousPosts()">Previous Posts</button>
-    </div>
-  </div>
-  <br>
-  <div class="current" id="current">
-    <h3 style="text-align:center">Current Posts Here~</h3>
-  </div>
-  <div class="saved" id="working" style="display:none">
-    <h3 style="text-align:center">Saved Posts~</h3>
-  </div>
-  <div class="previous" id="previous" style="display:none"> 
-    <h3 style="text-align:center">Previous Posts Here~</h3>
-  </div>
+  
 </div>
 {% endblock %}

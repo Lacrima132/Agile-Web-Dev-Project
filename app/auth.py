@@ -15,7 +15,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                flash('Logged in successful!', category='success')
+                flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('routes.home'))
             else:
@@ -41,18 +41,18 @@ def sign_up():
 
         user = User.query.filter_by(email=email).first()
         if user:
-            flash('Email already exist', category='error')
-        elif len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
-        elif len(username) < 2:
-            flash('First name must be graeter than 1 character', category='error')
+            flash('Email already in use.', category='error')
+        elif len(email) < 4 or '@' not in email:
+            flash('Invalid email.', category='error')
+        elif len(username) < 6:
+            flash('Username must be longer than 5 characters.', category='error')
         elif password1 != password2:
-            flash('Password does not match', category='error')
+            flash('Passwords do not match.', category='error')
         elif len(password1) < 7:
-            flash('Password must be at least 7 characters', category='error')
+            flash('Invalid password: must be at least 7 characters.', category='error')
         else:
             password_hash=generate_password_hash(password1, method='pbkdf2:sha256')
-            new_user = User(email=email, username=username, password=password_hash)
+            new_user = User(email=email, username=username, password=password_hash, avatar='profile.png')
             db.session.add(new_user)
             db.session.commit()
             flash('Account created!', category='success')
