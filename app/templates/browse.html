@@ -1,142 +1,140 @@
 {% extends "base.html" %} {% block title %} Browse
 {% endblock %} {% block content %}
 <div class="intro-section">
+  <h1 class="pagetitle">Browse</h1>
   <div class="search-container">
-    <h1 class="pagetitle">Browse</h1>
-    <div class="searchbar-box">
-      <form class="searchbar" action="">
-        <label class="sr-text" for="query"
-          >Search:</label
-        >
-        <input
-          class="searchbarinput"
-          type="text"
-          placeholder="Search"
-          id="query"
-          name="query"
-        />
-        <button type="submit">
-          <i class="fa fa-search fa-lg"></i>
-        </button>
-      </form>
+    <div class="row">
+      <div class="col-12">
+        <form class="form-inline searchbar-box">
+          <div class="input-group w-100">
+            <input
+              type="text"
+              class="searchbarinput form-control"
+              placeholder="Search"
+            />
+            <div class="input-group-append">
+              <button
+                class="searchbtn"
+                type="button"
+              >
+                <i class="fa fa-search fa-lg"></i>
+              </button>
+              <div class="dropdown">
+                <button
+                  class="searchbtn dropdown-toggle"
+                  type="button"
+                  id="filterDropdown"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i
+                    class="fa fa-filter fa-lg"
+                  ></i>
+                </button>
+                <div
+                  class="dropdown-menu"
+                  aria-labelledby="filterDropdown"
+                >
+                  <a
+                    class="dropdown-item filter-item"
+                    href="#"
+                    data-filter="recent"
+                    >Most Recent</a
+                  >
+                  <a
+                    class="dropdown-item filter-item"
+                    href="#"
+                    data-filter="likes"
+                    >Most Liked</a
+                  >
+                  <a
+                    class="dropdown-item filter-item"
+                    href="#"
+                    data-filter="interacts"
+                    >Most Interacted</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+    <div id="filterTagsContainer"></div>
   </div>
   <!-- BREAK -->
 
   <div class="forum-section">
     <div class="post-container">
       <div class="row">
-
         {% for post in posts %}
-        <div class="col-md-3">
+        <div class="col-lg-3 col-md-4 col-sm-6">
           <div class="postbubble">
-            <div class="posttext">
-              <div class="posttitle"> {{ post.title }}</div>
-              <div class="postimages">
-                <img src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}" width="250" height="250" alt="Post" >
+            <img
+              src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}"
+              alt="Post Image"
+            />
+            <div
+              class="screen-overlay overlay-animation"
+            >
+              <div class="posttext">
+                <div class="posttitle">
+                  {{ post.title }}
+                </div>
+                <div class="postcontent">
+                  {{ post.desc}}
+                </div>
               </div>
-              <div class="postcontent">
-                {{ post.desc}}
+              <div class="reactbar">
+                <button
+                  id="likeButton"
+                  class="reactbutton"
+                  onclick="toggleLike('likeCount', 'likeIcon', true)"
+                >
+                  <i
+                    id="likeIcon"
+                    class="fa fa-thumbs-o-up fa-lg"
+                  ></i>
+                </button>
+                <span
+                  id="likeCount"
+                  class="reactnumber"
+                  >0</span
+                >
+                <button
+                  id="dislikeButton"
+                  class="reactbutton"
+                  onclick="toggleLike('dislikeCount', 'dislikeIcon', false)"
+                >
+                  <i
+                    id="dislikeIcon"
+                    class="fa fa-thumbs-o-down fa-lg"
+                  ></i>
+                </button>
+                <span
+                  id="dislikeCount"
+                  class="reactnumber"
+                  >0</span
+                >
+                <button
+                  id="commentButton"
+                  class="reactbutton"
+                >
+                  <i
+                    class="fa fa-commenting-o fa-lg"
+                  ></i>
+                </button>
+                <span
+                  id="commentCount"
+                  class="reactnumber"
+                  >0</span
+                >
               </div>
-            </div>
-            <div class="reactbar">
-              <button
-                id="likeButton"
-                class="reactbutton"
-                onclick="incrementLike()"
-              >
-                <i
-                  class="fa fa-heart-o fa-lg"
-                ></i>
-              </button>
-              <span
-                id="likeCount"
-                class="reactnumber"
-              >
-                0
-              </span>
-              <button class="reactbutton">
-                <i
-                  class="fa fa-commenting-o fa-lg"
-                  class="reactnumber"
-                ></i>
-              </button>
-              <span
-                id="commentCount"
-                class="reactnumber"
-              >
-                0
-              </span>
-              <button class="reactbutton">
-                <i
-                  class="fa fa-eye fa-lg"
-                  class="reactnumber"
-                ></i>
-              </button>
-              <span
-                id="viewCount"
-                class="reactnumber"
-              >
-                0
-              </span>
             </div>
           </div>
         </div>
         {% endfor %}
-
-        <!-- <div class="col-md-3">
-          <div class="postbubble">
-            <div class="posttitle">
-              Test post 2
-            </div>
-            <div class="postcontent">
-              Please work i swear..
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="postbubble">
-            <div class="posttitle">
-              Test post 3
-            </div>
-            <div class="postcontent">
-              Please work i swear..
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="postbubble">
-            <div class="posttitle">
-              Test post 4
-            </div>
-            <div class="postcontent">
-              Please work i swear..
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="postbubble">
-            <div class="posttitle">
-              Test post 3
-            </div>
-            <div class="postcontent">
-              Please work i swear..
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="postbubble">
-            <div class="posttitle">
-              Test post 4
-            </div>
-            <div class="postcontent">
-              Please work i swear..
-            </div>
-          </div>
-        </div> -->
-
       </div>
     </div>
   </div>
