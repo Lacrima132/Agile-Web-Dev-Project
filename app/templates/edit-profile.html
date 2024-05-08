@@ -1,6 +1,10 @@
 {% extends "base.html" %} 
 {% block title %}Edit profile{% endblock %} 
 {% block content %}
+<div class="form-section">
+    <form method="POST" enctype="multipart/form-data">
+        <h2 class="form-header">Edit Profile</h2>
+        <label class="sr-text" for="username"
 <div class="intro-section">
   <h1 class="pagetitle-edit">Edit Profile</h1>
   <form action="{{ url_for('routes.changepassword') }}">
@@ -34,14 +38,14 @@
           class="bio-bubble"
           type="text"
           placeholder="Enter new bio."
-          id="bio"
-          name="bio"
+          id="bio-change"
+          name="bio-change"
         />
+        <br>
         <br>
         <label class="sr-text" for="avatar">Select new profile photo:</label>
         <input 
-            class="choose-file"
-            type="file" 
+            type="file"
             alt="Select image"
             id="avatar"
             name="avatar"

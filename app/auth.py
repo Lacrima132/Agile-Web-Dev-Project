@@ -31,11 +31,11 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
-@auth.route('/sign-up', methods=['GET', 'POST'])
+@auth.route('/sign-up', methods=['GET','POST'])
 def sign_up():
     if request.method == 'POST':
         email = request.form.get('email')
-        firstName = request.form.get('firstName')
+        username = request.form.get('username')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
@@ -44,7 +44,7 @@ def sign_up():
             flash('Email already in use.', category='error')
         elif len(email) < 4 or '@' not in email:
             flash('Invalid email.', category='error')
-        elif len(firstName) < 6:
+        elif len(username) < 6:
             flash('Username must be longer than 5 characters.', category='error')
         elif password1 != password2:
             flash('Passwords do not match.', category='error')
@@ -52,10 +52,12 @@ def sign_up():
             flash('Invalid password: must be at least 7 characters.', category='error')
         else:
             password_hash=generate_password_hash(password1, method='pbkdf2:sha256')
-            new_user = User(email=email, firstName=firstName, password=password_hash, avatar="profile.png")
+            new_user = User(email=email, username=username, password=password_hash, avatar='profile.png')
             db.session.add(new_user)
             db.session.commit()
             flash('Account created!', category='success')
+            login_user(new_user, remember=True)
             return redirect(url_for('routes.home'))
+
         
     return render_template("signup.html", user=current_user)

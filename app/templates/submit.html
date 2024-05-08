@@ -1,11 +1,9 @@
-{%extends "base.html"%} {% block title %}Submit{%
-endblock %} {% block content %}
+{%extends "base.html"%} {% block title %}Submit{% endblock %} {% block content
+%}
 <div class="form-section">
-  <form action="">
+  <form action="" method="POST" enctype="multipart/form-data">
     <h2 class="form-header">Submit a post</h2>
-    <label class="sr-text" for="target"
-      >Target:</label
-    >
+    <label class="sr-text" for="target">Target:</label>
     <input
       placeholder="Target Name"
       class="form-input-bubble"
@@ -21,9 +19,7 @@ endblock %} {% block content %}
       name="image"
       id="image"
     /><br />
-    <label class="sr-text" for="tinfo"
-      >Target Information:</label
-    >
+    <label class="sr-text" for="tinfo">Target Information:</label>
     <input
       placeholder="Target Information"
       class="form-input-bubble"
@@ -31,11 +27,7 @@ endblock %} {% block content %}
       id="tinfo"
       name="tinfo"
     /><br />
-    <input
-      class="btn-submit"
-      type="submit"
-      value="submit"
-    />
+    <input class="btn-submit" type="submit" value="submit" />
   </form>
 </div>
 {% endblock %}
