@@ -24,7 +24,7 @@
           <br>
           <p>Bio text goes here </p>
           <br>
-          <p>Posts: 12     Likes: 27</p>
+          <p>Posts: {{ num_posts }}     Likes: {{ total_likes }}</p>
         </div>
      
           
@@ -43,16 +43,24 @@
         </div>
       </div>
       <br>
+       
+      {% for current_user_post in current_user_posts %}
       <div class="current" id="current">
         <div>
           <div class="post-container">
             <div class="row">
               <div class="col-md-3">
                 <div class="postbubble">
+                  <div class="postbubble">
+                    <img
+                      src="{{ url_for('static', filename='/images/posts/' + current_user_post.img_filename) }}"
+                      alt="Post Image"
+                    />
+                  </div>
                   <div class="posttext">
-                    <div class="posttitle">Post Title</div>
+                    <div class="posttitle">{{ current_user_post.title }}</div>
                     <div class="postcontent">
-                      Content goes here
+                      {{ current_user_post.desc }}
                     </div>
                   </div>
                   <div class="reactbar">
@@ -98,60 +106,13 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttitle">
-                    Test post 2
-                  </div>
-                  <div class="postcontent">
-                    Please work i swear..
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttitle">
-                    Test post 3
-                  </div>
-                  <div class="postcontent">
-                    Please work i swear..
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttitle">
-                    Test post 4
-                  </div>
-                  <div class="postcontent">
-                    Please work i swear..
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttitle">
-                    Test post 3
-                  </div>
-                  <div class="postcontent">
-                    Please work i swear..
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttitle">
-                    Test post 4
-                  </div>
-                  <div class="postcontent">
-                    Please work i swear..
-                  </div>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
       </div>
+      {% endfor %}
+
       <div class="saved" id="working" style="display:none">
         <h3 style="text-align:center">Saved Posts~</h3>
       </div>

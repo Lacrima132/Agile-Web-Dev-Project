@@ -22,6 +22,7 @@ class Post(db.Model):
     img_filepath = db.Column(db.String(100), nullable=False)
     img_filename = db.Column(db.String(100), nullable=False)
     desc = db.Column(db.String(1000))
+    flag = db.Column(db.String(100))
     executed = db.Column(db.Boolean, default=False)
     exec_by_id = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
