@@ -19,7 +19,7 @@
                       {{ post.title }}
                     </a>
                   </div>
-                  <div class="postauthor">
+                  <div class="author">
                     <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="small_avatar" alt="avatar" style="width: 10px;"/>
                     {% if post.user.uid != current_user.uid %}
                     <a href= "/view-other-userpf/{{ post.user.uid }}">
@@ -34,7 +34,7 @@
                     <p>{{ post.desc }}</p>
                     <p>Price: ${{ post.price }}</p>
                   </div>
-                  <button>
+                  <button class="btn-prominent">
                     <a
                       href="{{ url_for('routes.purchase', sid=post.sid) }}"
                       class="purchase-btn"
@@ -43,22 +43,6 @@
                   </button>
                 </div>
                 <div class="reactbar">
-                  <button id="likeButton" class="reactbutton like" onclick="toggleLike(this, {{ post.pid }})">
-                    {% if post.pid in lip %}
-                    <i id="likeIcon" class="fa fa-thumbs-up fa-lg"></i>
-                    {% else %}
-                    <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
-                    {% endif %}
-                  </button>
-                  <span id="likeCount" class="reactnumber">{{ post.likes }}</span>
-                  <button id="dislikeButton" class="reactbutton" onclick="toggleLike(this, {{ post.pid }})">
-                    {% if post.pid in dip %}
-                    <i id="dislikeIcon" class="fa fa-thumbs-down fa-lg"></i>
-                    {% else %}
-                    <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
-                    {% endif %}
-                  </button>
-                  <span id="dislikeCount" class="reactnumber">{{ post.dislikes }}</span>
                   <button id="commentButton" class="reactbutton">
                     <i class="fa fa-commenting-o fa-lg"></i>
                   </button>
