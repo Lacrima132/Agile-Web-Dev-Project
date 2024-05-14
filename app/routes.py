@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from . import db, allowed_file, allowed_size
 from .models import User, Post
 from werkzeug.utils import secure_filename
+from sqlalchemy import or_, func
 import os
 
 
@@ -36,7 +37,7 @@ def submit():
 
         if img and allowed_file(img.filename):
             filename = secure_filename(img.filename)
-            save_path = os.path.join('app\static\images\posts', filename)
+            save_path = os.path.join('app/static/images/posts', filename)
             img.save(save_path)
             new_image = Post(title=title,desc=desc,uid=user_id,img_filename=filename, img_filepath=save_path)
             db.session.add(new_image)
@@ -48,9 +49,29 @@ def submit():
 
     return render_template('submit.html', user=current_user)
 
+@routes.route('/post/delete/<int:post_id>', methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    # Check if the current user is the author of the post
+    if post.uid != current_user.uid:
+        print("lol")  # Forbidden - user is not authorized to delete this post
+
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post deleted successfully', 'success')
+    return redirect(url_for('routes.profile'))
+
 @routes.route('/profile')
 def profile():
-    return render_template('profile.html', user=current_user)
+    num_posts = Post.query.filter_by(uid=current_user.get_id()).count()
+    total_likes = Post.query.filter_by(uid=current_user.get_id()).with_entities(func.sum(Post.likes)).scalar()
+    total_likes = total_likes if total_likes else 0  # Handle case where total_likes is None
+    print(total_likes, num_posts)
+
+    current_user_posts = Post.query.filter_by(uid=current_user.get_id()).all()
+
+    return render_template('profile.html', user=current_user, num_posts = num_posts, total_likes = total_likes, current_user_posts=current_user_posts)
 
 @routes.route('/editprofile', methods =['GET', 'POST'])
 def editprofile():

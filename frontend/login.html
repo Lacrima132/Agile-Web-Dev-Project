@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0"
     />
     <title>
-      {% block title %}Bountify{% endblock %}
+      Bountify
     </title>
     <link
       rel="preconnect"
@@ -43,9 +43,9 @@
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/main-style.css') }}"
+      href="style.css"
     />
-    <script src="{{ url_for('static', filename='js/indexpage.js') }}"></script>
+    <script src="index.js"></script>
     <link
       rel="icon"
       href="{{ url_for('static',
@@ -60,49 +60,46 @@
       onmouseleave="shrinkNav(); hideHidden();"
     >
       <div class="logo">
-        <a href="{{ url_for('routes.home') }}">
+        <a href="home.html">
           B<span class="hidden">OUNTIFY</span> </a>
       </div>
       </div>
       <div class="main-menu">
-        {% if user.is_authenticated %}
         <ul>
           <li>
-            <a href="{{ url_for('routes.home') }}">
+            <a href="home.html">
               <i class="fa fa-home fa-lg"></i>
               <span class="hidden"> Home</span>
             </a>
           </li>
           <li>
             <a
-              href="{{ url_for('routes.browse') }}"
+              href="browse.html"
               ><i class="fa fa-search fa-lg"></i>
               <span class="hidden"> Browse</span>
             </a>
           </li>
           <li>
             <a
-              href="{{ url_for('routes.submit') }}"
+              href="submit.html"
               ><i class="fa fa-plus fa-lg"></i>
               <span class="hidden"> Submit</span>
             </a>
           </li>
           <li>
             <a
-              href="{{ url_for('routes.ranking') }}"
+              href="ranking.html"
               ><i class="fa fa-trophy fa-lg"></i>
               <span class="hidden"> Ranking</span>
             </a>
           </li>
         </ul>
-        {% endif %}
       </div>
       <div class="login">
         <ul>
-        {% if user.is_authenticated %}
         <li>
           <a
-            href="{{ url_for('routes.profile') }}"
+            href="profile.html"
             ><i class="fa fa-user-circle-o fa-lg"></i>
             <span class="hidden"> Profile</span>
           </a>
@@ -113,64 +110,78 @@
           <span class="hidden"> Log Out</span>
         </a>
       </li>
-        {% else %}
         <li>
-        <a href="{{ url_for('auth.login') }}"
+        <a href="login.html"
           ><i class="fa fa-sign-in fa-lg"></i>
           <span class="hidden"> Log In</span>
         </a>
         </li>
         <li>
-        <a href="{{ url_for('auth.sign_up') }}"
+        <a href="signup.html"
           ><i class="fa fa-pencil-square-o fa-lg"></i>
           <span class="hidden"> Sign Up</span>
         </a>
         </li>
-        {% endif %}
         </ul>
       </div>
     </nav>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %} 
-        {% for category, message in messages %}
-        {%if category == 'error'%}
-            <div class="alert alert-danger alter-dismissable fade show" role="alert"> 
-                {{ message }}
-                <button type="button" class="close"data-dismiss="alert">
-                    <span aria-hidden="true">&nbsp;
-                      <i class="fa fa-times" aria-hidden="true"></i>
-                    </span>
-                </button>
-            </div>
-        {% else %}
-            <div class="alert alert-success alter-dismissable fade show" role="alert"> 
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert">
-                    <span aria-hidden="true">&nbsp;
-                      <i class="fa fa-times" aria-hidden="true"></i>
-                    </span>
-                </button>
-            </div>
-        {% endif %}
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
-
-    <!-- Base block for other inheriting html files to display content -->
-    {% block content %} {% endblock %}
+    <div class="form-section">
+        <form method="POST">
+          <h2 class="form-header">Login</h2>
+          <label class="sr-text" for="email"
+            >Email:</label
+          >
+          <input
+            class="form-input-bubble"
+            type="email"
+            placeholder="Email"
+            id="email"
+            name="email"
+            placeholder="Enter email"
+            required
+          />
+          <br />
+          <label class="sr-text" for="password"
+            >Password:</label
+          >
+          <input
+            class="form-input-bubble"
+            type="password"
+            placeholder="Password"
+            id="password"
+            name="password"
+            required
+          />
+          <br />
+          <input
+            class="btn-submit"
+            type="submit"
+            value="Submit"
+          />
+          <br />
+          <p class="center">
+            Not a member?
+            <span>
+              <a href="signup.html"
+                >Sign up</a
+              ></span
+            >
+          </p>
+        </form>
+      </div>
 
     <div class="footer">
       <h2>Useful Links</h2>
       <ul>
         <li>
-          <a href="{{ url_for('routes.faq') }}"
+          <a href="faq.html"
             >FAQ</a
           >
         </li>
         <li>
           <a
-            href="{{ url_for('routes.aboutus') }}"
+            href="about-us.html"
             >About Us</a
           >
         </li>

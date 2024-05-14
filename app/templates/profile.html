@@ -1,166 +1,114 @@
-{% extends "base.html" %} 
-{% block title %}{{ user.username }}{% endblock %} 
-{% block content %}
+{% extends "base.html" %} {% block title %}{{ user.username }}{% endblock %} {%
+block content %}
 <div class="intro-section">
-    <div >
-      <div class="info-bubble">
-        <div class="profile-pic">
-          <!--<img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">-->
-          <img src="../static/images/profilepics/profile.png" class="avatar" alt="avatar">
-        </div>
-        <div class="profile-box2">
-          <div class="profile-box3">
-            <h2 class="profile-name">{{ user.firstName }} <img src="../static/images/ranks/6.png" class="rank-img"></h2>
-          
-          
+  <div>
+    <div class="info-bubble">
+      <div class="profile-pic">
+        <!--<img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">-->
+        <img
+          src="../static/images/profilepics/profile.png"
+          class="avatar"
+          alt="avatar"
+        />
+      </div>
+      <div class="profile-box2">
+        <div class="profile-box3">
+          <h2 class="profile-name">
+            {{ user.firstName }}
+            <img src="../static/images/ranks/6.png" class="rank-img" />
+          </h2>
           <form action="{{ url_for('routes.editprofile') }}">
-            <input
-              class="btn-edit"
-              type="submit"
-              value="Edit Profile"
-            />
+            <input class="btn-edit" type="submit" value="Edit Profile" />
           </form>
-          </div>
-          <br>
-          <p>Bio text goes here </p>
-          <br>
-          <p>Posts: 12     Likes: 27</p>
         </div>
-     
-          
-        
+        <br />
+        <p>Bio text goes here</p>
+        <br />
+        <p>Posts: {{ num_posts }} Likes: {{ total_likes }}</p>
       </div>
-      <br>
-      <div class="select-view">
-        <div class="select">
-          <button class="view-button" onclick="currentPosts()">Current Posts</button>
-        </div>
-        <div class="select">
-          <button class="view-button" onclick="savedPosts()">Saved</button>
-        </div>
-        <div class="select">
-          <button class="view-button" onclick="previousPosts()">Previous Posts</button>
-        </div>
+    </div>
+    <br />
+    <div class="select-view">
+      <div class="select">
+        <button class="view-button" onclick="currentPosts()">
+          Current Posts
+        </button>
       </div>
-      <br>
-      <div class="current" id="current">
-        <div>
-          <div class="post-container">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttext">
-                    <div class="posttitle">Post Title</div>
-                    <div class="postcontent">
-                      Content goes here
-                    </div>
-                  </div>
-                  <div class="reactbar">
-                    <button
-                      id="likeButton"
-                      class="reactbutton"
-                      onclick="incrementLike()"
+      <div class="select">
+        <button class="view-button" onclick="savedPosts()">Saved</button>
+      </div>
+      <div class="select">
+        <button class="view-button" onclick="previousPosts()">
+          Previous Posts
+        </button>
+      </div>
+    </div>
+    <br />
+
+    <div class="forum-section">
+      <div class="post-container">
+        <div class="row">
+          {% for current_user_post in current_user_posts %}
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="postbubble">
+              <img
+                src="{{ url_for('static', filename='/images/posts/' + current_user_post.img_filename) }}"
+                alt="Post Image"
+              />
+              <div class="screen-overlay overlay-animation">
+                <div class="posttext">
+                  <div class="postheader">
+                    <div class="posttitle">{{ current_user_post.title }}</div>
+                    <form
+                      action="{{ url_for('routes.delete_post', post_id=current_user_post.pid) }}"
+                      method="post"
                     >
-                      <i
-                        class="fa fa-heart-o fa-lg"
-                      ></i>
-                    </button>
-                    <span
-                      id="likeCount"
-                      class="reactnumber"
-                    >
-                      0
-                    </span>
-                    <button class="reactbutton">
-                      <i
-                        class="fa fa-commenting-o fa-lg"
-                        class="reactnumber"
-                      ></i>
-                    </button>
-                    <span
-                      id="commentCount"
-                      class="reactnumber"
-                    >
-                      0
-                    </span>
-                    <button class="reactbutton">
-                      <i
-                        class="fa fa-eye fa-lg"
-                        class="reactnumber"
-                      ></i>
-                    </button>
-                    <span
-                      id="viewCount"
-                      class="reactnumber"
-                    >
-                      0
-                    </span>
+                      <input type="hidden" name="_method" value="DELETE" />
+                      <button type="submit" class="reactbutton">
+                        <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                      </button>
+                    </form>
                   </div>
+                  <div class="postcontent">{{ current_user_post.desc }}</div>
                 </div>
-              </div>
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttitle">
-                    Test post 2
-                  </div>
-                  <div class="postcontent">
-                    Please work i swear..
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttitle">
-                    Test post 3
-                  </div>
-                  <div class="postcontent">
-                    Please work i swear..
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttitle">
-                    Test post 4
-                  </div>
-                  <div class="postcontent">
-                    Please work i swear..
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttitle">
-                    Test post 3
-                  </div>
-                  <div class="postcontent">
-                    Please work i swear..
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="postbubble">
-                  <div class="posttitle">
-                    Test post 4
-                  </div>
-                  <div class="postcontent">
-                    Please work i swear..
-                  </div>
+                <div class="reactbar">
+                  <button
+                    id="likeButton"
+                    class="reactbutton"
+                    onclick="toggleLike('likeCount', 'likeIcon', true)"
+                  >
+                    <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
+                  </button>
+                  <span id="likeCount" class="reactnumber">0</span>
+                  <button
+                    id="dislikeButton"
+                    class="reactbutton"
+                    onclick="toggleLike('dislikeCount', 'dislikeIcon', false)"
+                  >
+                    <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
+                  </button>
+                  <span id="dislikeCount" class="reactnumber">0</span>
+                  <button id="commentButton" class="reactbutton">
+                    <i class="fa fa-commenting-o fa-lg"></i>
+                  </button>
+                  <span id="commentCount" class="reactnumber">0</span>
                 </div>
               </div>
             </div>
           </div>
+          {% endfor %}
         </div>
       </div>
-      <div class="saved" id="working" style="display:none">
-        <h3 style="text-align:center">Saved Posts~</h3>
-      </div>
-      <div class="previous" id="previous" style="display:none"> 
-        <h3 style="text-align:center">Previous Posts Here~</h3>
-      </div>
     </div>
-  
-  <br>
-  
+
+    <div class="saved" id="working" style="display: none">
+      <h3 style="text-align: center">Saved Posts~</h3>
+    </div>
+    <div class="previous" id="previous" style="display: none">
+      <h3 style="text-align: center">Previous Posts Here~</h3>
+    </div>
+  </div>
+
+  <br />
 </div>
 {% endblock %}
