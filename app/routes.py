@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, request, flash, redirect
 from flask_login import login_required, current_user
 from . import db, allowed_file, allowed_size
-from .models import User, Post
+from .models import User, Post, Comments
 from werkzeug.utils import secure_filename
 import os
 
@@ -17,6 +17,32 @@ def home():
 def browse():
     posts = Post.query.all()
     return render_template('browse.html', user=current_user, posts=posts)
+
+@routes.route('/post/<int:post_id>', methods=['GET', 'POST'])
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    comments = Comments.query.filter_by(pid=post_id).all()
+
+    if request.method == 'POST':                        # Upload comments
+        comments = request.form.get('comment')
+        if comments:
+            new_comment = Comments(pid=post_id, uid=current_user.get_id(), comment=comments)
+            db.session.add(new_comment)
+            db.session.commit()
+            flash('Comment Added!', category='success')
+            return redirect(url_for('routes.post', post_id=post_id))
+        else:
+            flash('Comment cannot be empty!', category='error')
+            return redirect(url_for('routes.post', post_id=post_id))
+
+    return render_template('post.html', user=current_user, post=post, comments=comments)
+
+@routes.route('/view-other-userpf/<int:user_id>', methods = ['GET','POST'])
+def view_userpf(user_id):
+    userinfo = User.query.get_or_404(user_id)
+    posts = Post.query.filter_by(uid=user_id).all()
+
+    return render_template('view-other-userpf.html', user=current_user, userinfo=userinfo, posts=posts)
 
 @routes.route('/faq')
 def faq():

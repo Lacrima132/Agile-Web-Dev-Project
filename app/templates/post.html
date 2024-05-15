@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block title %} Browse {% endblock %} {% block
+content %}
+
+<div class="comments-container">
+    <h1>Comments</h1>
+
+    <p>{{ post.desc }}</p>
+
+    {% for comment in comments %}
+        <div class="comment">
+            <div class="username">{{ comment.user.username }} {{ comment.timestamp }}</div>
+            <p>{{ comment.comment }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Comment Section -->
+<div class="add-comment">
+    <form method="post" onsubmit="event.preventDefault();">
+        <textarea name="comment" placeholder="Add comments"></textarea>
+        <button type="submit" onclick="document.forms[0].submit();">Add Comment</button>
+    </form>
+</div>
+
+{% endblock %}
