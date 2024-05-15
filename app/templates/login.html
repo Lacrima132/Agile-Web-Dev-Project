@@ -5,7 +5,7 @@ endblock %} {% block content %}
     <h2 class="form-header">Login</h2>
     <label class="sr-text" for="email"
       >Email:</label
-    ><br />
+    >
     <input
       class="form-input-bubble"
       type="email"
@@ -31,15 +31,13 @@ endblock %} {% block content %}
     <input
       class="btn-submit"
       type="submit"
-      value="submit"
+      value="Submit"
     />
     <br />
-    <p>
+    <p class="center">
       Not a member?
       <span>
-        <a href="{{ url_for('auth.sign_up') }}"
-          >Sign up</a
-        ></span
+        <a href="signup.html">Sign up</a></span
       >
     </p>
   </form>

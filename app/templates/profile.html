@@ -38,73 +38,127 @@
           </button>
         </div>
       </div>
-      <br />
-  
-      <div class="forum-section">
-        <div class="post-container">
-          <div class="row">
-            {% for current_user_post in current_user_posts %}
-            <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="postbubble">
-                <img
-                  src="{{ url_for('static', filename='/images/posts/' + current_user_post.img_filename) }}"
-                  alt="Post Image"
-                />
-                <div class="screen-overlay overlay-animation">
-                  <div class="posttext">
-                    <div class="postheader">
-                      <div class="posttitle">{{ current_user_post.title }}</div>
-                      <form
-                        action="{{ url_for('routes.delete_post', post_id=current_user_post.pid) }}"
-                        method="post"
-                      >
-                        <input type="hidden" name="_method" value="DELETE" />
-                        <button type="submit" class="reactbutton">
-                          <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
-                        </button>
-                      </form>
+    </div>
+    <br />
+
+    <div class="forum-section">
+      <div class="post-container">
+        <div class="row">
+          {% for current_user_post in
+          current_user_posts %}
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="postbubble">
+              <img
+                src="{{ url_for('static', filename='/images/posts/' + current_user_post.img_filename) }}"
+                alt="Post Image"
+              />
+              <div
+                class="screen-overlay overlay-animation"
+              >
+                <div class="posttext">
+                  <div class="postheader">
+                    <div class="posttitle">
+                      {{ current_user_post.title
+                      }}
                     </div>
-                    <div class="postcontent">{{ current_user_post.desc }}</div>
-                  </div>
-                  <div class="reactbar">
-                    <button
-                      id="likeButton"
-                      class="reactbutton"
-                      onclick="toggleLike('likeCount', 'likeIcon', true)"
+                    <form
+                      action="{{ url_for('routes.delete_post', post_id=current_user_post.pid) }}"
+                      method="post"
                     >
-                      <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
-                    </button>
-                    <span id="likeCount" class="reactnumber">0</span>
-                    <button
-                      id="dislikeButton"
-                      class="reactbutton"
-                      onclick="toggleLike('dislikeCount', 'dislikeIcon', false)"
-                    >
-                      <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
-                    </button>
-                    <span id="dislikeCount" class="reactnumber">0</span>
-                    <button id="commentButton" class="reactbutton">
-                      <i class="fa fa-commenting-o fa-lg"></i>
-                    </button>
-                    <span id="commentCount" class="reactnumber">0</span>
+                      <input
+                        type="hidden"
+                        name="_method"
+                        value="DELETE"
+                      />
+                      <button
+                        type="submit"
+                        class="reactbutton"
+                      >
+                        <i
+                          class="fa fa-trash fa-lg"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </form>
                   </div>
+                  <div class="postcontent">
+                    {{ current_user_post.desc }}
+                  </div>
+                </div>
+                <div class="reactbar">
+                  <button
+                    id="likeButton"
+                    class="reactbutton"
+                    onclick="toggleLike('likeCount', 'likeIcon', true)"
+                  >
+                    <i
+                      id="likeIcon"
+                      class="fa fa-thumbs-o-up fa-lg"
+                    ></i>
+                  </button>
+                  <span
+                    id="likeCount"
+                    class="reactnumber"
+                    >0</span
+                  >
+                  <button
+                    id="dislikeButton"
+                    class="reactbutton"
+                    onclick="toggleLike('dislikeCount', 'dislikeIcon', false)"
+                  >
+                    <i
+                      id="dislikeIcon"
+                      class="fa fa-thumbs-o-down fa-lg"
+                    ></i>
+                  </button>
+                  <span
+                    id="dislikeCount"
+                    class="reactnumber"
+                    >0</span
+                  >
+                  <button
+                    id="commentButton"
+                    class="reactbutton"
+                  >
+                    <i
+                      class="fa fa-commenting-o fa-lg"
+                    ></i>
+                  </button>
+                  <span
+                    id="commentCount"
+                    class="reactnumber"
+                    >0</span
+                  >
                 </div>
               </div>
             </div>
             {% endfor %}
           </div>
+          {% endfor %}
         </div>
       </div>
-  
-      <div class="saved" id="working" style="display: none">
-        <h3 style="text-align: center">Saved Posts~</h3>
-      </div>
-      <div class="previous" id="previous" style="display: none">
-        <h3 style="text-align: center">Previous Posts Here~</h3>
-      </div>
     </div>
-  
-    <br />
+
+    <div
+      class="saved"
+      id="working"
+      style="display: none"
+    >
+      <h3 style="text-align: center">
+        Saved Posts~
+      </h3>
+    </div>
+    <div
+      class="previous"
+      id="previous"
+      style="display: none"
+    >
+      <h3 style="text-align: center">
+        Previous Posts Here~
+      </h3>
+    </div>
   </div>
-  {% endblock %}
-  
+
+  <br />
+</div>
+{% endblock %}
