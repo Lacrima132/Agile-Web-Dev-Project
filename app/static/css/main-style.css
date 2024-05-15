@@ -56,6 +56,10 @@ body {
   display: none;
 }
 
+.splash.invis {
+  display: none;
+}
+
 .splashtitle {
   font-size: 100px;
   font-weight: 1000;

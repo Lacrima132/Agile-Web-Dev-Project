@@ -11,8 +11,7 @@ document.addEventListener(
     ) {
       if (
         window.location.pathname === "/" ||
-        window.location.pathname ===
-          "/frontend/home.html"
+        window.location.pathname === "/home"
       ) {
         splash.classList.remove("invis");
         // Lock scrolling
@@ -38,8 +37,7 @@ document.addEventListener(
   function () {
     if (
       window.location.pathname === "/" ||
-      window.location.pathname ===
-        "/frontend/home.html"
+      window.location.pathname === "/home"
     ) {
       const observer = new IntersectionObserver(
         (entries) => {

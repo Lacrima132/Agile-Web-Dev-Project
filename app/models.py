@@ -18,10 +18,12 @@ class User(db.Model, UserMixin):
 class Post(db.Model):
     pid = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey('user.uid'))
+    user = db.relationship('User', backref='post')
     title = db.Column(db.String(100))
     img_filepath = db.Column(db.String(100), nullable=False)
     img_filename = db.Column(db.String(100), nullable=False)
     desc = db.Column(db.String(1000))
+    flag = db.Column(db.String(100))
     executed = db.Column(db.Boolean, default=False)
     exec_by_id = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
@@ -31,14 +33,10 @@ class Post(db.Model):
 class Comments(db.Model):
     cid = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey('user.uid'))
+    user = db.relationship('User', backref='comments') 
     pid = db.Column(db.Integer, db.ForeignKey('post.pid'))
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
     comment = db.Column(db.String(1000))
-    likes = db.Column(db.Integer)
-    dislikes = db.Column(db.Integer)
 
     # def get_id(self):
     #     return str(self.cid)  # Ensure it returns a string, as expected by Flask-Login
-
-
-    

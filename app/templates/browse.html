@@ -6,18 +6,16 @@
   <div class="search-container">
     <div class="row">
       <div class="col-12">
-        <form class="form-inline searchbar-box">
+        <form class="form-inline searchbar-box" method="POST">
           <div class="input-group w-100">
             <input
               type="text"
               class="searchbarinput form-control"
               placeholder="Search"
+              name="keyword"
             />
             <div class="input-group-append">
-              <button
-                class="searchbtn"
-                type="button"
-              >
+              <button class="searchbtn" type="button">
                 <i class="fa fa-search fa-lg"></i>
               </button>
               <div class="dropdown">
@@ -29,14 +27,9 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <i
-                    class="fa fa-filter fa-lg"
-                  ></i>
+                  <i class="fa fa-filter fa-lg"></i>
                 </button>
-                <div
-                  class="dropdown-menu"
-                  aria-labelledby="filterDropdown"
-                >
+                <div class="dropdown-menu" aria-labelledby="filterDropdown">
                   <a
                     class="dropdown-item filter-item"
                     href="#"
@@ -66,6 +59,8 @@
   </div>
   <!-- BREAK -->
 
+  
+
   <div class="forum-section">
     <div class="post-container">
       <div class="row">
@@ -75,59 +70,52 @@
               src="yodabounty.jpg"
               alt="Post Image"
             />
-            <div
-              class="screen-overlay overlay-animation"
-            >
+            <div class="screen-overlay overlay-animation">
               <div class="posttext">
-                <div class="posttitle">BOO!!</div>
-                <div class="postcontent">
-                  scared ya ;D
+                <div class="posttitle">
+                  {{ post.title }}
+                  <a href="/view-other-userpf/{{ post.user.uid }}">
+                  <button id="userpfbutton" class="userpfbutton">User Profile</button>
                 </div>
+                <div class="postauthor">
+                  <!-- check if pfp is displayed correctly -->
+                  <img
+                    src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}"
+                    class="avatar"
+                    alt="avatar"
+                    width="25px"
+                    height="25px"
+                  />
+                  {{ post.user.username }}
+
+                  <!-- link to post.html -->
+                  <a href="/post/{{ post.pid }}">
+                  <button id="postbutton" class="postbutton">View</button>
+
+                </div>
+                <div class="postcontent">{{ post.desc}}</div>
               </div>
               <div class="reactbar">
                 <button
                   id="likeButton"
-                  class="reactbutton"
+                  class="reactbutton like"
                   onclick="toggleLike(this)"
                 >
-                  <i
-                    id="likeIcon"
-                    class="fa fa-thumbs-up, fa-thumbs-o-up fa-lg"
-                  ></i>
+                  <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
                 </button>
-                <span
-                  id="likeCount"
-                  class="reactnumber"
-                  >0</span
-                >
+                <span id="likeCount" class="reactnumber">0</span>
                 <button
                   id="dislikeButton"
                   class="reactbutton"
                   onclick="toggleLike(this)"
                 >
-                  <i
-                    id="dislikeIcon"
-                    class="fa fa-thumbs-down, fa-thumbs-o-down fa-lg"
-                  ></i>
+                  <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
                 </button>
-                <span
-                  id="dislikeCount"
-                  class="reactnumber"
-                  >0</span
-                >
-                <button
-                  id="commentButton"
-                  class="reactbutton"
-                >
-                  <i
-                    class="fa fa-commenting-o fa-lg"
-                  ></i>
+                <span id="dislikeCount" class="reactnumber">0</span>
+                <button id="commentButton" class="reactbutton">
+                  <i class="fa fa-commenting-o fa-lg"></i>
                 </button>
-                <span
-                  id="commentCount"
-                  class="reactnumber"
-                  >0</span
-                >
+                <span id="commentCount" class="reactnumber">0</span>
               </div>
             </div>
           </div>

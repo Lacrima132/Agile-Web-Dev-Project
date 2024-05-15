@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %} Browse {% endblock %} {% block
+content %}
+
+
+    <!-- User Profile Picture -->
+    <div class="profile-picture">
+        <img src="{{ url_for('static', filename='/images/profilepics/' + userinfo.avatar) }}" alt="User Profile Picture">
+    </div>
+
+    <!-- User Name -->
+    <div class="username">
+        {{ userinfo.username }}
+    </div>
+
+    <!-- Heading for User Posts -->
+    <div class="user-posts">
+        User Posts
+    </div>
+
+    <!-- User Posts -->
+    {% for post in posts %}
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="postbubble">
+        <img
+          src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}"
+          alt="Post Image"
+        />
+        <div class="screen-overlay overlay-animation">
+          <div class="posttext">
+            <div class="posttitle">{{ post.title }}</div>
+            <div class="postauthor">
+
+              <!-- link to post.html -->
+              <a href="/post/{{ post.pid }}">
+              <button id="postbutton" class="postbutton">View</button>
+
+            </div>
+            <div class="postcontent">{{ post.desc}}</div>
+          </div>
+          <div class="reactbar">
+            <button
+              id="likeButton"
+              class="reactbutton"
+              onclick="toggleLike('likeCount', 'likeIcon', true)"
+            >
+              <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
+            </button>
+            <span id="likeCount" class="reactnumber">0</span>
+            <button
+              id="dislikeButton"
+              class="reactbutton"
+              onclick="toggleLike('dislikeCount', 'dislikeIcon', false)"
+            >
+              <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
+            </button>
+            <span id="dislikeCount" class="reactnumber">0</span>
+            <button id="commentButton" class="reactbutton">
+              <i class="fa fa-commenting-o fa-lg"></i>
+            </button>
+            <span id="commentCount" class="reactnumber">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}

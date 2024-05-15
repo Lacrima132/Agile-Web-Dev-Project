@@ -1,69 +1,42 @@
-{% extends "base.html" %} {% block title %}{{
-user.username }}{% endblock %} {% block content %}
-<div class="intro-section">
-  <div>
-    <div class="info-bubble">
-      <div class="profile-pic">
-        <!--<img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">-->
-        <img
-          src="../static/images/profilepics/profile.png"
-          class="avatar"
-          alt="avatar"
-        />
-      </div>
-      <div class="profile-box2">
-        <div class="profile-box3">
-          <h2 class="profile-name">
-            {{ user.firstName }}
-            <img
-              src="../static/images/ranks/6.png"
-              class="rank-img"
-            />
-          </h2>
-          <form
-            action="{{ url_for('routes.editprofile') }}"
-          >
-            <input
-              class="btn-edit"
-              type="submit"
-              value="Edit Profile"
-            />
-          </form>
+{% extends "base.html" %} {% block title %}{{ user.username }}{% endblock %} {%
+  block content %}
+  <div class="intro-section">
+    <div>
+      <div class="info-bubble">
+        <div class="profile-pic">
+          <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
         </div>
-        <br />
-        <p>Bio text goes here</p>
-        <br />
-        <p>
-          Posts: {{ num_posts }} Likes: {{
-          total_likes }}
-        </p>
+        <div class="profile-box2">
+          <div class="profile-box3">
+            <h2 class="profile-name">
+              {{ user.firstName }}
+              <img src="../static/images/ranks/6.png" class="rank-img" />
+            </h2>
+            <form action="{{ url_for('routes.editprofile') }}">
+              <input class="btn-edit" type="submit" value="Edit Profile" />
+            </form>
+          </div>
+          <br />
+          <p>Bio text goes here</p>
+          <br />
+          <p>Posts: {{ num_posts }} Likes: {{ total_likes }}</p>
+        </div>
       </div>
-    </div>
-    <br />
-    <div class="select-view">
-      <div class="select">
-        <button
-          class="view-button"
-          onclick="currentPosts()"
-        >
-          Current Posts
-        </button>
-      </div>
-      <div class="select">
-        <button
-          class="view-button"
-          onclick="savedPosts()"
-        >
-          Saved
-        </button>
-      </div>
-      <div class="select">
-        <button
-          class="view-button"
-          onclick="previousPosts()"
-        >
-          Previous Posts
-        </button>
+      <br />
+      <div class="select-view">
+        <div class="select">
+          <button class="view-button" onclick="currentPosts()">
+            Current Posts
+          </button>
+        </div>
+        <div class="select">
+          <button class="view-button" onclick="savedPosts()">Saved</button>
+        </div>
+        <div class="select">
+          <button class="view-button" onclick="previousPosts()">
+            Previous Posts
+          </button>
+        </div>
       </div>
     </div>
     <br />
@@ -159,6 +132,7 @@ user.username }}{% endblock %} {% block content %}
                 </div>
               </div>
             </div>
+            {% endfor %}
           </div>
           {% endfor %}
         </div>
