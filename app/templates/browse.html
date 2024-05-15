@@ -5,12 +5,13 @@ content %}
   <div class="search-container">
     <div class="row">
       <div class="col-12">
-        <form class="form-inline searchbar-box">
+        <form class="form-inline searchbar-box" method="POST">
           <div class="input-group w-100">
             <input
               type="text"
               class="searchbarinput form-control"
               placeholder="Search"
+              name="keyword"
             />
             <div class="input-group-append">
               <button class="searchbtn" type="button">
@@ -57,6 +58,8 @@ content %}
   </div>
   <!-- BREAK -->
 
+  
+
   <div class="forum-section">
     <div class="post-container">
       <div class="row">
@@ -95,8 +98,8 @@ content %}
               <div class="reactbar">
                 <button
                   id="likeButton"
-                  class="reactbutton"
-                  onclick="toggleLike('likeCount', 'likeIcon', true)"
+                  class="reactbutton like"
+                  onclick="toggleLike(this)"
                 >
                   <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
                 </button>
@@ -104,7 +107,7 @@ content %}
                 <button
                   id="dislikeButton"
                   class="reactbutton"
-                  onclick="toggleLike('dislikeCount', 'dislikeIcon', false)"
+                  onclick="toggleLike(this)"
                 >
                   <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
                 </button>
