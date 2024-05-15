@@ -92,9 +92,10 @@
               <div class="reactbar">
                 <button
                   id="likeButton"
-                  class="reactbutton"
-                  onclick="toggleLike('likeCount', 'likeIcon', true)"
+                  class="reactbutton like"
+                  onclick="toggleLike(this)"
                 >
+                  <!-- if user.liked = false then -->
                   <i
                     id="likeIcon"
                     class="fa fa-thumbs-o-up fa-lg"
@@ -103,12 +104,12 @@
                 <span
                   id="likeCount"
                   class="reactnumber"
-                  >0</span
+                  >1</span
                 >
                 <button
                   id="dislikeButton"
                   class="reactbutton"
-                  onclick="toggleLike('dislikeCount', 'dislikeIcon', false)"
+                  onclick="toggleLike(this)"
                 >
                   <i
                     id="dislikeIcon"
@@ -118,7 +119,7 @@
                 <span
                   id="dislikeCount"
                   class="reactnumber"
-                  >0</span
+                  >4</span
                 >
                 <button
                   id="commentButton"

@@ -22,7 +22,7 @@ def browse():
     if keyword:
         keywords = keyword.split()  # Split the keyword into individual words
         filtered_posts = []
-        
+
         for post in posts:
             for kw in keywords:
                 if kw.lower() in post.title.lower(): #or kw.lower() in post.desc.lower():
@@ -73,6 +73,19 @@ def submit():
 
     return render_template('submit.html', user=current_user)
 
+@routes.route('/post/delete/<int:post_id>', methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    # Check if the current user is the author of the post
+    if post.uid != current_user.uid:
+        print("lol")  # Forbidden - user is not authorized to delete this post
+
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post deleted successfully', 'success')
+    return redirect(url_for('routes.profile'))
+
 @routes.route('/profile')
 def profile():
     num_posts = Post.query.filter_by(uid=current_user.get_id()).count()
@@ -97,6 +110,7 @@ def editprofile():
             current_user.avatar = filename
             db.session.commit()
             flash('Profile picture Uploaded!', category='success')
+            print(save_path)
             avatar.save(save_path)
             if previous_avatar_filename:
                 previous_avatar_path = os.path.join(r'app\static\images\profilepics', previous_avatar_filename)
