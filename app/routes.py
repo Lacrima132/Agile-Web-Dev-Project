@@ -87,7 +87,7 @@ def submit():
         flag = request.form.get('category-menu')
         if img and allowed_file(img.filename):
             filename = secure_filename(img.filename)
-            save_path = os.path.join('app/static/images/posts', filename)
+            save_path = os.path.join('app', 'static', 'images', 'posts', filename)
             img.save(save_path)
             new_image = Post(title=title,desc=desc,uid=user_id,img_filename=filename, img_filepath=save_path, flag=flag)
             db.session.add(new_image)
@@ -132,14 +132,14 @@ def editprofile():
         bio = request.form.get('bio-change')
         if avatar and allowed_file(avatar.filename) and allowed_size(avatar): 
             filename = secure_filename(avatar.filename)
-            save_path = os.path.join(r'app\static\images\profilepics', filename)
+            save_path = os.path.join('app', 'static', 'images', 'profilepics', filename)
             current_user.avatar = filename
             db.session.commit()
             flash('Profile picture Uploaded!', category='success')
             print(save_path)
             avatar.save(save_path)
             if previous_avatar_filename:
-                previous_avatar_path = os.path.join(r'app\static\images\profilepics', previous_avatar_filename)
+                previous_avatar_path = os.path.join('app', 'static', 'images', 'profilepics', previous_avatar_filename)
                 if os.path.exists(previous_avatar_path):
                     os.remove(previous_avatar_path)
         if bio:

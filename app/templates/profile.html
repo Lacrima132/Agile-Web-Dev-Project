@@ -4,7 +4,7 @@
     <div>
       <div class="info-bubble">
         <div class="profile-pic">
-          <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
+          <img src="{{ url_for('static', filename='/images/profilepics/' + user.avatar) }}" class="avatar" alt="avatar">
         </div>
         <div class="profile-box2">
           <div class="profile-box3">
@@ -134,7 +134,6 @@
             </div>
             {% endfor %}
           </div>
-          {% endfor %}
         </div>
       </div>
     </div>
