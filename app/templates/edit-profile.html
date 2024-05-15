@@ -1,20 +1,31 @@
-{% extends "base.html" %} {% block title %}Edit profile{% endblock %} {% block
-content %}
+{% extends "base.html" %} {% block title %}Edit
+profile{% endblock %} {% block content %}
 <div class="form-section">
-  <form method="POST" enctype="multipart/form-data">
+  <form
+    method="POST"
+    enctype="multipart/form-data"
+  >
     <h2 class="form-header">Edit Profile</h2>
     <label class="sr-text" for="username"></label>
     <div class="intro-section">
       <h1 class="pagetitle-edit">Edit Profile</h1>
-      <form action="{{ url_for('routes.changepassword') }}">
+      <form
+        action="{{ url_for('routes.changepassword') }}"
+      >
         <div class="edit">
-          <input class="btn-submit" type="submit" value="Change Password" />
+          <input
+            class="btn-submit"
+            type="submit"
+            value="Change Password"
+          />
         </div>
         <br />
       </form>
       <form method="POST">
         <div class="edit">
-          <label class="sr-text" for="username">Change username:</label>
+          <label class="sr-text" for="username"
+            >Change username:</label
+          >
           <input
             class="form-input-bubble"
             type="text"
@@ -24,7 +35,9 @@ content %}
           />
           <br />
 
-          <label class="sr-text" for="bio">Change Bio:</label>
+          <label class="sr-text" for="bio"
+            >Change Bio:</label
+          >
           <input
             class="bio-bubble"
             type="text"
@@ -34,10 +47,21 @@ content %}
           />
           <br />
           <br />
-          <label class="sr-text" for="avatar">Select new profile photo:</label>
-          <input type="file" alt="Select image" id="avatar" name="avatar" />
+          <label class="sr-text" for="avatar"
+            >Select new profile photo:</label
+          >
+          <input
+            type="file"
+            alt="Select image"
+            id="avatar"
+            name="avatar"
+          />
           <br /><br />
-          <input class="btn-submit" type="submit" value="submit" />
+          <input
+            class="btn-submit"
+            type="submit"
+            value="submit"
+          />
         </div>
       </form>
     </div>

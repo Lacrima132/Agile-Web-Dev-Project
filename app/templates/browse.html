@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block title %} Browse {% endblock %} {% block
-content %}
+{% extends "base.html" %} {% block title %} Browse
+{% endblock %} {% block content %}
+
 <div class="intro-section">
   <h1 class="pagetitle">Browse</h1>
   <div class="search-container">
@@ -13,7 +14,10 @@ content %}
               placeholder="Search"
             />
             <div class="input-group-append">
-              <button class="searchbtn" type="button">
+              <button
+                class="searchbtn"
+                type="button"
+              >
                 <i class="fa fa-search fa-lg"></i>
               </button>
               <div class="dropdown">
@@ -25,9 +29,14 @@ content %}
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <i class="fa fa-filter fa-lg"></i>
+                  <i
+                    class="fa fa-filter fa-lg"
+                  ></i>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="filterDropdown">
+                <div
+                  class="dropdown-menu"
+                  aria-labelledby="filterDropdown"
+                >
                   <a
                     class="dropdown-item filter-item"
                     href="#"
@@ -60,47 +69,69 @@ content %}
   <div class="forum-section">
     <div class="post-container">
       <div class="row">
-        {% for post in posts %}
         <div class="col-lg-3 col-md-4 col-sm-6">
           <div class="postbubble">
             <img
-              src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}"
+              src="yodabounty.jpg"
               alt="Post Image"
             />
-            <div class="screen-overlay overlay-animation">
+            <div
+              class="screen-overlay overlay-animation"
+            >
               <div class="posttext">
-                <div class="posttitle">{{ post.title }}</div>
-                <div class="postcontent">{{ post.desc}}</div>
+                <div class="posttitle">BOO!!</div>
+                <div class="postcontent">
+                  scared ya ;D
+                </div>
               </div>
               <div class="reactbar">
                 <button
                   id="likeButton"
-                  class="reactbutton like"
+                  class="reactbutton"
                   onclick="toggleLike(this)"
                 >
-                  <!-- if user.liked = false then -->
-                  <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
-                  <!-- else then (ie, user has liked the post before) -->
-                  <i id="likeIcon" class="fa fa-thumbs-up fa-lg"></i>
+                  <i
+                    id="likeIcon"
+                    class="fa fa-thumbs-up, fa-thumbs-o-up fa-lg"
+                  ></i>
                 </button>
-                <span id="likeCount" class="reactnumber">1</span>
+                <span
+                  id="likeCount"
+                  class="reactnumber"
+                  >0</span
+                >
                 <button
                   id="dislikeButton"
                   class="reactbutton"
                   onclick="toggleLike(this)"
                 >
-                  <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
+                  <i
+                    id="dislikeIcon"
+                    class="fa fa-thumbs-down, fa-thumbs-o-down fa-lg"
+                  ></i>
                 </button>
-                <span id="dislikeCount" class="reactnumber">4</span>
-                <button id="commentButton" class="reactbutton">
-                  <i class="fa fa-commenting-o fa-lg"></i>
+                <span
+                  id="dislikeCount"
+                  class="reactnumber"
+                  >0</span
+                >
+                <button
+                  id="commentButton"
+                  class="reactbutton"
+                >
+                  <i
+                    class="fa fa-commenting-o fa-lg"
+                  ></i>
                 </button>
-                <span id="commentCount" class="reactnumber">0</span>
+                <span
+                  id="commentCount"
+                  class="reactnumber"
+                  >0</span
+                >
               </div>
             </div>
           </div>
         </div>
-        {% endfor %}
       </div>
     </div>
   </div>

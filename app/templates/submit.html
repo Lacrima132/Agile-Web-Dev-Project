@@ -1,9 +1,17 @@
-{%extends "base.html"%} {% block title %}Submit{% endblock %} {% block content
-%}
+{%extends "base.html"%} {% block title %}Submit{%
+endblock %} {% block content %}
+
 <div class="form-section">
-  <form action="" method="POST" enctype="multipart/form-data">
+  <form
+    action=""
+    method="POST"
+    enctype="multipart/form-data"
+    id="post-submit"
+  >
     <h2 class="form-header">Submit a post</h2>
-    <label class="sr-text" for="target">Target:</label>
+    <label class="sr-text" for="target"
+      >Title:</label
+    >
     <input
       placeholder="Target Name"
       class="form-input-bubble"
@@ -11,7 +19,9 @@
       id="target"
       name="target"
     /><br />
-    <label for="image">Upload Image:</label>
+    <label for="image" class="label"
+      >Upload Image:</label
+    >
     <br />
     <input
       class="form-input-bubble"
@@ -19,15 +29,37 @@
       name="image"
       id="image"
     /><br />
-    <label class="sr-text" for="tinfo">Target Information:</label>
-    <input
+    <label class="sr-text" for="tinfo"
+      >Post Description:</label
+    >
+    <textarea
       placeholder="Target Information"
       class="form-input-bubble"
-      type="text"
       id="tinfo"
       name="tinfo"
-    /><br />
-    <input class="btn-submit" type="submit" value="submit" />
+    ></textarea
+    ><br />
+    <label class="sr-text" for="tags"
+      >Tags:</label
+    >
+    <select
+      class="form-input-bubble"
+      type="dropdown"
+      id="tags"
+      name="tags"
+    >
+      <option value="Weapon">Weapon</option>
+      <option value="Bounty">Bounty</option>
+      <option value="Information">
+        Information
+      </option>
+    </select>
+    <br />
+    <input
+      class="btn-submit"
+      type="submit"
+      value="Submit"
+    />
   </form>
 </div>
 {% endblock %}
