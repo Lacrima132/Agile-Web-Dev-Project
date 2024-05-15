@@ -142,96 +142,75 @@ function togglePostVisibility() {
 
 let likeSelected = false;
 let dislikeSelected = false;
-
-function toggleLike(button) {
+YAYYYY
+function toggleLike(button, postId) {
   const likeContainer = button.parentElement; // Get parent container
   console.log("parent =" + likeContainer);
 
-  const likeCountDisplay = likeContainer.querySelector(
-    ".reactnumber:nth-child(2)"
-  ); // Like count
-  console.log("count =" + likeCountDisplay);
-
-  let likeIcon = likeContainer.querySelector(".fa-thumbs-o-up"); // Like icon (solid)
-  console.log("icon =" + likeIcon);
-  if (likeIcon == null) {
-    likeSelected = true;
-    likeIcon = likeContainer.querySelector(".fa-thumbs-up"); // Like icon (outline)
-    console.log("icon2 =" + likeIcon);
-  } else {
-    likeSelected = false;
-  }
-  console.log("like status =" + likeSelected);
-
-  const dislikeCountDisplay = likeContainer.querySelector(
-    ".reactnumber:nth-child(4)"
-  ); // Dislike count
-  console.log("count2 =" + dislikeCountDisplay);
-
-  let dislikeIcon = likeContainer.querySelector(".fa-thumbs-o-down"); // Dislike icon (solid)
-  console.log("icon3 =" + dislikeIcon);
-  if (dislikeIcon == null) {
-    dislikeSelected = true;
-    dislikeIcon = likeContainer.querySelector(".fa-thumbs-down"); // Dislike icon (outline)
-    console.log("icon4 =" + dislikeIcon);
-  } else {
-    dislikeSelected = false;
-  }
-  console.log("dislike status =" + dislikeSelected);
+  const likeCountDisplay = likeContainer.querySelector(".reactnumber:nth-child(2)"); // Like count
+  let likeIcon = likeContainer.querySelector(".fa-thumbs-up, .fa-thumbs-o-up"); // Like icon
+  const dislikeCountDisplay = likeContainer.querySelector(".reactnumber:nth-child(4)"); // Dislike count
+  let dislikeIcon = likeContainer.querySelector(".fa-thumbs-down, .fa-thumbs-o-down"); // Dislike icon
 
   const isLike = button.classList.contains("like"); // Check if like button
-  console.log("like =" + isLike);
-
-  let likeCount = parseInt(likeCountDisplay.textContent);
-  console.log("likeCount =" + likeCount);
-  let dislikeCount = parseInt(dislikeCountDisplay.textContent);
-  console.log("dislikeCount =" + dislikeCount);
-
-  // Like logic
-  if (isLike) {
-    if (!likeSelected) {
-      likeCount++;
-      likeIcon.classList.add("fa-thumbs-up");
-      likeIcon.classList.remove("fa-thumbs-o-up"); // Remove outline if present
-      likeSelected = true;
-
-      if (dislikeSelected) {
-        dislikeSelected = false;
-        dislikeCount--;
-        dislikeIcon.classList.add("fa-thumbs-o-down");
-        dislikeIcon.classList.remove("fa-thumbs-down");
-      }
-    } else {
-      likeCount--;
-      likeIcon.classList.add("fa-thumbs-o-up");
-      likeIcon.classList.remove("fa-thumbs-up");
-      likeSelected = false;
-    }
-  } else {
-    // Dislike logic
-    if (!dislikeSelected) {
-      dislikeCount++;
-      dislikeIcon.classList.add("fa-thumbs-down");
-      dislikeIcon.classList.remove("fa-thumbs-o-down"); // Remove outline if present
-      dislikeSelected = true;
-
-      if (likeSelected) {
-        likeSelected = false;
-        likeCount--;
-        likeIcon.classList.add("fa-thumbs-o-up"); // Add outline back
-        likeIcon.classList.remove("fa-thumbs-up");
-      }
-    } else {
-      dislikeCount--;
-      dislikeIcon.classList.add("fa-thumbs-o-down"); // Add outline back
-      dislikeIcon.classList.remove("fa-thumbs-down");
-      dislikeSelected = false;
-    }
+  let url = `/like_post/${postId}`;
+  if (!isLike) {
+    url = `/dislike_post/${postId}`;
   }
 
-  // Update DOM
-  likeCountDisplay.textContent = likeCount;
-  dislikeCountDisplay.textContent = dislikeCount;
+  fetch(url, { method: 'POST' })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        let likeCount = parseInt(likeCountDisplay.textContent);
+        let dislikeCount = parseInt(dislikeCountDisplay.textContent);
+        let likeSelected = likeIcon.classList.contains("fa-thumbs-up");
+        let dislikeSelected = dislikeIcon.classList.contains("fa-thumbs-down");
+
+        // Like logic
+        if (isLike) {
+          if (!likeSelected) {
+            likeCount++;
+            likeIcon.classList.add("fa-thumbs-up");
+            likeIcon.classList.remove("fa-thumbs-o-up"); // Remove outline if present
+            if (dislikeSelected) {
+              dislikeSelected = false;
+              dislikeCount--;
+              dislikeIcon.classList.add("fa-thumbs-o-down");
+              dislikeIcon.classList.remove("fa-thumbs-down");
+            }
+          } else {
+            likeCount--;
+            likeIcon.classList.add("fa-thumbs-o-up");
+            likeIcon.classList.remove("fa-thumbs-up");
+          }
+        } else {
+          // Dislike logic
+          if (!dislikeSelected) {
+            dislikeCount++;
+            dislikeIcon.classList.add("fa-thumbs-down");
+            dislikeIcon.classList.remove("fa-thumbs-o-down"); // Remove outline if present
+            if (likeSelected) {
+              likeSelected = false;
+              likeCount--;
+              likeIcon.classList.add("fa-thumbs-o-up"); // Add outline back
+              likeIcon.classList.remove("fa-thumbs-up");
+            }
+          } else {
+            dislikeCount--;
+            dislikeIcon.classList.add("fa-thumbs-o-down"); // Add outline back
+            dislikeIcon.classList.remove("fa-thumbs-down");
+          }
+        }
+
+        // Update DOM
+        likeCountDisplay.textContent = likeCount;
+        dislikeCountDisplay.textContent = dislikeCount;
+      } else {
+        console.error("Failed to update like/dislike status.");
+      }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 document.addEventListener("DOMContentLoaded", function () {

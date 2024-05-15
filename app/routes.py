@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, url_for, request, flash, redirect
+from flask import Blueprint, render_template, url_for, request, flash, redirect, jsonify
 from flask_login import login_required, current_user
 from . import db, allowed_file, allowed_size
-from .models import User, Post, Comments
+from .models import User, Post, Comments, Likes
 from werkzeug.utils import secure_filename
 from sqlalchemy import or_, func
 import os
@@ -40,8 +40,73 @@ def browse():
 
     # Retrieve all Weapons posts
     weapons_posts = Post.query.filter(Post.flag == "Weapons").all()
+
+    #total likes for each post, total dislikes for each post stored in post.likes or post.dislikes
+
+    #if logged in user has liked post or not
+
+    liked_posts = Likes.query.filter_by(uid=current_user.uid, liked=True).all()
     
-    return render_template('browse.html', user=current_user, posts=posts, bounty_posts=bounty_posts, weapons_posts=weapons_posts, advice_posts=advice_posts, )
+    disliked_posts = Likes.query.filter_by(uid=current_user.uid, liked=False).all()
+
+    lip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, liked=True).all()]
+    dip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, disliked=True).all()]
+    print("Liked Post IDs:", lip)
+    for post in posts:
+        print("Post ID:", post.pid, "Liked:", post.pid in lip)
+
+    return render_template('browse.html', user=current_user, posts=posts, bounty_posts=bounty_posts, weapons_posts=weapons_posts, advice_posts=advice_posts,  lip=lip, dip=dip)
+
+@routes.route('/like_post/<int:post_id>', methods=['POST'])
+def like_post(post_id):
+    user_id = current_user.uid  # Assuming user_id is always present in session
+    post = Post.query.get_or_404(post_id)
+
+    like_record = Likes.query.filter_by(uid=user_id, pid=post_id).first()
+
+    if like_record:
+        if not like_record.liked:
+            like_record.liked = True
+            like_record.disliked = False  # Ensure a post cannot be both liked and disliked
+            post.likes += 1  # Increment likes
+            if post.dislikes > 0:
+                post.dislikes -= 1  # Decrement dislikes if previously disliked
+        else:
+            like_record.liked = False  # Toggle like off if already liked
+            post.likes -= 1  # Decrement likes
+    else:
+        like_record = Likes(uid=user_id, pid=post_id, liked=True)
+        db.session.add(like_record)
+        post.likes += 1  # Increment likes
+
+    db.session.commit()
+    return jsonify(success=True)
+
+
+@routes.route('/dislike_post/<int:post_id>', methods=['POST'])
+def dislike_post(post_id):
+    user_id = current_user.uid  # Assuming user_id is always present in session
+    post = Post.query.get_or_404(post_id)
+
+    like_record = Likes.query.filter_by(uid=user_id, pid=post_id).first()
+
+    if like_record:
+        if not like_record.disliked:
+            like_record.disliked = True
+            like_record.liked = False  # Ensure a post cannot be both liked and disliked
+            post.dislikes += 1  # Increment dislikes
+            if post.likes > 0:
+                post.likes -= 1  # Decrement likes if previously liked
+        else:
+            like_record.disliked = False  # Toggle dislike off if already disliked
+            post.dislikes -= 1  # Decrement dislikes
+    else:
+        like_record = Likes(uid=user_id, pid=post_id, disliked=True)
+        db.session.add(like_record)
+        post.dislikes += 1  # Increment dislikes
+
+    db.session.commit()
+    return jsonify(success=True)
 
 @routes.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def post(post_id):

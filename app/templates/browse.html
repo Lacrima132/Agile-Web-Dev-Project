@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block title %} Browse {% endblock %} {% block
-content %}
+{% extends "base.html" %}
+{% block title %} Browse {% endblock %}
+{% block content %}
 <div class="intro-section">
   <h1 class="pagetitle">Browse</h1>
   <div class="search-container">
@@ -7,46 +8,19 @@ content %}
       <div class="col-12">
         <form class="form-inline searchbar-box" method="POST">
           <div class="input-group w-100">
-            <input
-              type="text"
-              class="searchbarinput form-control"
-              placeholder="Search"
-              name="keyword"
-            />
+            <input type="text" class="searchbarinput form-control" placeholder="Search" name="keyword" />
             <div class="input-group-append">
-              <button class="searchbtn" type="button">
+              <button class="searchbtn" type="submit">
                 <i class="fa fa-search fa-lg"></i>
               </button>
               <div class="dropdown">
-                <button
-                  class="searchbtn dropdown-toggle"
-                  type="button"
-                  id="filterDropdown"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
+                <button class="searchbtn dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fa fa-filter fa-lg"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="filterDropdown">
-                  <a
-                    class="dropdown-item filter-item"
-                    href="#"
-                    data-filter="recent"
-                    >Most Recent</a
-                  >
-                  <a
-                    class="dropdown-item filter-item"
-                    href="#"
-                    data-filter="likes"
-                    >Most Liked</a
-                  >
-                  <a
-                    class="dropdown-item filter-item"
-                    href="#"
-                    data-filter="interacts"
-                    >Most Interacted</a
-                  >
+                  <a class="dropdown-item filter-item" href="#" data-filter="recent">Most Recent</a>
+                  <a class="dropdown-item filter-item" href="#" data-filter="likes">Most Liked</a>
+                  <a class="dropdown-item filter-item" href="#" data-filter="interacts">Most Interacted</a>
                 </div>
               </div>
             </div>
@@ -58,60 +32,47 @@ content %}
   </div>
   <!-- BREAK -->
 
-  
-
   <div class="forum-section">
     <div class="post-container">
       <div class="row">
         {% for post in posts %}
         <div class="col-lg-3 col-md-4 col-sm-6">
           <div class="postbubble">
-            <img
-              src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}"
-              alt="Post Image"
-            />
+            <img src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}" alt="Post Image" />
             <div class="screen-overlay overlay-animation">
               <div class="posttext">
                 <div class="posttitle">
                   {{ post.title }}
                   <a href="/view-other-userpf/{{ post.user.uid }}">
-                  <button id="userpfbutton" class="userpfbutton">User Profile</button>
+                    <button id="userpfbutton" class="userpfbutton">User Profile</button>
+                  </a>
                 </div>
                 <div class="postauthor">
-                  <!-- check if pfp is displayed correctly -->
-                  <img
-                    src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}"
-                    class="avatar"
-                    alt="avatar"
-                    width="25px"
-                    height="25px"
-                  />
+                  <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="avatar" alt="avatar" width="25px" height="25px" />
                   {{ post.user.username }}
-
-                  <!-- link to post.html -->
                   <a href="/post/{{ post.pid }}">
-                  <button id="postbutton" class="postbutton">View</button>
-
+                    <button id="postbutton" class="postbutton">View</button>
+                  </a>
                 </div>
-                <div class="postcontent">{{ post.desc}}</div>
+                <div class="postcontent">{{ post.desc }}</div>
               </div>
               <div class="reactbar">
-                <button
-                  id="likeButton"
-                  class="reactbutton like"
-                  onclick="toggleLike(this)"
-                >
+                <button id="likeButton" class="reactbutton like" onclick="toggleLike(this, {{ post.pid }})">
+                  {% if post.pid in lip %}
+                  <i id="likeIcon" class="fa fa-thumbs-up fa-lg"></i>
+                  {% else %}
                   <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
+                  {% endif %}
                 </button>
-                <span id="likeCount" class="reactnumber">0</span>
-                <button
-                  id="dislikeButton"
-                  class="reactbutton"
-                  onclick="toggleLike(this)"
-                >
+                <span id="likeCount" class="reactnumber">{{ post.likes }}</span>
+                <button id="dislikeButton" class="reactbutton" onclick="toggleLike(this, {{ post.pid }})">
+                  {% if post.pid in dip %}
+                  <i id="dislikeIcon" class="fa fa-thumbs-down fa-lg"></i>
+                  {% else %}
                   <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
+                  {% endif %}
                 </button>
-                <span id="dislikeCount" class="reactnumber">0</span>
+                <span id="dislikeCount" class="reactnumber">{{ post.dislikes }}</span>
                 <button id="commentButton" class="reactbutton">
                   <i class="fa fa-commenting-o fa-lg"></i>
                 </button>
