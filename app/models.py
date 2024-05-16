@@ -47,3 +47,13 @@ class Likes(db.Model):
     pid = db.Column(db.Integer, db.ForeignKey('post.pid'))
     liked = db.Column(db.Boolean, default=False)
     disliked = db.Column(db.Boolean, default=False)
+
+class Sell(db.Model):
+    sid = db.Column(db.Integer, primary_key=True)
+    uid = db.Column(db.Integer, db.ForeignKey('user.uid'))
+    user = db.relationship('User', backref='sell')
+    price = db.Column(db.Integer)
+    title = db.Column(db.String(100))
+    img = db.Column(db.String(100), nullable=False)
+    desc = db.Column(db.String(1000))
+    sold = db.Column(db.String(100), default="Unsold")

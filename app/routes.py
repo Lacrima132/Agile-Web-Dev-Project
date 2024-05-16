@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, request, flash, redirect, jsonify
 from flask_login import login_required, current_user
 from . import db, allowed_file, allowed_size
-from .models import User, Post, Comments, Likes
+from .models import User, Post, Comments, Likes, Sell
 from werkzeug.utils import secure_filename
 from sqlalchemy import or_, func
 import os
@@ -183,10 +183,10 @@ def profile():
     total_likes = Post.query.filter_by(uid=current_user.get_id()).with_entities(func.sum(Post.likes)).scalar()
     total_likes = total_likes if total_likes else 0  # Handle case where total_likes is None
     print(total_likes, num_posts)
-
+    purchased_items = Sell.query.filter_by(uid=current_user.get_id(), sold=current_user.get_id()).all()
     current_user_posts = Post.query.filter_by(uid=current_user.get_id()).all()
 
-    return render_template('profile.html', user=current_user, num_posts = num_posts, total_likes = total_likes, current_user_posts=current_user_posts)
+    return render_template('profile.html', user=current_user, num_posts = num_posts, total_likes = total_likes, current_user_posts=current_user_posts, purchased_items=purchased_items)
 
 @routes.route('/editprofile', methods =['GET', 'POST'])
 def editprofile():
@@ -227,3 +227,56 @@ def changepassword():
 @routes.route('/aboutus')
 def aboutus():
     return render_template('about-us.html', user=current_user)
+
+@routes.route('/marketplace')
+def marketplace():
+    all_posts = Sell.query.filter_by(sold="Unsold").all()
+    return render_template("marketplace.html", user=current_user, posts=all_posts)
+
+@routes.route('/sell', methods =['GET', 'POST'])
+def sell():
+    if request.method == 'POST':
+        weapon_image = request.files.get('weapon_image') #parameter is the name
+        weapon_title = request.form.get('weapon_title') #parameter is the name
+        weapon_price = request.form.get('weapon_price')
+        weapon_desc = request.form.get('weapon_description')
+        if weapon_image and allowed_file(weapon_image.filename) and allowed_size(weapon_image): 
+            filename = secure_filename(weapon_image.filename)
+            save_path = os.path.join(r'app\static\images\sellpics', filename)
+            new__item_listing = Sell(uid=current_user.get_id(), price=weapon_price, title=weapon_title, img=filename, desc=weapon_desc)
+            db.session.add(new__item_listing)
+            db.session.commit()
+            flash('Successfully Listed Item!', category='success')
+            print(save_path)
+            weapon_image.save(save_path)
+        if not weapon_title or not weapon_price or not weapon_desc:
+            flash("Please fill in all fields", category='error')
+        if not allowed_file(weapon_image.filename) or not allowed_size(weapon_image):
+            flash("Invalid file format or file is too big, must be below 10mb and png/jpg/jpeg", category='error')
+        # if not weapon_title or weapon_price:
+        #     flash("Please fill in all fields", category='error')
+    return render_template("sell.html", user=current_user)
+
+@routes.route('/purchase/<int:sid>')
+def purchase(sid):
+    post_wanted = Sell.query.filter_by(sid=sid).first()
+    print(post_wanted)
+    # Logic for purchasing the item with post_id
+    # You can retrieve the post details using the post_id and perform any necessary actions, such as updating the database
+    
+    # After processing the purchase, you can redirect the user to a confirmation page or any other appropriate page
+    return render_template("purchase.html", post_wanted = post_wanted, user=current_user)
+
+@routes.route('/purchase_confirmation/<int:sid>', methods=['POST'])
+def purchase_confirmation(sid):
+    sold = Sell.query.filter_by(sid=sid, sold="Unsold").first()  # Find the entry with the given sid
+
+    if sold:
+        sold.sold = current_user.get_id()  # Delete the entry from the session
+        db.session.commit()  # Commit the transaction
+        flash('Purchase Completed :)', category='success')
+
+    else:
+        flash('Entry not found', category='error')
+    # Render the purchase confirmation page
+    return redirect(url_for('routes.marketplace'))
