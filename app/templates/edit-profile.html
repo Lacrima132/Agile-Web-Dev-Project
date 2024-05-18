@@ -1,62 +1,42 @@
-{% extends "base.html" %} {% block title %}Edit
-profile{% endblock %} {% block content %}
-<div class="form-section">
-  <h1 class="pagetitle-edit">Edit Profile</h1>
-  <!-- Change Password Form -->
-  <form
-    action="{{ url_for('routes.changepassword') }}"
-    method="POST"
-  >
-    <div class="edit">
-      <input
-        class="btn-submit"
-        type="submit"
-        value="Change Password"
-      />
+{% extends "base.html" %} {% block title %}Edit profile{% endblock %} {% block
+content %}
+<div class="home">
+  <div class="editprofile forum-section">
+    <div class="row">
+      <div class="col-lg-6 col-md-4 col-sm-2">
+        <h1 class="star-text">Edit Profile</h1>
+      </div>
+      <div class="col-lg-6 col-md-8 col-sm-10">
+        <form method="POST" enctype="multipart/form-data">
+          <label class="sr-text" for="username">Change username:</label>
+          <input
+            class="form-input-bubble"
+            type="text"
+            placeholder="Username"
+            id="username"
+            name="username"
+          />
+          <br />
+          <label class="sr-text" for="bio-change">Change Bio:</label>
+          <input
+            class="bio-bubble"
+            type="text"
+            placeholder="Enter new bio."
+            id="bio-change"
+            name="bio-change"
+          />
+          <br /><br />
+          <label for="avatar">Change profile picture:</label>
+          <input type="file" id="avatar" name="change-image" />
+          <br /><br />
+          <input class="btn-submit" type="submit" value="Submit" />
+        </form>
+        <!-- Change Password Form -->
+      </div>
+      <form action="{{ url_for('routes.changepassword') }}" method="POST">
+        <input class="btn-prominent" type="submit" value="Change Password" />
+      </form>
     </div>
-  </form>
-  <br />
-  <!-- Profile Edit Form -->
-  <form
-    method="POST"
-    enctype="multipart/form-data"
-  >
-    <div class="edit">
-      <label for="username"
-        >Change username:</label
-      >
-      <input
-        class="form-input-bubble"
-        type="text"
-        placeholder="Username"
-        id="username"
-        name="username"
-      />
-      <br />
-      <label for="bio-change">Change Bio:</label>
-      <input
-        class="bio-bubble"
-        type="text"
-        placeholder="Enter new bio."
-        id="bio-change"
-        name="bio-change"
-      />
-      <br /><br />
-      <label for="avatar"
-        >Select new profile photo:</label
-      >
-      <input
-        type="file"
-        id="avatar"
-        name="change-image"
-      />
-      <br /><br />
-      <input
-        class="btn-submit"
-        type="submit"
-        value="Submit"
-      />
-    </div>
-  </form>
+  </div>
 </div>
 {% endblock %}

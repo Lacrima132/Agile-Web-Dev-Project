@@ -1,45 +1,38 @@
-{% extends "base.html" %}
-{% block title %}Ranking{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Ranking{% endblock %} {% block
+content %}
 <div class="lb-container">
   <h1 class="pagetitle">Leaderboard</h1>
 </div>
-<div class="form-section">
+<div class="home">
   <div class="lb">
-    <div style="text-align:center">
-      Rank
-    </div>
-    <div>
-      Profile Picture
-    </div>
-    <div>
-      Username
-    </div>
-    <div>
-      Email
-    </div>
-    <div style="text-align:center">
-      Promotions
+    <div class="lb-border"></div>
+    <div class="lb-content">
+      <div class="center">Rank</div>
+      <div>Profile Picture</div>
+      <div class="center">Username</div>
+      <div class="center">Email</div>
+      <div class="center">Promotions</div>
     </div>
   </div>
-  <br>
+  <br />
   <!-- Loop through users and display their info -->
   {% for user in highest_promoted %}
   <div class="lb">
-    <div style="text-align:center">
-      {{ loop.index }}
-    </div>
-    <div>
-      <img src="{{ url_for('static', filename='images/profilepics/' ~ user.avatar) }}" alt="Profile Picture" width="50" height="50">
-    </div>
-    <div>
-      {{ user.username }}
-    </div>
-    <div>
-      {{ user.email }}
-    </div>
-    <div style="text-align:center">
-      {{ user.promote }}
+    <div class="lb-border"></div>
+    <div class="lb-content">
+      <div class="center">{{ loop.index }}</div>
+      <div>
+        <img
+          class="small-avatar"
+          src="{{ url_for('static', filename='images/profilepics/' ~ user.avatar) }}"
+          alt="Profile Picture"
+          width="50"
+          height="50"
+        />
+      </div>
+      <div class="center">{{ user.username }}</div>
+      <div class="center">{{ user.email }}</div>
+      <div class="center">{{ user.promote }}</div>
     </div>
   </div>
   {% endfor %}

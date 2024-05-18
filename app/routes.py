@@ -147,7 +147,6 @@ def promote_user(user_id):
     return jsonify(success=True, promotion_count=hunter.promote)
 
 
-
 # @routes.route('/promote-user/<int:user_id>', methods = ['GET','POST'])
 # def promote_user(user_id):
 

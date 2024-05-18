@@ -1,59 +1,51 @@
-{% extends "base.html" %} {% block title %} Browse {% endblock %} {% block content %}
-<div class="post-container text-center">
-        <div class="form-section">
-          <form action="" method="POST" enctype="multipart/form-data">
-            <h2 class="form-header">List a Bounty</h2>
-            <label class="sr-text" for="target">Target:</label>
-            <input
-              placeholder="Target Name"
-              class="form-input-bubble"
-              type="text"
-              id="target"
-              name="target"
-            /><br />
-            <label for="image">Upload Image:</label>
-            <br />
-            <input
-              class="form-input-bubble"
-              type="file"
-              name="image"
-              id="image"
-            /><br />
-            <label class="sr-text" for="tinfo">Target Information:</label>
-            <input
-              placeholder="Target Information"
-              class="form-input-bubble"
-              type="text"
-              id="tinfo"
-              name="tinfo"
-            /><br />
-          <label class="sr-text" for="tinfo">Price</label>
-          <input
-              placeholder="Price"
-              class="form-input-bubble"
-              type="text"
-              id="price"
-              name="price"
-            /><br />
-            <label class="sr-text" for="tinfo">Dead or Alive</label>
-            <input
-              placeholder="Dead or Alive"
-              class="form-input-bubble"
-              type="text"
-              id="description"
-              name="description"
-            /><br />
-            <label for="Category">Dead or Alive?</label>
-            <br />
-            <select name="category-menu">
-            <option value="Dead">Dead</option>
-            <option value="Alive">Alive</option>
-            <option value="Either">Either</option>
-            </select>
-            <br />
-            <br />
-            <input class="btn-submit" type="submit" value="Submit" />
-          </form>
-        </div>
+{% extends "base.html" %} {% block title %} Browse {% endblock %} {% block
+content %}
+<div class="form-section">
+  <form action="" method="POST" enctype="multipart/form-data">
+    <h2 class="form-header">List a Bounty</h2>
+    <label class="sr-text" for="target">Target:</label>
+    <input
+      placeholder="Target Name"
+      class="form-input-bubble"
+      type="text"
+      id="target"
+      name="target"
+    /><br />
+    <label for="image" class="label">Upload Image:</label>
+    <br />
+    <input
+      class="form-input-bubble"
+      type="file"
+      name="image"
+      id="image"
+    /><br />
+    <label class="sr-text" for="tinfo">Target Information:</label>
+    <textarea
+      placeholder="Target Information"
+      class="form-input-bubble"
+      id="tinfo"
+      name="tinfo"
+    ></textarea
+    ><br />
+    <label class="sr-text" for="tinfo">Price</label>
+    <input
+      placeholder="Price"
+      class="form-input-bubble"
+      type="text"
+      id="price"
+      name="price"
+    /><br />
+    <div class="form-center">
+      <label for="Category">Dead or Alive?</label>
+      <select class="form-input-bubble" name="category-menu">
+        <option value="Dead">Dead</option>
+        <option value="Alive">Alive</option>
+        <option value="Either">Either</option>
+      </select>
+      <br />
+      <br />
+    </div>
+    <input class="btn-submit" type="submit" value="Submit" />
+  </form>
 </div>
 {% endblock %}

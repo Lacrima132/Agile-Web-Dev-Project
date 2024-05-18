@@ -42,20 +42,19 @@
             <div class="screen-overlay overlay-animation">
               <div class="posttext">
                 <div class="posttitle">
-                  {{ post.title }}
-                  {% if post.user.uid != current_user.uid %}
-                  <a href="/view-other-userpf/{{ post.user.uid }}">
-                  {% else %}
-                  <a href="/profile">
-                  {% endif %}
-                    <button id="userpfbutton" class="userpfbutton">User Profile</button>
+                  <a href="/post/{{ post.pid }}">
+                    {{ post.title }}
                   </a>
                 </div>
                 <div class="postauthor">
-                  <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="avatar" alt="avatar" width="10" height="10" />
-                  {{ post.user.username }}
-                  <a href="/post/{{ post.pid }}">
-                    <button id="postbutton" class="postbutton">View</button>
+                  <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="small_avatar" alt="avatar"/>
+                  {% if post.user.uid != current_user.uid %}
+                  <a href= "/view-other-userpf/{{ post.user.uid }}">
+                    {{ post.user.username }}
+                    {% else %}
+                  <a href="/profile">
+                    {{ post.user.username }}
+                    {% endif %}
                   </a>
                 </div>
                 <div class="postcontent">{{ post.desc }}</div>

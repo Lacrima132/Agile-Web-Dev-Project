@@ -232,7 +232,7 @@ body {
 
 .form-section form {
   align-self: center;
-  width: 20%;
+  width: 40%;
   padding: 1rem;
   background-clip: padding-box;
   background-color: rgba(25, 5, 5, 1);
@@ -248,8 +248,9 @@ body {
   width: 60%;
 }
 
-.form-section #tinfo {
-  height: 10rem;
+.form-section #tinfo,
+#weapon_description {
+  height: 18rem;
 }
 
 .label {
@@ -454,13 +455,6 @@ ul {
   font-size: 20px;
 }
 
-.pagetitle-edit {
-  margin-top: 2rem;
-  padding: 1rem;
-  font-size: 60px;
-  text-align: center;
-}
-
 .search-container {
   margin-left: 6%;
   width: 90%;
@@ -634,6 +628,12 @@ ul {
   max-width: 16rem;
   border-radius: 50%;
   overflow: hidden;
+  border-radius: 100%;
+}
+
+.small-avatar {
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .rank-img {
@@ -746,7 +746,6 @@ ul {
 /* leaderboard */
 
 .lb-container {
-  padding-left: 5%;
   width: 100%;
   overflow-x: hidden;
   background-image: url("../images/bg.png");
@@ -764,65 +763,68 @@ ul {
 }
 
 .lb {
-  display: grid;
-  opacity: 80%;
-  grid-template-columns: 1fr 10fr 2fr 1fr 1fr;
-  align-items: center;
-  text-align: left;
   width: 94%;
   height: 4rem;
   box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
   color: #fff;
-  background-color: #111;
-  background-clip: padding-box;
-  border: 1px solid #818181;
-  border-radius: 0.25rem;
+  background-color: rgba(77, 4, 0, 0.75);
+  padding: 1px 0;
   transform: translate(5%, 5%);
+  cursor: pointer;
+  position: relative; /* Ensure pseudo-elements are positioned relative to .lb */
+  overflow: hidden; /* Ensure pseudo-elements do not overflow their parent */
 }
 
-/* leaderboard */
+.lb:hover::before,
+.lb:hover > .lb-border {
+  opacity: 1;
+}
 
-.lb-container {
-  padding-left: 5%;
+.lb::before,
+.lb > .lb-border {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  overflow-x: hidden;
-  background-image: url("../images/bg.png");
-  background-size: cover;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  color: #f4f4f6;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms;
 }
 
-.lb-container h1 {
-  font-size: 70px;
-  font-family: "Libre Franklin", sans-serif;
-  font-weight: 900;
-  font-style: italic;
+.lb::before {
+  background: radial-gradient(
+    800px circle at var(--mouse-x) var(--mouse-y),
+    rgba(255, 30, 30, 0.4),
+    transparent 40%
+  );
+  z-index: 1;
 }
 
-.lb {
+.lb > .lb-border {
+  background: radial-gradient(
+    400px circle at var(--mouse-x) var(--mouse-y),
+    rgba(252, 18, 18, 0.7),
+    transparent 40%
+  );
+  z-index: 2;
+}
+
+.lb-content {
   display: grid;
-  opacity: 80%;
-  grid-template-columns: 1fr 10fr 2fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr 10fr 2fr;
   align-items: center;
-  text-align: left;
-  width: 94%;
-  height: 4rem;
-  box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #fff;
-  background-color: #111;
-  background-clip: padding-box;
-  border: 1px solid #818181;
-  border-radius: 0.25rem;
-  transform: translate(5%, 5%);
+  height: 100%;
+  width: 100%;
+  background-color: rgba(22, 1, 0, 0.75);
+  padding: 1px;
+  position: relative;
+  z-index: 3; /* Ensure content is above pseudo-elements */
 }
 
 /*  FOOTER  */
@@ -858,7 +860,6 @@ ul {
   filter: blur(0);
 }
 
-
 .flash-message {
   position: fixed;
   top: 20px;
@@ -877,7 +878,6 @@ ul {
 .flash-message.error {
   background-color: #f44336; /* Red background for error */
 }
-
 
 /* NEW STUFF */
 
@@ -904,6 +904,13 @@ ul {
 
 .center {
   text-align: center;
+}
+
+.form-center {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* 
@@ -951,3 +958,7 @@ ul {
 } */
 
 /* NEW STUFF */
+
+.editprofile {
+  padding: 0 7rem;
+}
