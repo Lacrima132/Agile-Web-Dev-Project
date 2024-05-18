@@ -2,8 +2,6 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-
-
 class User(db.Model, UserMixin):
     uid = db.Column(db.Integer, primary_key=True) #turn back to ID if it doesnt work and make sure to change foreign key parameters below back to 'id' as well if required
     email = db.Column(db.String(150), unique=True)

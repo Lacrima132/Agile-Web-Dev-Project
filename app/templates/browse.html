@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %} Browse {% endblock %}
+
+{% block title %}Browse{% endblock %}
+
 {% block content %}
 <div class="intro-section">
   <h1 class="pagetitle">Browse</h1>
@@ -7,12 +9,11 @@
     <div class="row">
       <div class="col-12">
         <form class="form-inline searchbar-box" method="POST">
+          {{ form.hidden_tag() }}
           <div class="input-group w-100">
-            <input type="text" class="searchbarinput form-control" placeholder="Search" name="keyword" />
+            {{ form.keyword(class="searchbarinput form-control", placeholder="Search") }}
             <div class="input-group-append">
-              <button class="searchbtn" type="submit">
-                <i class="fa fa-search fa-lg"></i>
-              </button>
+              {{ form.submit(class="searchbtn") }}
               <div class="dropdown">
                 <button class="searchbtn dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fa fa-filter fa-lg"></i>
@@ -38,7 +39,7 @@
         {% for post in posts %}
         <div class="col-lg-3 col-md-4 col-sm-6">
           <div class="postbubble">
-            <img src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}" alt="{{post.img_filename}}" />
+            <img src="{{ url_for('static', filename='images/posts/' + post.img_filename) }}" alt="{{ post.img_filename }}" />
             <div class="screen-overlay overlay-animation">
               <div class="posttext">
                 <div class="posttitle">
@@ -52,7 +53,7 @@
                   </a>
                 </div>
                 <div class="postauthor">
-                  <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="avatar" alt="avatar" width="10" height="10" />
+                  <img src="{{ url_for('static', filename='images/profilepics/' ~ post.user.avatar) }}" class="avatar" alt="avatar" width="10" height="10" />
                   {{ post.user.username }}
                   <a href="/post/{{ post.pid }}">
                     <button id="postbutton" class="postbutton">View</button>

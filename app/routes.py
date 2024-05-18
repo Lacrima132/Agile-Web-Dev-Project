@@ -2,7 +2,9 @@ from flask import Blueprint, render_template, url_for, request, flash, redirect,
 from flask_login import login_required, current_user
 from . import db, allowed_file, allowed_size
 from .models import User, Post, Comments, Likes, Sell, Promote
+from .forms import SearchForm, CommentForm, DiscussionForm, ProfileEditForm, SellForm
 from werkzeug.utils import secure_filename
+from flask_wtf import CSRFProtect
 from sqlalchemy import func
 import os
 
@@ -16,29 +18,28 @@ def home():
 
 @routes.route('/browse', methods=['GET', 'POST'])
 def browse():
-    keyword = request.form.get('keyword')
+    form = SearchForm()
     posts = Post.query.all()  # Retrieve all posts initially
-    
-    if keyword:
+
+    if form.validate_on_submit():
+        keyword = form.keyword.data
         keywords = keyword.split()  # Split the keyword into individual words
         filtered_posts = []
 
         for post in posts:
             for kw in keywords:
-                if kw.lower() in post.title.lower(): #or kw.lower() in post.desc.lower():
+                if kw.lower() in post.title.lower():  # or kw.lower() in post.desc.lower():
                     filtered_posts.append(post)
                     break
-        
+
         posts = filtered_posts
-        if len(filtered_posts) == 0:
+        if len(keyword) == 0:
+            posts = Post.query.all()             
+        elif len(filtered_posts) == 0:
             flash("No posts match your search", category='error')
     
     bounty_posts = Post.query.filter(Post.flag == "Bounty").all()
-
-    # Retrieve all Advice posts
     advice_posts = Post.query.filter(Post.flag == "Advice").all()
-
-    # Retrieve all Weapons posts
     weapons_posts = Post.query.filter(Post.flag == "Weapons").all()
 
     lip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, liked=True).all()]
@@ -47,7 +48,7 @@ def browse():
     for post in posts:
         print("Post ID:", post.pid, "Liked:", post.pid in lip)
 
-    return render_template('browse.html', user=current_user, posts=posts, bounty_posts=bounty_posts, weapons_posts=weapons_posts, advice_posts=advice_posts,  lip=lip, dip=dip)
+    return render_template('browse.html', user=current_user, form=form, posts=posts, bounty_posts=bounty_posts, weapons_posts=weapons_posts, advice_posts=advice_posts, lip=lip, dip=dip)
 
 @routes.route('/like_post/<int:post_id>', methods=['POST'])
 def like_post(post_id):
@@ -104,21 +105,22 @@ def dislike_post(post_id):
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     comments = Comments.query.filter_by(pid=post_id).all()
+    form = CommentForm()
 
-    if request.method == 'POST':                        # Upload comments
-        comments = request.form.get('comment')
-        if comments:
-            new_comment = Comments(pid=post_id, uid=current_user.get_id(), comment=comments)
-            db.session.add(new_comment)
-            db.session.commit()
-            flash('Comment Added!', category='success')
-            return redirect(url_for('routes.post', post_id=post_id))
-        else:
-            flash('Comment cannot be empty!', category='error')
-            return redirect(url_for('routes.post', post_id=post_id))
+    if form.validate_on_submit():
+        comment_text = form.comment.data
+        new_comment = Comments(
+            pid=post_id,
+            uid=current_user.get_id(),
+            comment=comment_text,
+            timestamp=func.now()
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        flash('Comment Added!', category='success')
+        return redirect(url_for('routes.post', post_id=post_id))
 
-    return render_template('post.html', user=current_user, post=post, comments=comments)
-
+    return render_template('post.html', user=current_user, post=post, comments=comments, form=form)
 @routes.route('/view-other-userpf/<int:user_id>', methods = ['GET','POST'])
 def view_userpf(user_id):
     userinfo = User.query.get_or_404(user_id)
@@ -146,13 +148,6 @@ def promote_user(user_id):
     db.session.commit()
     return jsonify(success=True, promotion_count=hunter.promote)
 
-
-
-# @routes.route('/promote-user/<int:user_id>', methods = ['GET','POST'])
-# def promote_user(user_id):
-
-#     return 
-
 @routes.route('/faq')
 def faq():
     return render_template('faq.html', user=current_user)
@@ -165,25 +160,33 @@ def ranking():
 
 @routes.route('/discussion', methods=['GET', 'POST'])
 def discussion():
-    if request.method == 'POST':
-        title = request.form.get('title')
-        img = request.files.get('image')
-        desc = request.form.get('desc')
+    form = DiscussionForm()
+    if form.validate_on_submit():
+        title = form.title.data
+        image = form.image.data
+        desc = form.desc.data
         user_id = current_user.get_id()
-        if img and allowed_file(img.filename):
-            filename = secure_filename(img.filename)
-            # save_path = os.path.join('app\static\images\posts', filename)
-            save_path = os.path.join('app','static','images','posts', filename)
-            img.save(save_path)
-            new_disc_post = Post(title=title, desc =desc, flag="Discussion",uid=user_id,img_filename=filename)
+
+        if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            save_path = os.path.join('app', 'static', 'images', 'posts', filename)
+            image.save(save_path)
+
+            new_disc_post = Post(
+                title=title,
+                desc=desc,
+                flag="Discussion",
+                uid=user_id,
+                img_filename=filename
+            )
             db.session.add(new_disc_post)
             db.session.commit()
             flash('Discussion Post Uploaded!', category='success')
             return redirect(url_for('routes.discussion'))
         else:
-            flash("Invalid file format. PNG,JPG,JPEG accepted", category='error')
+            flash("Invalid file format. PNG, JPG, JPEG accepted", category='error')
 
-    return render_template('discussion.html', user=current_user)
+    return render_template('discussion.html', user=current_user, form=form)
 
 @routes.route('/post/delete/<int:post_id>', methods=['POST'])
 @login_required
@@ -213,39 +216,36 @@ def profile():
 
 @routes.route('/editprofile', methods =['GET', 'POST'])
 def editprofile():
-    if request.method == 'POST':
+    form = ProfileEditForm()
+    if form.validate_on_submit():
         previous_avatar_filename = current_user.avatar
-        avatar = request.files.get('change-image') #parameter is the name
-        username = request.form.get('username') #parameter is the name
-        bio = request.form.get('bio-change')
-        if avatar and allowed_file(avatar.filename) and allowed_size(avatar): 
+        avatar = form.image.data
+        username = form.username.data
+        bio = form.bio.data
+        
+        if avatar and allowed_file(avatar.filename) and allowed_size(avatar):
             filename = secure_filename(avatar.filename)
-            save_path = os.path.join('app','static','images','profilepics', filename)
-            current_user.avatar = filename
-            db.session.commit()
-            flash('Profile picture Uploaded!', category='success')
-            print(save_path)
+            save_path = os.path.join('app', 'static', 'images', 'profilepics', filename)
             avatar.save(save_path)
+            current_user.avatar = filename
+            flash('Profile picture uploaded!', category='success')
             if previous_avatar_filename:
-                previous_avatar_path = os.path.join('app','static','images','profilepics', previous_avatar_filename)
+                previous_avatar_path = os.path.join('app', 'static', 'images', 'profilepics', previous_avatar_filename)
                 if os.path.exists(previous_avatar_path):
                     os.remove(previous_avatar_path)
+        
         if bio:
             current_user.bio = bio
-            db.session.commit()
-            flash('Bio Updated!', category='success')
+            flash('Bio updated!', category='success')
+        
         if username:
             current_user.username = username
-            db.session.commit()
-            flash('Username Updated!', category='success')
-        elif not allowed_file(avatar.filename) and not allowed_size(avatar):
-            flash("Invalid file format or file is too big, must be below 10mb and png/jpg/jpeg", category='error')
-            
-    return render_template('edit-profile.html', user=current_user)
+            flash('Username updated!', category='success')
 
-@routes.route('/changepassword')
-def changepassword():
-    return render_template('change-password.html', user=current_user)
+        db.session.commit()
+        return redirect(url_for('routes.editprofile'))
+
+    return render_template('edit-profile.html', user=current_user, form=form)
 
 @routes.route('/aboutus')
 def aboutus():
@@ -256,30 +256,30 @@ def marketplace():
     all_posts = Sell.query.filter_by(sold="Unsold").all()
     return render_template("marketplace.html", user=current_user, posts=all_posts)
 
-@routes.route('/sell', methods =['GET', 'POST'])
+@routes.route('/sell', methods=['GET', 'POST'])
 def sell():
-    if request.method == 'POST':
-        weapon_image = request.files.get('weapon_image') #parameter is the name
-        weapon_title = request.form.get('weapon_title') #parameter is the name
-        weapon_price = request.form.get('weapon_price')
-        weapon_desc = request.form.get('weapon_description')
-        if weapon_image and allowed_file(weapon_image.filename) and allowed_size(weapon_image): 
+    form = SellForm()
+    if form.validate_on_submit():
+        weapon_image = form.weapon_image.data
+        weapon_title = form.weapon_title.data
+        weapon_price = form.weapon_price.data
+        weapon_desc = form.weapon_description.data
+
+        if allowed_size(weapon_image):
             filename = secure_filename(weapon_image.filename)
-            save_path = os.path.join('app','static','images','sellpics', filename)
-            new__item_listing = Sell(uid=current_user.get_id(), price=weapon_price, title=weapon_title, img=filename, desc=weapon_desc)
-            db.session.add(new__item_listing)
+            save_path = os.path.join('app', 'static', 'images', 'sellpics', filename)
+            new_item_listing = Sell(uid=current_user.get_id(), price=weapon_price, title=weapon_title, img=filename, desc=weapon_desc)
+            db.session.add(new_item_listing)
             db.session.commit()
             flash('Successfully Listed Item!', category='success')
-            print(save_path)
             weapon_image.save(save_path)
-            return render_template("sell.html", user=current_user)
-        if not weapon_title or not weapon_price or not weapon_desc:
-            flash("Please fill in all fields", category='error')
-        if not allowed_file(weapon_image.filename) or not allowed_size(weapon_image):
-            flash("Invalid file format or file is too big, must be below 10mb and png/jpg/jpeg", category='error')
-        if not weapon_title or weapon_price:
-            flash("Please fill in all fields", category='error')
-    return render_template("sell.html", user=current_user)
+            return redirect(url_for('routes.sell'))
+
+        flash("Invalid file format or file is too big, must be below 10mb and png/jpg/jpeg", category='error')
+    elif request.method == 'POST':
+        flash('Please fill in all fields correctly.', category='error')
+
+    return render_template("sell.html", user=current_user, form=form)
 
 @routes.route('/purchase/<int:sid>')
 def purchase(sid):
