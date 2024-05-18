@@ -32,9 +32,6 @@ def create_app():
     app.register_blueprint(routes, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    from .models import User
-
-    create_database(app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

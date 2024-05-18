@@ -5,11 +5,7 @@
   <div>
     <div class="info-bubble">
       <div class="profile-pic">
-        {% if user.avatar %}
         <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
-        {% else %}
-        <img src="../static/images/profilepics/{{ babyyoda.jpg }}" class="avatar" alt="Default Image">
-        {% endif %}
       </div>
       <div class="profile-box2">
         <div class="profile-box3">
