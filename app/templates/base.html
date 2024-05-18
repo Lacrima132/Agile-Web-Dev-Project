@@ -61,7 +61,7 @@
     >
       <div class="logo">
         <a href="{{ url_for('routes.home') }}">
-          B<span class="hidden">OUNTIFY</span> </a>
+          B<span class="hidden">BOUNTIFY</span> </a>
       </div>
       </div>
       <div class="main-menu">
@@ -82,9 +82,9 @@
           </li>
           <li>
             <a
-              href="{{ url_for('routes.submit') }}"
+              href="{{ url_for('routes.discussion') }}"
               ><i class="fa fa-plus fa-lg"></i>
-              <span class="hidden"> Submit</span>
+              <span class="hidden"> Add Discussion</span>
             </a>
           </li>
           <li>
@@ -106,6 +106,20 @@
               href="{{ url_for('routes.sell') }}"
               ><i class="fa fa-trophy fa-lg"></i>
               <span class="hidden"> Sell Here</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="{{ url_for('routes.bounties') }}"
+              ><i class="fa fa-trophy fa-lg"></i>
+              <span class="hidden">Bounties</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="{{ url_for('routes.addbounty') }}"
+              ><i class="fa fa-trophy fa-lg"></i>
+              <span class="hidden">Add Bounty</span>
             </a>
           </li>
         </ul>

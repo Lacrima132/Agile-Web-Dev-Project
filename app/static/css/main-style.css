@@ -818,3 +818,23 @@ ul {
   opacity: 1;
   filter: blur(0);
 }
+
+
+.flash-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  opacity: 0.9;
+  font-size: 16px;
+  text-align: center;
+}
+
+.flash-message.error {
+  background-color: #f44336; /* Red background for error */
+}

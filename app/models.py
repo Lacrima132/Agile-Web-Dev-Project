@@ -9,13 +9,14 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150))
     name = db.Column(db.String(150))
     avatar = db.Column(db.String(150))
-    bio = db.Column(db.String(150))
+    bio = db.Column(db.String(150), default="Nothing here yet!")
     rank = db.Column(db.String(150))
+    promote = db.Column(db.Integer, default=0)
 
     def get_id(self):
         return str(self.uid)  # Ensure it returns a string, as expected by Flask-Login
 
-class Post(db.Model):
+class Post(db.Model): #discussion posts, flag = "discussion"
     pid = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey('user.uid'))
     user = db.relationship('User', backref='post')
@@ -26,7 +27,7 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
     likes = db.Column(db.Integer, default = 0)
     dislikes = db.Column(db.Integer, default = 0)
-
+    
 class Comments(db.Model):
     cid = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey('user.uid'))
@@ -51,3 +52,10 @@ class Sell(db.Model):
     img = db.Column(db.String(100), nullable=False)
     desc = db.Column(db.String(1000))
     sold = db.Column(db.String(100), default="Unsold")
+    timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
+    
+class Promote(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    promoted_by=db.Column(db.Integer, db.ForeignKey('user.uid'))
+    promoting_this_guy=db.Column(db.Integer)
+    promoted = db.Column(db.Boolean, default=False)

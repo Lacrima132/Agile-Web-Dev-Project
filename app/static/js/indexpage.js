@@ -142,7 +142,7 @@ function togglePostVisibility() {
 
 let likeSelected = false;
 let dislikeSelected = false;
-YAYYYY
+
 function toggleLike(button, postId) {
   const likeContainer = button.parentElement; // Get parent container
   console.log("parent =" + likeContainer);
@@ -244,3 +244,56 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+function toggleUpdate(button, user_id) {
+  var action = button.textContent === 'Promoted' ? 'demote' : 'promote';
+  var newText = action === 'promote' ? 'Promoted' : 'Promote Me';
+
+  // Change button text
+  button.textContent = newText;
+
+  // Perform fetch request
+  fetch(`/promote_user/${user_id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ action: action })
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();  // Parse the JSON response
+    } else {
+      throw new Error('Request failed');
+    }
+  })
+  .then(data => {
+    if (data.success) {
+      showMessage(action === 'promote' ? 'User promoted successfully!' : 'User demotion successful!');
+      document.getElementById('promotionCount').innerText = data.promotion_count; // Update promotion count
+    } else {
+      showMessage('An error occurred. Please try again.');
+    }
+  })
+  .catch(error => {
+    console.error(`Error ${action}ing:`, error);
+    showMessage('An error occurred. Please try again.');
+  });
+
+  console.log("Hello");
+}
+
+// Function to show flash messages
+function showMessage(message) {
+  var flashMessage = document.createElement('div');
+  flashMessage.className = 'flash-message';
+  flashMessage.innerText = message;
+
+  document.body.appendChild(flashMessage);
+
+  // Remove the flash message after 3 seconds
+  setTimeout(() => {
+    flashMessage.remove();
+  }, 3000);
+}
+

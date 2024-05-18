@@ -38,17 +38,21 @@
         {% for post in posts %}
         <div class="col-lg-3 col-md-4 col-sm-6">
           <div class="postbubble">
-            <img src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}" alt="Post Image" />
+            <img src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}" alt="{{post.img_filename}}" />
             <div class="screen-overlay overlay-animation">
               <div class="posttext">
                 <div class="posttitle">
                   {{ post.title }}
+                  {% if post.user.uid != current_user.uid %}
                   <a href="/view-other-userpf/{{ post.user.uid }}">
+                  {% else %}
+                  <a href="/profile">
+                  {% endif %}
                     <button id="userpfbutton" class="userpfbutton">User Profile</button>
                   </a>
                 </div>
                 <div class="postauthor">
-                  <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="avatar" alt="avatar" width="25px" height="25px" />
+                  <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="avatar" alt="avatar" width="10" height="10" />
                   {{ post.user.username }}
                   <a href="/post/{{ post.pid }}">
                     <button id="postbutton" class="postbutton">View</button>

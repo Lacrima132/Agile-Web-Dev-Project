@@ -16,6 +16,13 @@
 <!-- Heading for User Posts -->
 <div class="user-posts text-center">
   User Posts
+  {% if  not promoted_by_current %}
+  <button id="updateButton" class="updateButton" onclick="toggleUpdate(this, {{ userinfo.uid }})">Promote Me</button>
+  {% else %}
+    Promote Me
+  {% endif %}
+</button>
+<span id="promotionCount">{{ userinfo.promote }}</span>
 </div>
                 <!-- User Posts -->
                 {% for post in posts %}

@@ -1,5 +1,6 @@
-{%extends "base.html"%} {% block title %}Ranking{%
-endblock %} {% block content %}
+{% extends "base.html" %}
+{% block title %}Ranking{% endblock %}
+{% block content %}
 <div class="lb-container">
   <h1 class="pagetitle">Leaderboard</h1>
 </div>
@@ -9,53 +10,36 @@ endblock %} {% block content %}
       Rank
     </div>
     <div>
-      Title
+      Profile Picture
     </div>
     <div>
-      Author
+      Username
+    </div>
+    <div>
+      Email
     </div>
     <div style="text-align:center">
-      Likes
-    </div>
-    <div style="text-align:center">
-      Comments
+      Promotions
     </div>
   </div>
   <br>
-  <!--for-->
+  <!-- Loop through users and display their info -->
+  {% for user in highest_promoted %}
   <div class="lb">
     <div style="text-align:center">
-      1
+      {{ loop.index }}
     </div>
     <div>
-      Title1
+      <img src="{{ url_for('static', filename='images/profilepics/' ~ user.avatar) }}" alt="Profile Picture" width="50" height="50">
     </div>
     <div>
-      Author1
-    </div>
-    <div style="text-align:center">
-      0
-    </div>
-    <div style="text-align:center">
-      0
-    </div>
-  </div>
-  <!--endfor-->
-  <div class="lb">
-    <div style="text-align:center">
-      2
+      {{ user.username }}
     </div>
     <div>
-      Title2
-    </div>
-    <div>
-      Author2
+      {{ user.email }}
     </div>
     <div style="text-align:center">
-      0
-    </div>
-    <div style="text-align:center">
-      0
+      {{ user.promote }}
     </div>
   </div>
   {% endfor %}

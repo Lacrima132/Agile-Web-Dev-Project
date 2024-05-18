@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}{{ user.username }}{% endblock %} {%block content %}
+
+<div class="post-container text-center">
+    <head> 
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Sell Your Weapon</title>
+            <style>
+                body {
+                    color: white; /* Set text color to white */
+                    background-color: black; /* Set background color to black for better contrast */
+                    font-family: Arial, sans-serif; /* Optional: Set font family */
+                }
+                form {
+                    margin: 20px;
+                }
+                label {
+                    display: block;
+                    margin-bottom: 5px;
+                }
+                input[type="text"],
+                input[type="number"],
+                textarea {
+                    width: 100%;
+                    padding: 8px;
+                    margin-bottom: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                }
+                input[type="submit"] {
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+                input[type="submit"]:hover {
+                    background-color: #45a049;
+                }
+            </style>
+        </head>
+    </head>
+<body>
+    <h1>Bounties</h1>
+    <p>Peep your next bounty</p>
+    <h1>All Bounties</h1>
+    <ul>
+        {% for bounty in bounty_list %}
+            <li>
+                <div class="post-box">
+                    <img src="{{ url_for('static', filename='/images/sellpics/' + bounty.img_filename) }}" class="avatar" alt="avatar" width="25px" height="25px">
+                    <div class="post-info">
+                        <h2>{{ bounty.title }}</h2>
+                        <p>{{ bounty.desc }}</p>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    
+</body>
+</div>
+{% endblock %}

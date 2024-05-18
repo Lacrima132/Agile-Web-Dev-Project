@@ -1,45 +1,48 @@
-{% extends "base.html" %} {% block title %}{{ user.username }}{% endblock %} {%
-  block content %}
-  <div class="intro-section">
-    <div>
-      <div class="info-bubble">
-        <div class="profile-pic">
-          <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
-        </div>
-        <div class="profile-box2">
-          <div class="profile-box3">
-            <h2 class="profile-name">
-              {{ user.firstName }}
-              <img src="../static/images/ranks/6.png" class="rank-img" />
-            </h2>
-            <form action="{{ url_for('routes.editprofile') }}">
-              <input class="btn-edit" type="submit" value="Edit Profile" />
-            </form>
-          </div>
-          <br />
-          <p>Bio text goes here</p>
-          <br />
-          <p>Posts: {{ num_posts }} Likes: {{ total_likes }}</p>
-        </div>
+{% extends "base.html" %}
+{% block title %}{{ user.username }}{% endblock %}
+{% block content %}
+<div class="intro-section">
+  <div>
+    <div class="info-bubble">
+      <div class="profile-pic">
+        {% if user.avatar %}
+        <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
+        {% else %}
+        <img src="../static/images/profilepics/{{ babyyoda.jpg }}" class="avatar" alt="Default Image">
+        {% endif %}
       </div>
-      <br />
-      <div class="select-view">
-        <div class="select">
-          <button class="view-button" onclick="currentPosts()">
-            Current Posts
-          </button>
+      <div class="profile-box2">
+        <div class="profile-box3">
+          <h2 class="profile-name">
+            {{ user.username }}
+            <img src="../static/images/ranks/6.png" class="rank-img" />
+          </h2>
+          <form action="{{ url_for('routes.editprofile') }}">
+            <input class="btn-edit" type="submit" value="Edit Profile" />
+          </form>
         </div>
-        <div class="select">
-          <button class="view-button" onclick="savedPosts()">Saved</button>
-        </div>
-        <div class="select">
-          <button class="view-button" onclick="previousPosts()">
-            Previous Posts
-          </button>
-        </div>
+        <br />
+        <p>{{ user.bio }}</p>
+        <br />
+        <p>Posts: {{ num_posts }} Likes: {{ total_likes }} Promotions: {{ current_user.promote }}</p>
       </div>
-      <br />
-  
+    </div>
+    <br />
+    <div class="select-view">
+      <div class="select">
+        <button class="view-button" onclick="openTab(event, 'CurrentPosts')" id="defaultOpen">Current Posts</button>
+      </div>
+      <div class="select">
+        <button class="view-button" onclick="openTab(event, 'Purchased')">Purchased</button>
+      </div>
+      <div class="select">
+        <button class="view-button" onclick="openTab(event, 'Bounties')">Bounties</button>
+      </div>
+    </div>
+    <br />
+
+    <!-- Tab content -->
+    <div id="CurrentPosts" class="tabcontent">
       <div class="forum-section">
         <div class="post-container">
           <div class="row">
@@ -95,16 +98,91 @@
           </div>
         </div>
       </div>
-  
-      <div class="saved" id="working" style="display: none">
-        <h3 style="text-align: center">Saved Posts~</h3>
-      </div>
-      <div class="previous" id="previous" style="display: none">
-        <h3 style="text-align: center">Previous Posts Here~</h3>
+    </div>
+
+    <div id="Purchased" class="tabcontent" style="display:none">
+      <h3 style="text-align: center">Purchased Posts~</h3>
+        <div class="forum-section">
+        <div class="post-container">
+          <div class="row">
+            {% for current_user_post in current_user_posts %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="postbubble">
+                <img
+                  src="{{ url_for('static', filename='/images/posts/' + current_user_post.img_filename) }}"
+                  alt="Post Image"
+                />
+                <div class="screen-overlay overlay-animation">
+                  <div class="posttext">
+                    <div class="postheader">
+                      <div class="posttitle">{{ current_user_post.title }}</div>
+                      <form
+                        action="{{ url_for('routes.delete_post', post_id=current_user_post.pid) }}"
+                        method="post"
+                      >
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button type="submit" class="reactbutton">
+                          <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                        </button>
+                      </form>
+                    </div>
+                    <div class="postcontent">{{ current_user_post.desc }}</div>
+                  </div>
+                  <div class="reactbar">
+                    <button
+                      id="likeButton"
+                      class="reactbutton"
+                      onclick="toggleLike('likeCount', 'likeIcon', true)"
+                    >
+                      <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
+                    </button>
+                    <span id="likeCount" class="reactnumber">0</span>
+                    <button
+                      id="dislikeButton"
+                      class="reactbutton"
+                      onclick="toggleLike('dislikeCount', 'dislikeIcon', false)"
+                    >
+                      <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
+                    </button>
+                    <span id="dislikeCount" class="reactnumber">0</span>
+                    <button id="commentButton" class="reactbutton">
+                      <i class="fa fa-commenting-o fa-lg"></i>
+                    </button>
+                    <span id="commentCount" class="reactnumber">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
-  
-    <br />
+    
+    <div id="Bounties" class="tabcontent" style="display:none">
+      <h3 style="text-align: center">Bounties~</h3>
+      <!-- Add content for bounties here -->
+    </div>
   </div>
-  {% endblock %}
-  
+  <br />
+</div>
+
+<script>
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("view-button");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  // Open the default tab
+  document.getElementById("defaultOpen").click();
+</script>
+{% endblock %}
