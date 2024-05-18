@@ -45,10 +45,6 @@ def browse():
 
     #if logged in user has liked post or not
 
-    liked_posts = Likes.query.filter_by(uid=current_user.uid, liked=True).all()
-    
-    disliked_posts = Likes.query.filter_by(uid=current_user.uid, liked=False).all()
-
     lip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, liked=True).all()]
     dip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, disliked=True).all()]
     print("Liked Post IDs:", lip)
@@ -186,7 +182,6 @@ def profile():
     purchased_items = Sell.query.filter_by(uid=current_user.get_id(), sold=current_user.get_id()).all()
     current_user_posts = Post.query.filter_by(uid=current_user.get_id()).all()
 
-    return render_template('profile.html', user=current_user, num_posts = num_posts, total_likes = total_likes, current_user_posts=current_user_posts, purchased_items=purchased_items)
 
 @routes.route('/editprofile', methods =['GET', 'POST'])
 def editprofile():
