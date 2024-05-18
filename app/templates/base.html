@@ -9,53 +9,6 @@
     <title>
       {% block title %}Bountify{% endblock %}
     </title>
-
-
-    <!-- temperary style sheet for post.html, daniel can play around with the formatting after -->
-    <!-- <style>
-      body {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          background-color: #f0f0f0;
-      }
-      .comments-container {
-          width: 50%; /* Adjust width as needed */
-          max-width: 600px; /* Optional: Set maximum width */
-      }
-      h1 {
-          color: red; /* Set text color to yellow */
-          text-align: center; /* Center-align header text */
-      }
-      .comment {
-          color: red;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          padding: 10px;
-          margin-bottom: 10px;
-          background-color: #fff; /* Optional: Set comment box background color */
-      }
-      .username {
-          color: red;
-          font-weight: bold;
-          margin-bottom: 5px;
-      }
-      .add-comment textarea {
-            width: calc(100% - 22px); /* Adjust for padding and border */
-            margin-bottom: 10px;
-      }
-      .add-comment button {
-            width: 100%;
-            padding: 8px 0;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-      }
-    </style> -->
-
     <link
       rel="preconnect"
       href="https://fonts.googleapis.com"
@@ -107,7 +60,7 @@
     >
       <div class="logo">
         <a href="{{ url_for('routes.home') }}">
-          B<span class="hidden">OUNTIFY</span> </a>
+          B<span class="hidden">BOUNTIFY</span> </a>
       </div>
       </div>
       <div class="main-menu">
@@ -128,9 +81,9 @@
           </li>
           <li>
             <a
-              href="{{ url_for('routes.submit') }}"
+              href="{{ url_for('routes.discussion') }}"
               ><i class="fa fa-plus fa-lg"></i>
-              <span class="hidden"> Submit</span>
+              <span class="hidden"> Add Discussion</span>
             </a>
           </li>
           <li>
@@ -138,6 +91,34 @@
               href="{{ url_for('routes.ranking') }}"
               ><i class="fa fa-trophy fa-lg"></i>
               <span class="hidden"> Ranking</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="{{ url_for('routes.marketplace') }}"
+              ><i class="fa fa-trophy fa-lg"></i>
+              <span class="hidden"> Marketplace</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="{{ url_for('routes.sell') }}"
+              ><i class="fa fa-trophy fa-lg"></i>
+              <span class="hidden"> Sell Here</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="{{ url_for('routes.bounties') }}"
+              ><i class="fa fa-trophy fa-lg"></i>
+              <span class="hidden">Bounties</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="{{ url_for('routes.addbounty') }}"
+              ><i class="fa fa-trophy fa-lg"></i>
+              <span class="hidden">Add Bounty</span>
             </a>
           </li>
         </ul>

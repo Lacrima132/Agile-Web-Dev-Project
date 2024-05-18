@@ -193,122 +193,74 @@ function togglePostVisibility() {
 let likeSelected = false;
 let dislikeSelected = false;
 
-function toggleLike(button) {
+function toggleLike(button, postId) {
   const likeContainer = button.parentElement; // Get parent container
   console.log("parent =" + likeContainer);
 
-  const likeCountDisplay =
-    likeContainer.querySelector(
-      ".reactnumber:nth-child(2)"
-    ); // Like count
-  console.log("count =" + likeCountDisplay);
+  const likeCountDisplay = likeContainer.querySelector(".reactnumber:nth-child(2)"); // Like count
+  let likeIcon = likeContainer.querySelector(".fa-thumbs-up, .fa-thumbs-o-up"); // Like icon
+  const dislikeCountDisplay = likeContainer.querySelector(".reactnumber:nth-child(4)"); // Dislike count
+  let dislikeIcon = likeContainer.querySelector(".fa-thumbs-down, .fa-thumbs-o-down"); // Dislike icon
 
-  let likeIcon = likeContainer.querySelector(
-    ".fa-thumbs-o-up"
-  ); // Like icon (solid)
-  console.log("icon =" + likeIcon);
-  if (likeIcon == null) {
-    likeSelected = true;
-    likeIcon = likeContainer.querySelector(
-      ".fa-thumbs-up"
-    ); // Like icon (outline)
-    console.log("icon2 =" + likeIcon);
-  } else {
-    likeSelected = false;
+  const isLike = button.classList.contains("like"); // Check if like button
+  let url = `/like_post/${postId}`;
+  if (!isLike) {
+    url = `/dislike_post/${postId}`;
   }
-  console.log("like status =" + likeSelected);
 
-  const dislikeCountDisplay =
-    likeContainer.querySelector(
-      ".reactnumber:nth-child(4)"
-    ); // Dislike count
-  console.log("count2 =" + dislikeCountDisplay);
+  fetch(url, { method: 'POST' })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        let likeCount = parseInt(likeCountDisplay.textContent);
+        let dislikeCount = parseInt(dislikeCountDisplay.textContent);
+        let likeSelected = likeIcon.classList.contains("fa-thumbs-up");
+        let dislikeSelected = dislikeIcon.classList.contains("fa-thumbs-down");
 
-  let dislikeIcon = likeContainer.querySelector(
-    ".fa-thumbs-o-down"
-  ); // Dislike icon (solid)
-  console.log("icon3 =" + dislikeIcon);
-  if (dislikeIcon == null) {
-    dislikeSelected = true;
-    dislikeIcon = likeContainer.querySelector(
-      ".fa-thumbs-down"
-    ); // Dislike icon (outline)
-    console.log("icon4 =" + dislikeIcon);
-  } else {
-    dislikeSelected = false;
-  }
-  console.log(
-    "dislike status =" + dislikeSelected
-  );
+        // Like logic
+        if (isLike) {
+          if (!likeSelected) {
+            likeCount++;
+            likeIcon.classList.add("fa-thumbs-up");
+            likeIcon.classList.remove("fa-thumbs-o-up"); // Remove outline if present
+            if (dislikeSelected) {
+              dislikeSelected = false;
+              dislikeCount--;
+              dislikeIcon.classList.add("fa-thumbs-o-down");
+              dislikeIcon.classList.remove("fa-thumbs-down");
+            }
+          } else {
+            likeCount--;
+            likeIcon.classList.add("fa-thumbs-o-up");
+            likeIcon.classList.remove("fa-thumbs-up");
+          }
+        } else {
+          // Dislike logic
+          if (!dislikeSelected) {
+            dislikeCount++;
+            dislikeIcon.classList.add("fa-thumbs-down");
+            dislikeIcon.classList.remove("fa-thumbs-o-down"); // Remove outline if present
+            if (likeSelected) {
+              likeSelected = false;
+              likeCount--;
+              likeIcon.classList.add("fa-thumbs-o-up"); // Add outline back
+              likeIcon.classList.remove("fa-thumbs-up");
+            }
+          } else {
+            dislikeCount--;
+            dislikeIcon.classList.add("fa-thumbs-o-down"); // Add outline back
+            dislikeIcon.classList.remove("fa-thumbs-down");
+          }
+        }
 
-  const isLike =
-    button.classList.contains("like"); // Check if like button
-  console.log("like =" + isLike);
-
-  let likeCount = parseInt(
-    likeCountDisplay.textContent
-  );
-  console.log("likeCount =" + likeCount);
-  let dislikeCount = parseInt(
-    dislikeCountDisplay.textContent
-  );
-  console.log("dislikeCount =" + dislikeCount);
-
-  // Like logic
-  if (isLike) {
-    if (!likeSelected) {
-      likeCount++;
-      likeIcon.classList.add("fa-thumbs-up");
-      likeIcon.classList.remove("fa-thumbs-o-up"); // Remove outline if present
-      likeSelected = true;
-
-      if (dislikeSelected) {
-        dislikeSelected = false;
-        dislikeCount--;
-        dislikeIcon.classList.add(
-          "fa-thumbs-o-down"
-        );
-        dislikeIcon.classList.remove(
-          "fa-thumbs-down"
-        );
+        // Update DOM
+        likeCountDisplay.textContent = likeCount;
+        dislikeCountDisplay.textContent = dislikeCount;
+      } else {
+        console.error("Failed to update like/dislike status.");
       }
-    } else {
-      likeCount--;
-      likeIcon.classList.add("fa-thumbs-o-up");
-      likeIcon.classList.remove("fa-thumbs-up");
-      likeSelected = false;
-    }
-  } else {
-    // Dislike logic
-    if (!dislikeSelected) {
-      dislikeCount++;
-      dislikeIcon.classList.add("fa-thumbs-down");
-      dislikeIcon.classList.remove(
-        "fa-thumbs-o-down"
-      ); // Remove outline if present
-      dislikeSelected = true;
-
-      if (likeSelected) {
-        likeSelected = false;
-        likeCount--;
-        likeIcon.classList.add("fa-thumbs-o-up"); // Add outline back
-        likeIcon.classList.remove("fa-thumbs-up");
-      }
-    } else {
-      dislikeCount--;
-      dislikeIcon.classList.add(
-        "fa-thumbs-o-down"
-      ); // Add outline back
-      dislikeIcon.classList.remove(
-        "fa-thumbs-down"
-      );
-      dislikeSelected = false;
-    }
-  }
-
-  // Update DOM
-  likeCountDisplay.textContent = likeCount;
-  dislikeCountDisplay.textContent = dislikeCount;
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 document.addEventListener(
@@ -341,21 +293,65 @@ document.addEventListener(
       filterTagsContainer.appendChild(filterTag);
     }
 
-    // Add event listener to the filter tags container to handle click events on close icons
-    filterTagsContainer.addEventListener(
-      "click",
-      function (event) {
-        if (
-          event.target.classList.contains(
-            "filterTagClose"
-          )
-        ) {
-          // If the clicked element is a close icon, remove its parent (the filter tag)
-          const filterTag =
-            event.target.parentElement;
-          filterTag.remove();
-        }
-      }
-    );
-  }
-);
+  // Add event listener to the filter tags container to handle click events on close icons
+  filterTagsContainer.addEventListener("click", function (event) {
+    if (event.target.classList.contains("filterTagClose")) {
+      // If the clicked element is a close icon, remove its parent (the filter tag)
+      const filterTag = event.target.parentElement;
+      filterTag.remove();
+    }
+  });
+});
+
+function toggleUpdate(button, user_id) {
+  var action = button.textContent === 'Promoted' ? 'demote' : 'promote';
+  var newText = action === 'promote' ? 'Promoted' : 'Promote Me';
+
+  // Change button text
+  button.textContent = newText;
+
+  // Perform fetch request
+  fetch(`/promote_user/${user_id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ action: action })
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();  // Parse the JSON response
+    } else {
+      throw new Error('Request failed');
+    }
+  })
+  .then(data => {
+    if (data.success) {
+      showMessage(action === 'promote' ? 'User promoted successfully!' : 'User demotion successful!');
+      document.getElementById('promotionCount').innerText = data.promotion_count; // Update promotion count
+    } else {
+      showMessage('An error occurred. Please try again.');
+    }
+  })
+  .catch(error => {
+    console.error(`Error ${action}ing:`, error);
+    showMessage('An error occurred. Please try again.');
+  });
+
+  console.log("Hello");
+}
+
+// Function to show flash messages
+function showMessage(message) {
+  var flashMessage = document.createElement('div');
+  flashMessage.className = 'flash-message';
+  flashMessage.innerText = message;
+
+  document.body.appendChild(flashMessage);
+
+  // Remove the flash message after 3 seconds
+  setTimeout(() => {
+    flashMessage.remove();
+  }, 3000);
+}
+

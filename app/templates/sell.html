@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% block title %}{{ user.username }}{% endblock %} {%block content %}
+<div class="post-container text-center">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sell Your Weapon</title>
+        <style>
+            body {
+                color: rgb(149, 135, 135); /* Set text color to white */
+                background-color: black; /* Set background color to black for better contrast */
+                font-family: Arial, sans-serif; /* Optional: Set font family */
+            }
+            form {
+                margin: 20px;
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+            input[type="text"],
+            input[type="number"],
+            textarea {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border: 1px solid #917171;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+            .post-box {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+            
+            .post-info {
+                margin-left: 10px;
+                background-color: #f0f0f0; /* Background color of the post box */
+                padding: 10px;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Sell Your Weapon</h1>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <label for="weapon_title">Weapon Title:</label><br>
+            <input type="text" id="weapon_title" name="weapon_title" required><br><br>
+    
+            <label for="weapon_price">Price:</label><br>
+            <input type="number" id="weapon_price" name="weapon_price" required><br><br>
+    
+            <label for="weapon_description">Weapon Description:</label><br>
+            <textarea id="weapon_description" name="weapon_description" rows="4" cols="50" required></textarea><br><br>
+    
+            <label for="weapon_image">Upload Picture:</label><br>
+            <input type="file" id="weapon_image" name="weapon_image" accept="image/*"><br><br>
+    
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</div>
+{% endblock %}
