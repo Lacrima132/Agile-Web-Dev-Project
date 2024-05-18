@@ -1,59 +1,89 @@
-{% extends "base.html" %} {% block title %} Browse {% endblock %} {% block content %}
+{% extends "base.html" %}
+{% block title %}Browse{% endblock %}
+{% block content %}
+<head>
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: white; /* Adjust as needed for better contrast */
+        }
+        .form-input-bubble {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #333;
+            color: white;
+        }
+        .btn-submit {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
 <div class="post-container text-center">
-        <div class="form-section">
-          <form action="" method="POST" enctype="multipart/form-data">
+    <div class="form-section">
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
             <h2 class="form-header">List a Bounty</h2>
-            <label class="sr-text" for="target">Target:</label>
-            <input
-              placeholder="Target Name"
-              class="form-input-bubble"
-              type="text"
-              id="target"
-              name="target"
-            /><br />
-            <label for="image">Upload Image:</label>
-            <br />
-            <input
-              class="form-input-bubble"
-              type="file"
-              name="image"
-              id="image"
-            /><br />
-            <label class="sr-text" for="tinfo">Target Information:</label>
-            <input
-              placeholder="Target Information"
-              class="form-input-bubble"
-              type="text"
-              id="tinfo"
-              name="tinfo"
-            /><br />
-          <label class="sr-text" for="tinfo">Price</label>
-          <input
-              placeholder="Price"
-              class="form-input-bubble"
-              type="text"
-              id="price"
-              name="price"
-            /><br />
-            <label class="sr-text" for="tinfo">Dead or Alive</label>
-            <input
-              placeholder="Dead or Alive"
-              class="form-input-bubble"
-              type="text"
-              id="description"
-              name="description"
-            /><br />
-            <label for="Category">Dead or Alive?</label>
-            <br />
-            <select name="category-menu">
-            <option value="Dead">Dead</option>
-            <option value="Alive">Alive</option>
-            <option value="Either">Either</option>
-            </select>
-            <br />
-            <br />
-            <input class="btn-submit" type="submit" value="Submit" />
-          </form>
-        </div>
+            
+            <div class="form-group">
+                <label for="target">{{ form.target.label }}</label>
+                {{ form.target(class="form-input-bubble") }}
+                {% for error in form.target.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="image">{{ form.weapon_image.label }}</label>
+                {{ form.weapon_image(class="form-input-bubble") }}
+                {% for error in form.weapon_image.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="tinfo">{{ form.tinfo.label }}</label>
+                {{ form.tinfo(class="form-input-bubble") }}
+                {% for error in form.tinfo.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="price">{{ form.price.label }}</label>
+                {{ form.price(class="form-input-bubble") }}
+                {% for error in form.price.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="category">{{ form.category_menu.label }}</label>
+                {{ form.category_menu(class="form-input-bubble") }}
+                {% for error in form.category_menu.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.submit(class="btn-submit") }}
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

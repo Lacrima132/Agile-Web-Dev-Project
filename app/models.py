@@ -28,6 +28,9 @@ class Post(db.Model): #discussion posts, flag = "discussion"
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
     likes = db.Column(db.Integer, default = 0)
     dislikes = db.Column(db.Integer, default = 0)
+    price = db.Column(db.Integer, default = 0)
+    status = db.Column(db.String(100))
+    com_num = db.Column(db.Integer, default = 0)
     
 class Comments(db.Model):
     cid = db.Column(db.Integer, primary_key=True)

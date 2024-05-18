@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, FileField, SubmitField, PasswordField, IntegerField
-from wtforms.validators import DataRequired, NumberRange, Email, EqualTo
+from wtforms import StringField, TextAreaField, FileField, SubmitField, PasswordField, IntegerField, SelectField
+from wtforms.validators import DataRequired, NumberRange, Email, EqualTo, Length, ValidationError
 from flask_wtf.file import FileAllowed, FileRequired
 
 class SignUpForm(FlaskForm):
@@ -53,4 +53,32 @@ class SellForm(FlaskForm):
     weapon_image = FileField('Upload Picture', validators=[FileRequired(), FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
     submit = SubmitField('Submit')
 
-    
+def validate_integer(form, field):
+    try:
+        int(field.data)
+    except ValueError:
+        raise ValidationError("Price must be an integer.")
+
+class BountyForm(FlaskForm):
+    target = StringField('Target', validators=[
+        DataRequired(), 
+        Length(min=1, max=100, message="Target name must be between 1 and 100 characters")
+    ])
+    price = StringField('Price', validators=[
+        DataRequired(),
+        validate_integer
+    ])
+    tinfo = TextAreaField('Target Information', validators=[
+        DataRequired(), 
+        Length(min=1, message="Target information must not be empty")
+    ])
+    weapon_image = FileField('Upload Image', validators=[
+        FileRequired(), 
+        FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')
+    ])
+    category_menu = SelectField('Dead or Alive?', choices=[
+        ('Dead', 'Dead'),
+        ('Alive', 'Alive'),
+        ('Either', 'Either')
+    ], validators=[DataRequired()])
+    submit = SubmitField('Submit')

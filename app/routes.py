@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, url_for, request, flash, redirect,
 from flask_login import login_required, current_user
 from . import db, allowed_file, allowed_size
 from .models import User, Post, Comments, Likes, Sell, Promote
-from .forms import SearchForm, CommentForm, DiscussionForm, ProfileEditForm, SellForm
+from .forms import SearchForm, CommentForm, DiscussionForm, ProfileEditForm, SellForm, BountyForm
 from werkzeug.utils import secure_filename
 from flask_wtf import CSRFProtect
 from sqlalchemy import func
@@ -115,6 +115,7 @@ def post(post_id):
             comment=comment_text,
             timestamp=func.now()
         )
+        post.com_num += 1
         db.session.add(new_comment)
         db.session.commit()
         flash('Comment Added!', category='success')
@@ -310,27 +311,28 @@ def bounties():
     bounty_list = Post.query.filter_by(flag="Bounty").all()
     return render_template('bounties.html', user=current_user, bounty_list=bounty_list)
 
-@routes.route('/addbounty', methods =['GET', 'POST'])
+@routes.route('/addbounty', methods=['GET', 'POST'])
 def addbounty():
-    if request.method == 'POST':
-        bounty_image = request.files.get('weapon_image') #parameter is the name
-        target = request.form.get('target') #parameter is the name
-        price = request.form.get('price')
-        target_info = request.form.get('tinfo')
-        if bounty_image and allowed_file(bounty_image.filename) and allowed_size(bounty_image): 
+    form = BountyForm()
+    if form.validate_on_submit():
+        bounty_image = form.weapon_image.data
+        target = form.target.data
+        price = int(form.price.data)  # Convert to integer
+        target_info = form.tinfo.data
+        target_status = form.category_menu.data
+
+        if allowed_size(bounty_image):
             filename = secure_filename(bounty_image.filename)
-            save_path = os.path.join('app','static','images','sellpics', filename)
-            # list_bounty = Post(uid=current_user.get_id(), price=price, title=weapon_title, img=filename, desc=weapon_desc)
-            # db.session.add(new__item_listing)
-            # db.session.commit()
+            save_path = os.path.join('app', 'static', 'images', 'sellpics', filename)
+            list_bounty = Post(uid=current_user.get_id(), price=price, title=target, img_filename=filename, desc=target_info, status=target_status, flag="Bounty")
+            db.session.add(list_bounty)
+            db.session.commit()
             flash('Successfully Listed Item!', category='success')
-            print(save_path)
             bounty_image.save(save_path)
-            return render_template("sell.html", user=current_user)
-        # if not weapon_title or not weapon_price or not weapon_desc:
-        #     flash("Please fill in all fields", category='error')
-        # if not allowed_file(weapon_image.filename) or not allowed_size(weapon_image):
-        #     flash("Invalid file format or file is too big, must be below 10mb and png/jpg/jpeg", category='error')
-        # # if not weapon_title or weapon_price:
-        #     flash("Please fill in all fields", category='error')
-    return render_template('add-bounty.html', user=current_user)
+            return redirect(url_for('routes.addbounty'))
+
+        flash("Invalid file format or file is too big, must be below 10mb and png/jpg/jpeg", category='error')
+    elif request.method == 'POST':
+        flash('Please fill in all fields correctly.', category='error')
+
+    return render_template('add-bounty.html', user=current_user, form=form)
