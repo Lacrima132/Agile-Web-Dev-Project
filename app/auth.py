@@ -41,6 +41,7 @@ def sign_up():
         email = form.email.data
         username = form.username.data
         password1 = form.password1.data
+        is_bounty_hunter = form.is_bounty_hunter.data == 'yes'
     
         user = User.query.filter_by(email=email).first()
         if user:
@@ -51,7 +52,7 @@ def sign_up():
             flash('Invalid password: must be at least 7 characters.', category='error')
         else:
             password_hash = generate_password_hash(password1, method='pbkdf2:sha256')
-            new_user = User(email=email, username=username, password=password_hash, avatar='profile.png')
+            new_user = User(email=email, username=username, password=password_hash, avatar='profile.png', isHunter=is_bounty_hunter)
             db.session.add(new_user)
             db.session.commit()
             flash('Account created!', category='success')

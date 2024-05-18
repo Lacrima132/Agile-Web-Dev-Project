@@ -10,6 +10,7 @@ class SignUpForm(FlaskForm):
     password2 = PasswordField('Confirm Password', validators=[
         DataRequired(), EqualTo('password1', message='Passwords must match')
     ])
+    is_bounty_hunter = SelectField('Are you a bounty hunter?', choices=[('yes', 'Yes'), ('no', 'No')], validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
 class LoginForm(FlaskForm):
