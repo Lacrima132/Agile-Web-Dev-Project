@@ -2,6 +2,8 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
+
+
 class User(db.Model, UserMixin):
     uid = db.Column(db.Integer, primary_key=True) #turn back to ID if it doesnt work and make sure to change foreign key parameters below back to 'id' as well if required
     email = db.Column(db.String(150), unique=True)
@@ -11,6 +13,7 @@ class User(db.Model, UserMixin):
     avatar = db.Column(db.String(150))
     bio = db.Column(db.String(150), default="Nothing here yet!")
     rank = db.Column(db.String(150))
+    isHunter = db.Column(db.Boolean, default=False)
     promote = db.Column(db.Integer, default=0)
 
     def get_id(self):
@@ -59,3 +62,6 @@ class Promote(db.Model):
     promoted_by=db.Column(db.Integer, db.ForeignKey('user.uid'))
     promoting_this_guy=db.Column(db.Integer)
     promoted = db.Column(db.Boolean, default=False)
+
+# class Bounty(db.Model):
+#     id = db.Column

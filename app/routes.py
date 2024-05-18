@@ -220,14 +220,14 @@ def editprofile():
         bio = request.form.get('bio-change')
         if avatar and allowed_file(avatar.filename) and allowed_size(avatar): 
             filename = secure_filename(avatar.filename)
-            save_path = os.path.join(r'app\static\images\profilepics', filename)
+            save_path = os.path.join('app','static','images','profilepics', filename)
             current_user.avatar = filename
             db.session.commit()
             flash('Profile picture Uploaded!', category='success')
             print(save_path)
             avatar.save(save_path)
             if previous_avatar_filename:
-                previous_avatar_path = os.path.join(r'app\static\images\profilepics', previous_avatar_filename)
+                previous_avatar_path = os.path.join('app','static','images','profilepics', previous_avatar_filename)
                 if os.path.exists(previous_avatar_path):
                     os.remove(previous_avatar_path)
         if bio:
@@ -265,7 +265,7 @@ def sell():
         weapon_desc = request.form.get('weapon_description')
         if weapon_image and allowed_file(weapon_image.filename) and allowed_size(weapon_image): 
             filename = secure_filename(weapon_image.filename)
-            save_path = os.path.join(r'app\static\images\sellpics', filename)
+            save_path = os.path.join('app','static','images','sellpics', filename)
             new__item_listing = Sell(uid=current_user.get_id(), price=weapon_price, title=weapon_title, img=filename, desc=weapon_desc)
             db.session.add(new__item_listing)
             db.session.commit()
@@ -319,7 +319,7 @@ def addbounty():
         target_info = request.form.get('tinfo')
         if bounty_image and allowed_file(bounty_image.filename) and allowed_size(bounty_image): 
             filename = secure_filename(bounty_image.filename)
-            save_path = os.path.join(r'app\static\images\sellpics', filename)
+            save_path = os.path.join('app','static','images','sellpics', filename)
             # list_bounty = Post(uid=current_user.get_id(), price=price, title=weapon_title, img=filename, desc=weapon_desc)
             # db.session.add(new__item_listing)
             # db.session.commit()
