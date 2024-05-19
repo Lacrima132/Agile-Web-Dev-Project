@@ -1,68 +1,40 @@
 {% extends "base.html" %} {% block title %}{{
 user.username }}{% endblock %} {% block content %}
 <div class="intro-section">
-	<div>
-		<div class="info-bubble">
-			<div class="profile-pic">
-				{% if user.avatar %}
-				<img
-					src="../static/images/profilepics/{{ user.avatar }}"
-					class="avatar"
-					alt="avatar" />
-				{% else %}
-				<img
-					src="../static/images/profilepics/{{ babyyoda.jpg }}"
-					class="avatar"
-					alt="Default Avatar" />
-				{% endif %}
-			</div>
-			<div class="profile-box2">
-				<div class="profile-box3">
-					<h2 class="profile-name">
-						<img src="../static/images/ranks/{{ user.rank }}.png" class="rank-img" />
-						{{ user.username }}
-					</h2>
-					<form
-						action="{{ url_for('routes.editprofile') }}">
-						<input
-							class="btn-edit"
-							type="submit"
-							value="Edit Profile" />
-					</form>
-				</div>
-				<p id="user-bio">{{ user.bio }}</p>
-			</div>
-		</div>
-		<p id="user-stats">
-			Posts: {{ num_posts }} Likes: {{ total_likes
-			}} Promotions: {{ current_user.promote }}
-		</p>
-		<br />
-		<div class="select-view">
-			<div class="select">
-				<button
-					class="view-button"
-					onclick="openTab(event, 'CurrentPosts')"
-					id="defaultOpen">
-					Current Posts
-				</button>
-			</div>
-			<div class="select">
-				<button
-					class="view-button"
-					onclick="openTab(event, 'Purchased')">
-					Purchased
-				</button>
-			</div>
-			<div class="select">
-				<button
-					class="view-button"
-					onclick="openTab(event, 'Bounties')">
-					Bounties
-				</button>
-			</div>
-		</div>
-		<br />
+  <div>
+    <div class="info-bubble">
+      <div class="profile-pic">
+        <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
+      </div>
+      <div class="profile-box2">
+        <div class="profile-box3">
+          <h2 class="profile-name">
+            {{ user.username }}
+            <img src="../static/images/ranks/{{user.rank}}.png" class="rank-img" />
+          </h2>
+          <form action="{{ url_for('routes.editprofile') }}">
+            <input class="btn-edit" type="submit" value="Edit Profile" />
+          </form>
+        </div>
+        <br />
+        <p>{{ user.bio }}</p>
+        <br />
+        <p>Posts: {{ num_posts }} Likes: {{ total_likes }} Promotions: {{ current_user.promote }}</p>
+      </div>
+    </div>
+    <br />
+    <div class="select-view">
+      <div class="select">
+        <button class="view-button" onclick="openTab(event, 'CurrentPosts')" id="defaultOpen">Current Posts</button>
+      </div>
+      <div class="select">
+        <button class="view-button" onclick="openTab(event, 'Purchased')">Purchased</button>
+      </div>
+      <div class="select">
+        <button class="view-button" onclick="openTab(event, 'Bounties')">Bounties</button>
+      </div>
+    </div>
+    <br />
 
 		<!-- Tab content -->
 		<div id="CurrentPosts" class="tabcontent">
