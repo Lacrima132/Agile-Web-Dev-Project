@@ -1,43 +1,35 @@
-{% extends "base.html" %} {% block title
-%}Discussion{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}Discussion{% endblock %} {% block
+content %}
 <div class="form-section">
-	<form
-		action="{{ url_for('routes.discussion') }}"
-		method="POST"
-		enctype="multipart/form-data">
-		{{ form.hidden_tag() }}
-		<h2 class="form-header">
-			Submit General Discussion Post
-		</h2>
-		<div class="form-group">
-			{{ form.title.label }} {{
-			form.title(class="form-input-bubble",
-			placeholder="Post Title") }} {% for error in
-			form.title.errors %}
-			<span class="text-danger">{{ error }}</span>
-			{% endfor %}
-		</div>
-		<br />
-		<div class="form-group">
-			{{ form.image.label }} {{
-			form.image(class="form-input-bubble") }} {%
-			for error in form.image.errors %}
-			<span class="text-danger">{{ error }}</span>
-			{% endfor %}
-		</div>
-		<br />
-		<div class="form-group">
-			{{ form.desc.label }} {{
-			form.desc(class="form-input-bubble",
-			placeholder="Description") }} {% for error
-			in form.desc.errors %}
-			<span class="text-danger">{{ error }}</span>
-			{% endfor %}
-		</div>
-		<br />
-		<div class="form-group">
-			{{ form.submit(class="btn-submit") }}
-		</div>
-	</form>
+  <form
+    action="{{ url_for('routes.discussion') }}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    {{ form.hidden_tag() }}
+    <h2 class="form-header">Submit General Discussion Post</h2>
+    <div class="form-group">
+      {{ form.title.label }} {{ form.title(class="form-input-bubble",
+      placeholder="Post Title") }} {% for error in form.title.errors %}
+      <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <br />
+    <div class="form-group">
+      {{ form.image.label }} {{ form.image(class="form-input-bubble") }} {% for
+      error in form.image.errors %}
+      <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <br />
+    <div class="form-group">
+      {{ form.desc.label }} {{ form.desc(class="form-input-bubble",
+      placeholder="Description") }} {% for error in form.desc.errors %}
+      <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <br />
+    <div class="form-group">{{ form.submit(class="btn-submit") }}</div>
+  </form>
 </div>
 {% endblock %}

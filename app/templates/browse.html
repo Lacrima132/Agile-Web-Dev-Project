@@ -14,22 +14,11 @@
               {{ form.keyword(class="searchbarinput form-control", placeholder="Search") }}
               <div class="input-group-append">
                 {{ form.submit(class="searchbtn") }}
-                <div class="dropdown">
-                  <button class="searchbtn dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-filter fa-lg"></i>
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="filterDropdown">
-                    <a class="dropdown-item filter-item" href="#" data-filter="recent">Most Recent</a>
-                    <a class="dropdown-item filter-item" href="#" data-filter="likes">Most Liked</a>
-                    <a class="dropdown-item filter-item" href="#" data-filter="interacts">Most Interacted</a>
-                  </div>
-                </div>
               </div>
             </div>
           </form>
         </div>
       </div>
-      <div id="filterTagsContainer"></div>
     </div>
     <!-- BREAK -->
 
@@ -39,7 +28,7 @@
         {% for post in posts %}
         <div class="col-lg-3 col-md-4 col-sm-6">
           <div class="postbubble">
-            <img src="{{ url_for('static', filename='/images/posts/' + post.img_filename) }}" alt="{{post.img_filename}}" />
+            <img src="{{ url_for('static', filename='/images/posts/' + post.img) }}" alt="{{post.img}}" />
             <div class="screen-overlay overlay-animation">
               <div class="posttext">
                 <div class="posttitle">

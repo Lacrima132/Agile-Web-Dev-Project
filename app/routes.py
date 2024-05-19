@@ -190,7 +190,7 @@ def discussion():
                 desc=desc,
                 flag="Discussion",
                 uid=user_id,
-                img_filename=filename
+                img=filename
             )
             db.session.add(new_disc_post)
             db.session.commit()
@@ -253,7 +253,7 @@ def editprofile():
             avatar.save(save_path)
             current_user.avatar = filename
             flash('Profile picture uploaded!', category='success')
-            if previous_avatar_filename:
+            if previous_avatar_filename != "pfp.png":
                 previous_avatar_path = os.path.join('app', 'static', 'images', 'profilepics', previous_avatar_filename)
                 if os.path.exists(previous_avatar_path):
                     os.remove(previous_avatar_path)
@@ -332,7 +332,9 @@ def purchase_confirmation(sid):
 @routes.route('/bounties')
 def bounties():
     bounty_list = Post.query.filter_by(flag="Bounty", claimed=False).all()
-    return render_template('bounties.html', user=current_user, bounty_list=bounty_list)
+    lip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, liked=True).all()]
+    dip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, disliked=True).all()]
+    return render_template('bounties.html', user=current_user, bounty_list=bounty_list, lip=lip, dip=dip)
 
 @routes.route('/addbounty', methods=['GET', 'POST'])
 def addbounty():
@@ -347,7 +349,7 @@ def addbounty():
         if allowed_size(bounty_image):
             filename = secure_filename(bounty_image.filename)
             save_path = os.path.join('app', 'static', 'images', 'sellpics', filename)
-            list_bounty = Post(uid=current_user.get_id(), price=price, title=target, img_filename=filename, desc=target_info, status=target_status, flag="Bounty")
+            list_bounty = Post(uid=current_user.get_id(), price=price, title=target, img=filename, desc=target_info, status=target_status, flag="Bounty")
             db.session.add(list_bounty)
             db.session.commit()
             flash('Successfully Listed Item!', category='success')
