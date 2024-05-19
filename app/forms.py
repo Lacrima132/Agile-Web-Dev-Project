@@ -3,10 +3,13 @@ from wtforms import StringField, TextAreaField, FileField, SubmitField, Password
 from wtforms.validators import DataRequired, NumberRange, Email, EqualTo, Length, ValidationError
 from flask_wtf.file import FileAllowed, FileRequired
 import re
+from .models import User
 
 def validate_username(form, field):
     if len(field.data) < 5:
         raise ValidationError('Username must be at least 5 characters long.')
+    if User.query.filter_by(username=field.data).first():
+        raise ValidationError('Username already in use.')
 
 def validate_password(form, field):
     password = field.data
@@ -20,6 +23,10 @@ def validate_password(form, field):
         raise ValidationError('Password must contain at least one number.')
     if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
         raise ValidationError('Password must contain at least one special character.')
+    
+def validate_email(form, field):
+    if User.query.filter_by(email=field.data).first():
+        raise ValidationError('Email already in use.')
 
 class SignUpForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
