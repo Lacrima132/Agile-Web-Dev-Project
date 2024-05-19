@@ -1,52 +1,102 @@
-{% extends "base.html" %} {% block title %}{{ user.username }}{% endblock %} {%block content %}
+{% extends "base.html" %}
+{% block title %}{{ user.username }}{% endblock %}
+{% block content %}
 
 <div class="post-container text-center">
     <head> 
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Sell Your Weapon</title>
-            <style>
-                body {
-                    color: white; /* Set text color to white */
-                    background-color: black; /* Set background color to black for better contrast */
-                    font-family: Arial, sans-serif; /* Optional: Set font family */
-                }
-                form {
-                    margin: 20px;
-                }
-                label {
-                    display: block;
-                    margin-bottom: 5px;
-                }
-                input[type="text"],
-                input[type="number"],
-                textarea {
-                    width: 100%;
-                    padding: 8px;
-                    margin-bottom: 10px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                    box-sizing: border-box;
-                }
-                input[type="submit"] {
-                    background-color: #4CAF50;
-                    color: white;
-                    padding: 10px 20px;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    font-size: 16px;
-                }
-                input[type="submit"]:hover {
-                    background-color: #45a049;
-                }
-            </style>
-        </head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sell Your Weapon</title>
+        <style>
+            body {
+                color: white; /* Set text color to white */
+                background-color: black; /* Set background color to black for better contrast */
+                font-family: Arial, sans-serif; /* Optional: Set font family */
+            }
+            form {
+                margin: 20px;
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+            input[type="text"],
+            input[type="number"],
+            textarea {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+            .add-market-btn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                margin-bottom: 20px;
+                text-decoration: none; /* Remove underline from links */
+                display: inline-block; /* Ensures the button is displayed inline */
+            }
+            .add-market-btn:hover {
+                background-color: #45a049;
+            }
+            .post-box {
+                border: 1px solid #333;
+                border-radius: 8px;
+                background-color: #2c2c2c; /* Slightly lighter background for the boxes */
+                overflow: hidden;
+                transition: transform 0.3s;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .post-box:hover {
+                transform: scale(1.02); /* Slightly enlarge on hover */
+            }
+            .post-info h2 {
+                margin: 0;
+                font-size: 24px;
+                color: #4CAF50; /* Green color for titles */
+            }
+            .post-info p {
+                margin: 10px 0 0 0;
+                font-size: 16px;
+            }
+            .purchase-btn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                text-decoration: none; /* Remove underline from links */
+            }
+            .purchase-btn:hover {
+                background-color: #45a049;
+            }
+        </style>
     </head>
 <body>
     <h1>Welcome to the Marketplace</h1>
     <p>This marketplace is dedicated to selling weapons.</p>
+    <a href="{{ url_for('routes.sell') }}" class="add-market-btn">Add Item to Market</a>
     <h1>All Posts</h1>
     <ul>
         {% for post in posts %}
@@ -57,9 +107,7 @@
                         <h2>{{ post.title }}</h2>
                         <p>{{ post.desc }}</p>
                         <p>Price: ${{ post.price }}</p>
-                        <button>
-                            <a href="{{ url_for('routes.purchase', sid=post.sid) }}" class="purchase-btn">Purchase</a>
-                        </button>
+                        <a href="{{ url_for('routes.purchase', sid=post.sid) }}" class="purchase-btn">Purchase</a>
                     </div>
                 </div>
             </li>
