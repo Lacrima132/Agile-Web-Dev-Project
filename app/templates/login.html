@@ -1,33 +1,40 @@
-{% extends "base.html" %}
-
-{% block title %}Login{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Login{%
+endblock %} {% block content %}
 <div class="form-section">
-  <form method="POST">
-    {{ form.hidden_tag() }}
-    <h2 class="form-header">Login</h2>
-    <div class="form-group">
-      <label class="sr-text" for="email">Email:</label>
-      {{ form.email(class="form-input-bubble", id="email", placeholder="Email") }}
-      {% for error in form.email.errors %}
-        <span class="text-danger">{{ error }}</span>
-      {% endfor %}
-    </div>
-    <br />
-    <div class="form-group">
-      <label class="sr-text" for="password">Password:</label>
-      {{ form.password(class="form-input-bubble", id="password", placeholder="Password") }}
-      {% for error in form.password.errors %}
-        <span class="text-danger">{{ error }}</span>
-      {% endfor %}
-    </div>
-    <br />
-    <div class="form-group">
-      {{ form.submit(class="btn-submit") }}
-    </div>
-    <p>Not a user? Sign up <a href="{{ url_for('auth.sign_up') }}">here</a>.</p>
-  </form>
-  
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		<h2 class="form-header">Login</h2>
+		<div class="form-group">
+			<label class="sr-text" for="email"
+				>Email:</label
+			>
+			{{ form.email(class="form-input-bubble",
+			id="email", placeholder="Email") }} {% for
+			error in form.email.errors %}
+			<span class="text-danger">{{ error }}</span>
+			{% endfor %}
+		</div>
+		<br />
+		<div class="form-group">
+			<label class="sr-text" for="password"
+				>Password:</label
+			>
+			{{ form.password(class="form-input-bubble",
+			id="password", placeholder="Password") }} {%
+			for error in form.password.errors %}
+			<span class="text-danger">{{ error }}</span>
+			{% endfor %}
+		</div>
+		<br />
+		<div class="form-group">
+			{{ form.submit(class="btn-submit") }}
+		</div>
+		<p>
+			Not a user? Sign up
+			<a href="{{ url_for('auth.sign_up') }}"
+				>here</a
+			>.
+		</p>
+	</form>
 </div>
 {% endblock %}

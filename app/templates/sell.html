@@ -1,91 +1,45 @@
-{% extends "base.html" %}
-{% block title %}{{ user.username }}{% endblock %}
-{% block content %}
-<div class="post-container text-center">
+{% extends "base.html" %} {% block title %}{{
+user.username }}{% endblock %} {% block content %}
+<div class="form-section">
+	<h1>Sell Your Weapon</h1>
+	<form
+		method="POST"
+		enctype="multipart/form-data">
+		{{ form.hidden_tag() }}
+		<label for="weapon_title"
+			>{{ form.weapon_title.label }}</label
+		>
+		{{ form.weapon_title(class="form-control") }}
+		{% for error in form.weapon_title.errors %}
+		<span style="color: red">[{{ error }}]</span>
+		{% endfor %}
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sell Your Weapon</title>
-        <style>
-            body {
-                color: rgb(149, 135, 135);
-                background-color: black;
-                font-family: Arial, sans-serif;
-            }
-            form {
-                margin: 20px;
-            }
-            label {
-                display: block;
-                margin-bottom: 5px;
-            }
-            input[type="text"],
-            input[type="number"],
-            textarea {
-                width: 100%;
-                padding: 8px;
-                margin-bottom: 10px;
-                border: 1px solid #917171;
-                border-radius: 4px;
-                box-sizing: border-box;
-            }
-            input[type="submit"] {
-                background-color: #4CAF50;
-                color: white;
-                padding: 10px 20px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 16px;
-            }
-            input[type="submit"]:hover {
-                background-color: #45a049;
-            }
-            .post-box {
-                display: flex;
-                align-items: center;
-                margin-bottom: 20px;
-            }
-            
-            .post-info {
-                margin-left: 10px;
-                background-color: #f0f0f0;
-                padding: 10px;
-                border-radius: 5px;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Sell Your Weapon</h1>
-        <form method="POST" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            <label for="weapon_title">{{ form.weapon_title.label }}</label>
-            {{ form.weapon_title(class="form-control") }}
-            {% for error in form.weapon_title.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            
-            <label for="weapon_price">{{ form.weapon_price.label }}</label>
-            {{ form.weapon_price(class="form-control") }}
-            {% for error in form.weapon_price.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            
-            <label for="weapon_description">{{ form.weapon_description.label }}</label>
-            {{ form.weapon_description(class="form-control") }}
-            {% for error in form.weapon_description.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            
-            <label for="weapon_image">{{ form.weapon_image.label }}</label>
-            {{ form.weapon_image(class="form-control") }}
-            {% for error in form.weapon_image.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            
-            {{ form.submit(class="btn btn-primary") }}
-        </form>
-    </body>
+		<label for="weapon_price"
+			>{{ form.weapon_price.label }}</label
+		>
+		{{ form.weapon_price(class="form-control") }}
+		{% for error in form.weapon_price.errors %}
+		<span style="color: red">[{{ error }}]</span>
+		{% endfor %}
+
+		<label for="weapon_description"
+			>{{ form.weapon_description.label }}</label
+		>
+		{{
+		form.weapon_description(class="form-control")
+		}} {% for error in
+		form.weapon_description.errors %}
+		<span style="color: red">[{{ error }}]</span>
+		{% endfor %}
+
+		<label for="weapon_image"
+			>{{ form.weapon_image.label }}</label
+		>
+		{{ form.weapon_image(class="form-control") }}
+		{% for error in form.weapon_image.errors %}
+		<span style="color: red">[{{ error }}]</span>
+		{% endfor %} {{ form.submit(class="btn
+		btn-primary") }}
+	</form>
 </div>
 {% endblock %}

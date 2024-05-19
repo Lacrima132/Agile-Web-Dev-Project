@@ -146,6 +146,18 @@ def promote_user(user_id):
         promote_hunter = Promote(promoted_by=current_user.get_id(), promoting_this_guy=user_id, promoted=True)
         db.session.add(promote_hunter)
         hunter.promote += 1  # Increment promotion count
+    if hunter.promote > 0:
+        hunter.rank = "D"
+    elif hunter.promote > 10:
+        hunter.rank = "C"
+    elif hunter.promote > 20:
+        hunter.rank = "B"
+    elif hunter.promote > 30:
+        hunter.rank = "A"
+    elif hunter.promote > 40:
+        hunter.rank = "S"
+    elif hunter.promote > 50:
+        hunter.rank = "SS"
     db.session.commit()
     return jsonify(success=True, promotion_count=hunter.promote)
 
@@ -189,10 +201,19 @@ def discussion():
 
     return render_template('discussion.html', user=current_user, form=form)
 
-@routes.route('/post/delete/<int:post_id>', methods=['POST'])
+@routes.route('/post/delete/<int:post_id>/<string:post_flag>', methods=['POST'])
 @login_required
-def delete_post(post_id):
-    post = Post.query.get_or_404(post_id)
+def delete_post(post_id, post_flag):
+    if post_flag == "Discussion":
+        post = Post.query.get_or_404(post_id)
+        db.session.delete(post)
+        db.session.commit()
+        flash('Post deleted successfully', 'success')
+    elif post_flag == "Listing":
+        post = Sell.query.get_or_404(post_id)
+        db.session.delete(post)
+        db.session.commit()
+        flash('Listing deleted successfully', 'success')
     # Check if the current user is the author of the post
     if post.uid != current_user.uid:
         print("lol")  # Forbidden - user is not authorized to delete this post
@@ -209,11 +230,13 @@ def profile():
     total_likes = Post.query.filter_by(uid=current_user.get_id()).with_entities(func.sum(Post.likes)).scalar()
     total_likes = total_likes if total_likes else 0  # Handle case where total_likes is None
     print(total_likes, num_posts)
-    purchased_items = Sell.query.filter_by(uid=current_user.get_id(), sold=current_user.get_id()).all()
+    purchased_items = Sell.query.filter_by(sold=current_user.get_id()).all()
     current_user_posts = Post.query.filter_by(uid=current_user.get_id()).all()
     sold_items = Sell.query.filter_by(uid=current_user.get_id(), sold="Unsold").all()
-
-    return render_template('profile.html', user=user, num_posts=num_posts, total_likes=total_likes, current_user_posts=current_user_posts, purchased_items=purchased_items, sold_items=sold_items)
+    disc_posts = Post.query.filter_by(uid=current_user.get_id(), flag="Discussion").all()
+    bounties_claimed = Post.query.filter_by(claimed=current_user.get_id()).all()
+    print(disc_posts)
+    return render_template('profile.html', user=user, num_posts=num_posts, total_likes=total_likes, current_user_posts=current_user_posts, purchased_items=purchased_items, sold_items=sold_items, disc_posts=disc_posts, bounties_claimed=bounties_claimed)
 
 @routes.route('/editprofile', methods =['GET', 'POST'])
 def editprofile():
@@ -269,7 +292,7 @@ def sell():
         if allowed_size(weapon_image):
             filename = secure_filename(weapon_image.filename)
             save_path = os.path.join('app', 'static', 'images', 'sellpics', filename)
-            new_item_listing = Sell(uid=current_user.get_id(), price=weapon_price, title=weapon_title, img=filename, desc=weapon_desc)
+            new_item_listing = Sell(uid=current_user.get_id(), price=weapon_price, title=weapon_title, img=filename, desc=weapon_desc, flag="Listing")
             db.session.add(new_item_listing)
             db.session.commit()
             flash('Successfully Listed Item!', category='success')
@@ -297,7 +320,7 @@ def purchase_confirmation(sid):
     sold = Sell.query.filter_by(sid=sid, sold="Unsold").first()  # Find the entry with the given sid
 
     if sold:
-        sold.sold = current_user.get_id()  # Delete the entry from the session
+        sold.sold = current_user.get_id()  # Delete the entry from the session, purchased by current user
         db.session.commit()  # Commit the transaction
         flash('Purchase Completed :)', category='success')
 
@@ -308,7 +331,7 @@ def purchase_confirmation(sid):
 
 @routes.route('/bounties')
 def bounties():
-    bounty_list = Post.query.filter_by(flag="Bounty").all()
+    bounty_list = Post.query.filter_by(flag="Bounty", claimed=False).all()
     return render_template('bounties.html', user=current_user, bounty_list=bounty_list)
 
 @routes.route('/addbounty', methods=['GET', 'POST'])
@@ -336,3 +359,12 @@ def addbounty():
         flash('Please fill in all fields correctly.', category='error')
 
     return render_template('add-bounty.html', user=current_user, form=form)
+
+@routes.route ('activate-bounty/<int:bounty_id>', methods=['GET', 'POST'])
+def activate_bounty(bounty_id):
+    bounty = Post.query.filter_by(pid=bounty_id).first()
+    bounty.claimed = False
+    bounty.claimed=current_user.get_id()
+    db.session.commit()
+    flash("Bounty Saved to Profile", category='success')
+    return render_template('bounties.html', user=current_user)

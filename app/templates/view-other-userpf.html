@@ -16,13 +16,14 @@
 <!-- Heading for User Posts -->
 <div class="user-posts text-center">
   User Posts
-  {% if  not promoted_by_current %}
+  {% if  not promoted_by_current_user %}
   <button id="updateButton" class="updateButton" onclick="toggleUpdate(this, {{ userinfo.uid }})">Promote Me</button>
   {% else %}
-    Promote Me
+  <button id="updateButton" class="updateButton" onclick="toggleUpdate(this, {{ userinfo.uid }})">Promoted</button>
   {% endif %}
 </button>
 <span id="promotionCount">{{ userinfo.promote }}</span>
+<img src="../static/images/ranks/{{ userinfo.rank }}.png" class="rank-img" />
 </div>
                 <!-- User Posts -->
                 {% for post in posts %}
