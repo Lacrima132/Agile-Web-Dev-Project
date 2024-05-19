@@ -8,9 +8,9 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
     name = db.Column(db.String(150))
-    avatar = db.Column(db.String(150))
+    avatar = db.Column(db.String(150), default="default.png")
     bio = db.Column(db.String(150), default="Nothing here yet!")
-    rank = db.Column(db.String(150))
+    rank = db.Column(db.String(150), default="D")
     isHunter = db.Column(db.Boolean, default=False)
     promote = db.Column(db.Integer, default=0)
 

@@ -11,7 +11,7 @@
         <div class="profile-box3">
           <h2 class="profile-name">
             {{ user.username }}
-            <img src="../static/images/ranks/6.png" class="rank-img" />
+            <img src="../static/images/ranks/{{user.rank}}.png" class="rank-img" />
           </h2>
           <form action="{{ url_for('routes.editprofile') }}">
             <input class="btn-edit" type="submit" value="Edit Profile" />

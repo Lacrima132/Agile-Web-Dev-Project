@@ -906,6 +906,10 @@ ul {
   text-align: center;
 }
 
+#faq-header {
+  padding-top: 2.5rem;
+}
+
 /* 
 .parallax {
   position: relative;
