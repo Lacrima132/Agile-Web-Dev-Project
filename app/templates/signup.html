@@ -50,6 +50,7 @@
     <div class="form-group">
       {{ form.submit(class="btn-submit") }}
     </div>
+    <p>Already have an account? Login <a href="{{ url_for('auth.login') }}">here</a>.</p>
   </form>
 </div>
 {% endblock %}
