@@ -2,20 +2,29 @@
 {% block title %}{{ user.username }}{% endblock %}
 {% block content %}
 <div class="intro-section">
-  <div>
-    <div class="info-bubble">
+  <div class="profile-header">
+    <img src="../static/images/profileheader.jpg" alt="profile-header">
+    <div class="profile-pic-container">
       <div class="profile-pic">
         <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar">
       </div>
+    </div>
+    <div class="profile-details">
+    <h2 class="profile-name">
+      <img src="../static/images/ranks/{{ user.rank }}.png" class="rank-img" />
+      {{ user.username }}
+    </h2>
+    <form action="{{ url_for('routes.editprofile') }}">
+      <input class="btn-edit" type="submit" value="Edit Profile" />
+    </form>
+    </div>
+    <div class="profile-header-base"></div>
+  </div>
+  <div>
+    <div class="info-bubble">
       <div class="profile-box2">
         <div class="profile-box3">
-          <h2 class="profile-name">
-            {{ user.username }}
-            <img src="../static/images/ranks/{{ user.rank }}.png" class="rank-img" />
-          </h2>
-          <form action="{{ url_for('routes.editprofile') }}">
-            <input class="btn-edit" type="submit" value="Edit Profile" />
-          </form>
+          
         </div>
         <br />
         <p>{{ user.bio }}</p>
@@ -25,13 +34,10 @@
     </div>
     <br />
     <div class="select-view">
-      <div class="select-buttons">
         <button class="view-button" onclick="openTab(event, 'Posts')" id="defaultOpen">Posts</button>
         <button class="view-button" onclick="openTab(event, 'Purchased')">Purchased</button>
         <button class="view-button" onclick="openTab(event, 'Bounties Claimed')">Bounties Claimed</button>
-        <button class="view-button" onclick="openTab(event, 'Listings')">Listings</button>
-      </div>
-    </div>
+        <button class="view-button" onclick="openTab(event, 'Listings')">Listings</button>    </div>
     <br />
 
     <!-- Tab content -->
