@@ -20,14 +20,13 @@ Bountify is a dynamic platform designed to facilitate mercenary and trade opport
 
 ## Team Members
 
-+----------------+------------+------------------+
 |      Name      | Student ID |  Github Username |
-+----------------+------------+------------------+
+|----------------|------------|------------------|
 | Daniel Loo     | 23157127   | Lacrima132       |
 | Helen Yang     | 23072751   | trebbyyy         |
 | Aaron Chin     | 23286189   | aaroooooon       |
 | Isabella Rowe  | 23159504   | ipr17            |
-+----------------+------------+------------------+
+
 
 ## User Journey
 
@@ -53,11 +52,16 @@ Bountify is a dynamic platform designed to facilitate mercenary and trade opport
 
 - Ensure you are in the directory that holds the tests folder
 - Ensure you have Google Chrome installed on your system (or in your virtual environment):
+
       $ google-chrome --version
-        If it is not installed (google-chrome: command not found):
-          $ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          $ sudo dpkg -i google-chrome-stable_current_amd64.deb
-          $ sudo apt-get install -f
+
+- If it is not installed (google-chrome: command not found):
+
+      $ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      $ sudo dpkg -i google-chrome-stable_current_amd64.deb
+      $ sudo apt-get install -f
+
 - Ensure the flask app is running 
 - From a new terminal:
+
       $ python -m unittest discover -s tests
