@@ -2,22 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <title>
-      {% block title %}Bountify{% endblock %}
-    </title>
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Bountify{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
       rel="stylesheet"
@@ -60,6 +48,136 @@
     >
       <div class="logo">
         <a href="{{ url_for('routes.home') }}">
+          B<span class="hidden">OUNTIFY</span>
+        </a>
+      </div>
+      <div class="main-menu">
+        {% if user.is_authenticated %}
+        <ul>
+          <li>
+            <a href="{{ url_for('routes.home') }}">
+              <i class="fa fa-home fa-lg"></i>
+              <span class="hidden"> Home</span>
+            </a>
+          </li>
+          <li
+            class="dropdown"
+            onmouseover="showNavDropdown('.browse-dropdown')"
+            onmouseleave="hideNavDropdown('.browse-dropdown')"
+          >
+            <a href="{{ url_for('routes.browse') }}">
+              <i class="fa fa-search fa-lg"></i>
+              <span class="hidden"> Browse &nbsp;&nbsp;</span>
+              <i
+                class="fa fa-chevron-right fa-xs hidden"
+                aria-hidden="true"
+              ></i>
+            </a>
+            <ul class="dropdown-menu browse-dropdown">
+              <li>
+                <a href="{{ url_for('routes.marketplace') }}">
+                  <i class="fa fa-trophy fa-lg"></i>
+                  <span class="hidden"> Marketplace</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url_for('routes.discussion') }}">
+                  <i class="fa fa-plus fa-lg"></i>
+                  <span class="hidden"> Discussion</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url_for('routes.bounties') }}">
+                  <i class="fa fa-trophy fa-lg"></i>
+                  <span class="hidden"> Bounties</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li
+            class="dropdown"
+            onmouseover="showNavDropdown('.submit-dropdown')"
+            onmouseleave="hideNavDropdown('.submit-dropdown')"
+          >
+            <a href="{{ url_for('routes.sell') }}">
+              <i class="fa fa-plus fa-lg"></i>
+              <span class="hidden"> Submit &nbsp;&nbsp;</span>
+              <i
+                class="fa fa-chevron-right fa-xs hidden"
+                aria-hidden="true"
+              ></i>
+            </a>
+            <ul class="dropdown-menu submit-dropdown">
+              <li>
+                <a href="{{ url_for('routes.sell') }}">
+                  <i class="fa fa-trophy fa-lg"></i>
+                  <span class="hidden"> Sell Here</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url_for('routes.discussion') }}">
+                  <i class="fa fa-plus fa-lg"></i>
+                  <span class="hidden"> Discussion</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url_for('routes.addbounty') }}">
+                  <i class="fa fa-trophy fa-lg"></i>
+                  <span class="hidden"> Add Bounty</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="{{ url_for('routes.ranking') }}">
+              <i class="fa fa-trophy fa-lg"></i>
+              <span class="hidden"> Ranking</span>
+            </a>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+      <div class="login">
+        <ul>
+          {% if user.is_authenticated %}
+          <li>
+            <a href="{{ url_for('routes.profile') }}">
+              <i class="fa fa-user-circle-o fa-lg"></i>
+              <span class="hidden"> Profile</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('auth.logout') }}">
+              <i class="fa fa-sign-out fa-lg"></i>
+              <span class="hidden"> Log Out</span>
+            </a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{{ url_for('auth.login') }}">
+              <i class="fa fa-sign-in fa-lg"></i>
+              <span class="hidden"> Log In</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('auth.sign_up') }}">
+              <i class="fa fa-pencil-square-o fa-lg"></i>
+              <span class="hidden"> Sign Up</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <!-- 
+    <nav
+      class="sidebar"
+      onmouseover="growNav(); revealHidden();"
+      onmouseleave="shrinkNav(); hideHidden();"
+    >
+      <div class="logo">
+        <a href="{{ url_for('routes.home') }}">
           B<span class="hidden">OUNTIFY</span> </a>
       </div>
       </div>
@@ -83,7 +201,7 @@
             <a
               href="{{ url_for('routes.discussion') }}"
               ><i class="fa fa-plus fa-lg"></i>
-              <span class="hidden"> Add Discussion</span>
+              <span class="hidden"> Discussion</span>
             </a>
           </li>
           <li>
@@ -111,14 +229,14 @@
             <a
               href="{{ url_for('routes.bounties') }}"
               ><i class="fa fa-trophy fa-lg"></i>
-              <span class="hidden">Bounties</span>
+              <span class="hidden"> Bounties</span>
             </a>
           </li>
           <li>
             <a
               href="{{ url_for('routes.addbounty') }}"
               ><i class="fa fa-trophy fa-lg"></i>
-              <span class="hidden">Add Bounty</span>
+              <span class="hidden"> Add Bounty</span>
             </a>
           </li>
         </ul>
@@ -156,33 +274,31 @@
         {% endif %}
         </ul>
       </div>
-    </nav>
+    </nav> -->
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %} 
-        {% for category, message in messages %}
-        {%if category == 'error'%}
-            <div class="alert alert-danger alter-dismissable fade show" role="alert"> 
-                {{ message }}
-                <button type="button" class="close"data-dismiss="alert">
-                    <span aria-hidden="true">&nbsp;
-                      <i class="fa fa-times" aria-hidden="true"></i>
-                    </span>
-                </button>
-            </div>
-        {% else %}
-            <div class="alert alert-success alter-dismissable fade show" role="alert"> 
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert">
-                    <span aria-hidden="true">&nbsp;
-                      <i class="fa fa-times" aria-hidden="true"></i>
-                    </span>
-                </button>
-            </div>
-        {% endif %}
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {%if category ==
+    'error'%}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true"
+          >&nbsp;
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true"
+          >&nbsp;
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
 
     <!-- Base block for other inheriting html files to display content -->
     {% block content %} {% endblock %}
@@ -191,15 +307,10 @@
       <h2>Useful Links</h2>
       <ul>
         <li>
-          <a href="{{ url_for('routes.faq') }}"
-            >FAQ</a
-          >
+          <a href="{{ url_for('routes.faq') }}">FAQ</a>
         </li>
         <li>
-          <a
-            href="{{ url_for('routes.aboutus') }}"
-            >About Us</a
-          >
+          <a href="{{ url_for('routes.aboutus') }}">About Us</a>
         </li>
       </ul>
     </div>

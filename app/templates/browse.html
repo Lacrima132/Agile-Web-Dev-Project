@@ -45,17 +45,18 @@
                   <a href="/post/{{ post.pid }}">
                     {{ post.title }}
                   </a>
-                </div>
-                <div class="postauthor">
-                  <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="small_avatar" alt="avatar"/>
-                  {% if post.user.uid != current_user.uid %}
-                  <a href= "/view-other-userpf/{{ post.user.uid }}">
-                    {{ post.user.username }}
-                    {% else %}
-                  <a href="/profile">
-                    {{ post.user.username }}
-                    {% endif %}
-                  </a>
+                  <br>
+                  <div class="author">
+                    <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="small_avatar" alt="avatar"/>
+                    {% if post.user.uid != current_user.uid %}
+                    <a href= "/view-other-userpf/{{ post.user.uid }}">
+                      {{ post.user.username }}
+                      {% else %}
+                    <a href="/profile">
+                      {{ post.user.username }}
+                      {% endif %}
+                    </a>
+                  </div>
                 </div>
                 <div class="postcontent">{{ post.desc }}</div>
               </div>

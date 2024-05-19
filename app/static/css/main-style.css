@@ -374,6 +374,24 @@ ul {
   color: var(--primary-color);
 }
 
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: rgba(30, 0, 0, 0.8);
+  min-width: 200px; /* Adjust width as needed */
+}
+
+.dropdown-menu li a {
+  padding: 10px 15px;
+  color: #ecf0f1;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
 .form-header {
   margin-bottom: 1.25rem;
   text-align: center;
@@ -555,7 +573,7 @@ ul {
 }
 
 .posttitle {
-  font-size: 30px;
+  font-size: 2rem;
   font-weight: bold;
   padding: 0.5rem;
   color: #f4f4f6;
@@ -563,6 +581,14 @@ ul {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   margin-bottom: 10px;
+}
+
+.author {
+  font-size: 1rem;
+}
+
+.postbubble a {
+  color: #f4f4f6;
 }
 
 .postcontent {
@@ -625,10 +651,12 @@ ul {
 /* PROFILE */
 
 .avatar {
-  max-width: 16rem;
+  width: 16rem;
+  height: 16rem;
   border-radius: 50%;
   overflow: hidden;
-  border-radius: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .small-avatar {
@@ -655,7 +683,7 @@ ul {
 .info-bubble {
   margin: 1rem 1rem;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 5fr;
   margin: 2rem 1rem 0 6%;
   /* width: 94%; */
   min-height: 10rem;
@@ -961,4 +989,47 @@ ul {
 
 .editprofile {
   padding: 0 7rem;
+}
+
+.particle-container {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.particles {
+  position: relative;
+  display: flex;
+}
+
+.particles span {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background: #a82018;
+  margin: 0 4px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 10px #831e19, 0 0 50px #d40b00, 0 0 100px #d10a00;
+  animation: animate 15s linear infinite;
+  animation-duration: calc(180s / var(--i));
+}
+
+@keyframes animate {
+  0% {
+    transform: translateY(100vh) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(35vh) scale(0.1);
+  }
+  100% {
+    transform: translateY(0vh) scale(0.2);
+    opacity: 0;
+  }
+}
+
+.particles span:nth-child(even) {
+  background: #d12a00;
+  box-shadow: 0 0 0 10px #a82018, 0 0 50px #a82018, 0 0 100px #a82018;
 }

@@ -56,6 +56,20 @@ function shrinkNav() {
   document.querySelector(".sidebar").style.width = "5rem";
 }
 
+function showSideDiv(className) {
+  var sideDiv = document.querySelector(className);
+  if (sideDiv) {
+    sideDiv.style.display = "block";
+  }
+}
+
+function hideSideDiv(className) {
+  var sideDiv = document.querySelector(className);
+  if (sideDiv) {
+    sideDiv.style.display = "none";
+  }
+}
+
 function revealHidden() {
   const hiddenText = document.querySelectorAll(".hidden");
   hiddenText.forEach((el) => el.classList.add("reveal"));
