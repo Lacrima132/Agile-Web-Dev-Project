@@ -213,7 +213,7 @@ def discussion():
 @routes.route('/post/delete/<int:post_id>/<string:post_flag>', methods=['POST'])
 @login_required
 def delete_post(post_id, post_flag):
-    if post_flag == "Discussion":
+    if post_flag == "Discussion" or post_flag == "Bounty":
         post = Post.query.get_or_404(post_id)
         db.session.delete(post)
         db.session.commit()
@@ -245,6 +245,7 @@ def profile():
     bounties_claimed = Post.query.filter_by(claimed=current_user.get_id()).all()
     bounties_listed = Post.query.filter_by(uid=current_user.get_id(), flag="Bounty", claimed=False).all()
     
+    sold_items = sold_items + bounties_listed
     return render_template('profile.html', user=user, num_posts=num_posts, total_likes=total_likes, current_user_posts=current_user_posts, purchased_items=purchased_items, sold_items=sold_items, disc_posts=disc_posts, bounties_claimed=bounties_claimed, bounties_listed=bounties_listed)
 
 @routes.route('/editprofile', methods=['GET', 'POST'])
