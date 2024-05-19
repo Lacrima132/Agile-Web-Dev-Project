@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block title %}Edit profile{% endblock %} {% block
-content %}
+{% extends "base.html" %}
+{% block title %}Edit profile{% endblock %}
+{% block content %}
 <div class="home">
   <div class="editprofile forum-section">
     <div class="row">
@@ -8,48 +9,51 @@ content %}
       </div>
       <div class="col-lg-6 col-md-8 col-sm-10">
         <!-- Profile Edit Form -->
-  <form method="POST" enctype="multipart/form-data" class="form-edit">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-      {{ form.username.label }}
-      {{ form.username(class="form-input-bubble", placeholder="Username") }}
-      {% for error in form.username.errors %}
-        <span class="text-danger">{{ error }}</span>
-      {% endfor %}
-    </div>
-    
-    <br />
-    
-    <div class="form-group">
-      {{ form.bio.label }}
-      {{ form.bio(class="form-input-bubble", placeholder="Enter new bio.") }}
-      {% for error in form.bio.errors %}
-        <span class="text-danger">{{ error }}</span>
-      {% endfor %}
-    </div>
-    
-    <br />
-    
-    <div class="form-group">
-      {{ form.image.label }}
-      {{ form.image(class="form-input-bubble") }}
-      {% for error in form.image.errors %}
-        <span class="text-danger">{{ error }}</span>
-      {% endfor %}
-    </div>
-    
-    <br />
-    
-    <div class="form-group">
-      {{ form.submit(class="btn-submit") }}
-
+        <form method="POST" enctype="multipart/form-data" class="form-edit">
+          {{ form.hidden_tag() }}
+          <div class="form-group">
+            {{ form.username.label }}
+            {{ form.username(class="form-input-bubble", placeholder="Username") }}
+            {% for error in form.username.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+          
+          <br />
+          
+          <div class="form-group">
+            {{ form.bio.label }}
+            {{ form.bio(class="form-input-bubble", placeholder="Enter new bio.") }}
+            {% for error in form.bio.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+          
+          <br />
+          
+          <div class="form-group">
+            {{ form.image.label }}
+            {{ form.image(class="form-input-bubble") }}
+            {% for error in form.image.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+          
+          <br />
+          
+          <div class="form-group">
+            {{ form.submit(class="btn-submit") }}
+          </div>
+        </form>
+        
         <!-- Change Password Form -->
+        <form action="{{ url_for('auth.changepassword') }}" method="POST" class="form-edit">
+          <div class="form-group">
+            <input class="btn-submit" type="submit" value="Change Password"/>
+          </div>
+        </form>
       </div>
-      <form action="{{ url_for('auth.changepassword') }}" method="POST" class="form-edit">
-        <div class="form-group">
-          <input class="btn-submit" type="submit" value="Change Password"/>
     </div>
   </div>
-</div>
 </div>
 {% endblock %}

@@ -52,7 +52,7 @@ def sign_up():
             flash('Invalid password: must be at least 7 characters.', category='error')
         else:
             password_hash = generate_password_hash(password1, method='pbkdf2:sha256')
-            new_user = User(email=email, username=username, password=password_hash, avatar='profile.png', isHunter=is_bounty_hunter)
+            new_user = User(email=email, username=username, password=password_hash, avatar="pfp.png", isHunter=is_bounty_hunter)
             db.session.add(new_user)
             db.session.commit()
             flash('Account created!', category='success')
@@ -77,4 +77,4 @@ def changepassword():
             return redirect(url_for('routes.profile'))
         else:
             flash('Invalid old password. Please try again.', category='error')
-    return render_template('change-password.html', user=current_user, form=form)
+    return render_template('change-password.html', user=current_user, form=form) 
