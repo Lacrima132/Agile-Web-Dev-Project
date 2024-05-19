@@ -91,38 +91,44 @@ Bountify {% endblock %} {% block content %}
 			putting the power to profit directly in your
 			hands amidst the endless expanse of space.
 		</p>
+
 		<p class="button-desc">Ready to go?</p>
-		<button
-			type="button"
-			class="btn-prominent"
-			onclick="window.location.href='browse.html';">
+    {% if current_user.is_authenticated %}
+    <form action="{{ url_for('routes.browse') }}" method="GET">
+    {% else %}
+    <form action="{{ url_for('auth.login') }}" method="GET">
+    {% endif %}
+    <button
+      type="submit"
+      class="btn-prominent"
+    >
 			Explore the forum
 		</button>
 	</div>
 
-	<div class="scroll">
-		<h1 class="star-text">
-			Look at all those chickens
-		</h1>
-		<p class="description">
-			hahahaa no no no no no mama mmia let me go
-		</p>
-	</div>
+  <div class="scroll">
+    <h1 class="star-text">
+      Engage with the Galaxy
+    </h1>
+    <p class="description">
+      Post and accept bounties, buy and sell weapons, and interact with a community of mercenaries. 
+      Whether you're looking for the next big hunt or the perfect trade, Bountify is your gateway to the Star Wars universe.
+    </p>
+  </div>
 
-	<div class="scroll">
-		<h1 class="star-text">
-			Baby i can see your halo
-		</h1>
-		<p class="description">
-			im the baaaad guy... duh. womp womp
-			wompwompwomp womp womp
-		</p>
-	</div>
+  <div class="scroll">
+    <h1 class="star-text">
+      Your Next Adventure Awaits
+    </h1>
+    <p class="description">
+      Join a thriving community where your skills and courage will lead you to great rewards. The galaxy is full of opportunities - seize them now!
+    </p>
+  </div>
 
-	<div class="scroll">
-		<h1 class="star-text">BomBaStiC SIdE eYE</h1>
-		<p class="description">CAN I GET A HOYAAA</p>
-	</div>
+  <div class="scroll">
+    <h1 class="star-text">Connect with Fellow Mercenaries</h1>
+    <p class="description">Share your experiences, learn from others, and grow your reputation in the galaxy. Your journey is just beginning.</p>
+  </div>
 </div>
 
 {% endblock %}

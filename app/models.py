@@ -2,8 +2,6 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-
-
 class User(db.Model, UserMixin):
     uid = db.Column(db.Integer, primary_key=True) #turn back to ID if it doesnt work and make sure to change foreign key parameters below back to 'id' as well if required
     email = db.Column(db.String(150), unique=True)
@@ -30,6 +28,11 @@ class Post(db.Model): #discussion posts, flag = "discussion"
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
     likes = db.Column(db.Integer, default = 0)
     dislikes = db.Column(db.Integer, default = 0)
+    price = db.Column(db.Integer, default = 0)
+    status = db.Column(db.String(100))
+    com_num = db.Column(db.Integer, default = 0)
+    claimed = db.Column(db.String(100), default=False) #if the logged in user has claimed this bounty or not
+    
     
 class Comments(db.Model):
     cid = db.Column(db.Integer, primary_key=True)
@@ -48,14 +51,15 @@ class Likes(db.Model):
 
 class Sell(db.Model):
     sid = db.Column(db.Integer, primary_key=True)
-    uid = db.Column(db.Integer, db.ForeignKey('user.uid'))
+    uid = db.Column(db.Integer, db.ForeignKey('user.uid')) #who is selling the item
     user = db.relationship('User', backref='sell')
     price = db.Column(db.Integer)
     title = db.Column(db.String(100))
     img = db.Column(db.String(100), nullable=False)
     desc = db.Column(db.String(1000))
-    sold = db.Column(db.String(100), default="Unsold")
+    sold = db.Column(db.String(100), default="Unsold") #changes to user logged in who bought it
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
+    flag = db.Column(db.String(100))
     
 class Promote(db.Model):
     id = db.Column(db.Integer, primary_key=True)

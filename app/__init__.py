@@ -1,11 +1,17 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import CSRFProtect
 from os import path
 from flask_login import LoginManager
 import os
+from flask_migrate import Migrate
+from config import Config
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
+migrate = Migrate()
+csrf = CSRFProtect()
+
 
 ALLOWED_EXTENSIONS = set(['png','jpg','jpeg'])
 
@@ -19,22 +25,24 @@ def allowed_size(file):
     file.seek(0)
     return file_size <= max_size
 
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'your_secret_key'
+    app.config.from_object(config_class)
+    app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'default_secret_key')
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['POST_FOLDER'] = 'static/posts'
     db.init_app(app)
+    migrate.init_app(app, db)  # Initialize Flask-Migrate with the app and db
 
     from .routes import routes
     from .auth import auth
+    from .models import User, Post, Comments, Likes, Sell, Promote
 
+    with app.app_context():
+        db.create_all()
+    
     app.register_blueprint(routes, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
-
-    from .models import User
-
-    create_database(app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

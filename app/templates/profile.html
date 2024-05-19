@@ -19,9 +19,7 @@ user.username }}{% endblock %} {% block content %}
 			<div class="profile-box2">
 				<div class="profile-box3">
 					<h2 class="profile-name">
-						<img
-							src="../static/images/ranks/6.png"
-							class="rank-img" />
+						<img src="../static/images/ranks/{{ user.rank }}.png" class="rank-img" />
 						{{ user.username }}
 					</h2>
 					<form
@@ -154,6 +152,42 @@ user.username }}{% endblock %} {% block content %}
 				</div>
 			</div>
 		</div>
+    <!-- Tab content -->
+    <div id="Posts" class="tabcontent">
+      <div class="forum-section">
+        <div class="post-container">
+          <div class="row">
+            {% for item in disc_posts %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="postbubble">
+                <img
+                  src="{{ url_for('static', filename='/images/posts/' + item.img_filename) }}"
+                  alt="Post Image"
+                />
+                <div class="screen-overlay overlay-animation">
+                  <div class="posttext">
+                    <div class="postheader">
+                      <div class="posttitle">{{ item.title }}</div>
+                      <form
+                        action="{{ url_for('routes.delete_post', post_id=item.pid, post_flag = item.flag) }}"
+                        method="post"
+                      >
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button type="submit" class="reactbutton">
+                          <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                        </button>
+                      </form>
+                    </div>
+                    <div class="postcontent">{{ item.desc }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
 
 		<div
 			id="Purchased"
@@ -260,6 +294,107 @@ user.username }}{% endblock %} {% block content %}
 		</div>
 	</div>
 	<br />
+    <div id="Purchased" class="tabcontent" style="display:none">
+      <h3 style="text-align: center">Purchased Posts~</h3>
+      <div class="forum-section">
+        <div class="post-container">
+          <div class="row">
+            {% for item in purchased_items %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="postbubble">
+                <img
+                  src="{{ url_for('static', filename='/images/sellpics/' + item.img) }}"
+                  alt="Post Image"
+                />
+                <div class="screen-overlay overlay-animation">
+                  <div class="posttext">
+                    <div class="postheader">
+                      <div class="posttitle">{{ item.title }}</div>
+                    </div>
+                    <div class="postcontent">{{ item.desc }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="Bounties Claimed" class="tabcontent" style="display:none">
+      <h3 style="text-align: center">Bounties Claimed</h3>
+      <div class="forum-section">
+        <div class="post-container">
+          <div class="row">
+            {% for item in bounties_claimed %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="postbubble">
+                <img
+                  src="{{ url_for('static', filename='/images/sellpics/' + item.img_filename) }}"
+                  alt="Post Image"
+                />
+                <div class="screen-overlay overlay-animation">
+                  <div class="posttext">
+                    <div class="postheader">
+                      <div class="posttitle">{{ item.title }}</div>
+                    </div>
+                    <div class="postcontent">{{ item.desc }}</div>
+                    <div class="postdetails">
+                      <p>Price: {{ item.price }}</p>
+                      <p>Status: {{ item.status }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="Listings" class="tabcontent" style="display:none">
+      <h3 style="text-align: center">Listings~</h3>
+      <div class="forum-section">
+        <div class="post-container">
+          <div class="row">
+            {% for item in sold_items %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="postbubble">
+                <img
+                  src="{{ url_for('static', filename='/images/sellpics/' + item.img) }}"
+                  alt="Post Image"
+                />
+                <div class="screen-overlay overlay-animation">
+                  <div class="posttext">
+                    <div class="postheader">
+                      <div class="posttitle">{{ item.title }}</div>
+                      <form
+                        action="{{ url_for('routes.delete_post', post_id=item.sid, post_flag = item.flag) }}"
+                        method="post"
+                      >
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button type="submit" class="reactbutton">
+                          <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                        </button>
+                      </form>
+                    </div>
+                    <div class="postcontent">{{ item.desc }}</div>
+                    <div class="postdetails">
+                      <p>Price: {{ item.price }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
 </div>
 
 <script>
@@ -289,4 +424,16 @@ user.username }}{% endblock %} {% block content %}
 	// Open the default tab
 	document.getElementById("defaultOpen").click();
 </script>
+
+<style>
+	.select-buttons {
+		display: flex;
+		justify-content: space-around;
+	}
+	.view-button {
+		flex: 1;
+		text-align: center;
+		margin: 0 10px;
+	}
+</style>
 {% endblock %}

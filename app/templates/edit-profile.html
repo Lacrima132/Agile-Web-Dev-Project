@@ -7,36 +7,49 @@ content %}
         <h1 class="star-text">Edit Profile</h1>
       </div>
       <div class="col-lg-6 col-md-8 col-sm-10">
-        <form method="POST" enctype="multipart/form-data">
-          <label class="sr-text" for="username">Change username:</label>
-          <input
-            class="form-input-bubble"
-            type="text"
-            placeholder="Username"
-            id="username"
-            name="username"
-          />
-          <br />
-          <label class="sr-text" for="bio-change">Change Bio:</label>
-          <input
-            class="bio-bubble"
-            type="text"
-            placeholder="Enter new bio."
-            id="bio-change"
-            name="bio-change"
-          />
-          <br /><br />
-          <label for="avatar">Change profile picture:</label>
-          <input type="file" id="avatar" name="change-image" />
-          <br /><br />
-          <input class="btn-submit" type="submit" value="Submit" />
-        </form>
+        <!-- Profile Edit Form -->
+  <form method="POST" enctype="multipart/form-data" class="form-edit">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      {{ form.username.label }}
+      {{ form.username(class="form-input-bubble", placeholder="Username") }}
+      {% for error in form.username.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    
+    <br />
+    
+    <div class="form-group">
+      {{ form.bio.label }}
+      {{ form.bio(class="form-input-bubble", placeholder="Enter new bio.") }}
+      {% for error in form.bio.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    
+    <br />
+    
+    <div class="form-group">
+      {{ form.image.label }}
+      {{ form.image(class="form-input-bubble") }}
+      {% for error in form.image.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    
+    <br />
+    
+    <div class="form-group">
+      {{ form.submit(class="btn-submit") }}
+
         <!-- Change Password Form -->
       </div>
-      <form action="{{ url_for('routes.changepassword') }}" method="POST">
-        <input class="btn-prominent" type="submit" value="Change Password" />
-      </form>
+      <form action="{{ url_for('auth.changepassword') }}" method="POST" class="form-edit">
+        <div class="form-group">
+          <input class="btn-submit" type="submit" value="Change Password"/>
     </div>
   </div>
+</div>
 </div>
 {% endblock %}

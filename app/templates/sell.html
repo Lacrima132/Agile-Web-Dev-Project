@@ -1,44 +1,45 @@
-{% extends "base.html" %} {% block title %}{{ user.username }}{% endblock %}
-{%block content %}
+{% extends "base.html" %} {% block title %}{{
+user.username }}{% endblock %} {% block content %}
 <div class="form-section">
-  <form action="" method="POST" enctype="multipart/form-data">
-    <h2 class="form-header">Sell Your Weapon</h2>
-    <label class="sr-text" for="weapon_title">Weapon Title:</label><br />
-    <input
-      type="text"
-      id="weapon_title"
-      name="weapon_title"
-      class="form-input-bubble"
-      placeholder="Weapon Title"
-      required
-    /><br />
-    <label class="sr-text" for="weapon_price">Price:</label>
-    <input
-      type="number"
-      id="weapon_price"
-      name="weapon_price"
-      class="form-input-bubble"
-      placeholder="Price"
-      required
-    /><br />
-    <label class="sr-text" for="weapon_description">Weapon Description:</label>
-    <textarea
-      placeholder="Weapon Description"
-      id="weapon_description"
-      name="weapon_description"
-      class="form-input-bubble"
-      required
-    ></textarea
-    ><br />
-    <label class="label" for="weapon_image">Upload Picture:</label>
-    <input
-      type="file"
-      id="weapon_image"
-      name="weapon_image"
-      class="form-input-bubble"
-      accept="image/*"
-    /><br />
-    <input class="btn-submit" type="submit" value="Submit" />
-  </form>
+	<h1>Sell Your Weapon</h1>
+	<form
+		method="POST"
+		enctype="multipart/form-data">
+		{{ form.hidden_tag() }}
+		<label for="weapon_title"
+			>{{ form.weapon_title.label }}</label
+		>
+		{{ form.weapon_title(class="form-control") }}
+		{% for error in form.weapon_title.errors %}
+		<span style="color: red">[{{ error }}]</span>
+		{% endfor %}
+
+		<label for="weapon_price"
+			>{{ form.weapon_price.label }}</label
+		>
+		{{ form.weapon_price(class="form-control") }}
+		{% for error in form.weapon_price.errors %}
+		<span style="color: red">[{{ error }}]</span>
+		{% endfor %}
+
+		<label for="weapon_description"
+			>{{ form.weapon_description.label }}</label
+		>
+		{{
+		form.weapon_description(class="form-control")
+		}} {% for error in
+		form.weapon_description.errors %}
+		<span style="color: red">[{{ error }}]</span>
+		{% endfor %}
+
+		<label for="weapon_image"
+			>{{ form.weapon_image.label }}</label
+		>
+		{{ form.weapon_image(class="form-control") }}
+		{% for error in form.weapon_image.errors %}
+		<span style="color: red">[{{ error }}]</span>
+		{% endfor %} {{ form.submit(class="btn
+		btn-primary") }}
+	</form>
 </div>
 {% endblock %}

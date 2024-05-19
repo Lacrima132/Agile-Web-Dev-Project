@@ -1,63 +1,80 @@
-{% extends "base.html" %} {% block title %} Browse
-{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title
+%}Browse{% endblock %} {% block content %}
+
 <div class="form-section">
 	<form
-		action=""
 		method="POST"
 		enctype="multipart/form-data">
+		{{ form.hidden_tag() }}
 		<h2 class="form-header">List a Bounty</h2>
-		<label class="sr-text" for="target"
-			>Target:</label
-		>
-		<input
-			placeholder="Target Name"
-			class="form-input-bubble"
-			type="text"
-			id="target"
-			name="target" /><br />
-		<label for="image" class="label"
-			>Upload Image:</label
-		>
-		<br />
-		<input
-			class="form-input-bubble"
-			type="file"
-			name="image"
-			id="image" /><br />
-		<label class="sr-text" for="tinfo"
-			>Target Information:</label
-		>
-		<textarea
-			placeholder="Target Information"
-			class="form-input-bubble"
-			id="tinfo"
-			name="tinfo"></textarea
-		><br />
-		<label class="sr-text" for="tinfo"
-			>Price</label
-		>
-		<input
-			placeholder="Price"
-			class="form-input-bubble"
-			type="number"
-			id="price"
-			name="price" /><br />
-		<div class="form-center">
-			<label for="Category">Dead or Alive?</label>
-			<select
-				class="form-input-bubble"
-				name="category-menu">
-				<option value="Dead">Dead</option>
-				<option value="Alive">Alive</option>
-				<option value="Either">Either</option>
-			</select>
-			<br />
-			<br />
+
+		<div class="form-group">
+			<label for="target"
+				>{{ form.target.label }}</label
+			>
+			{{ form.target(class="form-input-bubble") }}
+			{% for error in form.target.errors %}
+			<span style="color: red"
+				>[{{ error }}]</span
+			>
+			{% endfor %}
 		</div>
-		<input
-			class="btn-submit"
-			type="submit"
-			value="Submit" />
+
+		<div class="form-group">
+			<label for="image"
+				>{{ form.weapon_image.label }}</label
+			>
+			{{
+			form.weapon_image(class="form-input-bubble")
+			}} {% for error in form.weapon_image.errors
+			%}
+			<span style="color: red"
+				>[{{ error }}]</span
+			>
+			{% endfor %}
+		</div>
+
+		<div class="form-group">
+			<label for="tinfo"
+				>{{ form.tinfo.label }}</label
+			>
+			{{ form.tinfo(class="form-input-bubble") }}
+			{% for error in form.tinfo.errors %}
+			<span style="color: red"
+				>[{{ error }}]</span
+			>
+			{% endfor %}
+		</div>
+
+		<div class="form-group">
+			<label for="price"
+				>{{ form.price.label }}</label
+			>
+			{{ form.price(class="form-input-bubble") }}
+			{% for error in form.price.errors %}
+			<span style="color: red"
+				>[{{ error }}]</span
+			>
+			{% endfor %}
+		</div>
+
+		<div class="form-group">
+			<label for="category"
+				>{{ form.category_menu.label }}</label
+			>
+			{{
+			form.category_menu(class="form-input-bubble")
+			}} {% for error in form.category_menu.errors
+			%}
+			<span style="color: red"
+				>[{{ error }}]</span
+			>
+			{% endfor %}
+		</div>
+
+		<div class="form-group">
+			{{ form.submit(class="btn-submit") }}
+		</div>
 	</form>
 </div>
 {% endblock %}
