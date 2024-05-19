@@ -109,6 +109,10 @@ def post(post_id):
     comments = Comments.query.filter_by(pid=post_id).all()
     form = CommentForm()
 
+
+    lip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, liked=True).all()]
+    dip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, disliked=True).all()]
+
     if form.validate_on_submit():
         comment_text = form.comment.data
         new_comment = Comments(
@@ -120,13 +124,17 @@ def post(post_id):
         db.session.add(new_comment)
         db.session.commit()
         flash('Comment Added!', category='success')
+
+
         return redirect(url_for('routes.post', post_id=post_id))
 
-    return render_template('post.html', user=current_user, post=post, comments=comments, form=form)
+    return render_template('post.html', user=current_user, post=post, comments=comments, form=form, lip=lip, dip=dip)
 @routes.route('/view-other-userpf/<int:user_id>', methods = ['GET','POST'])
 def view_userpf(user_id):
     userinfo = User.query.get_or_404(user_id)
     posts = Post.query.filter_by(uid=user_id).all()
+    # if_liked = Likes.query.filter_by(uid=current_user.get_id(), pid=user_id, liked=True).first()
+    # if_disliked = Likes.query_filter_by(uid=current_user.get_id(), pid=user_id, liked=).first()
     promoted_by_current_user = Promote.query.filter_by(promoted_by=current_user.get_id(), promoted=True, promoting_this_guy=user_id).first()
 
     return render_template('view-other-userpf.html', user=current_user, userinfo=userinfo, posts=posts, promoted_by_current_user=promoted_by_current_user)
@@ -338,7 +346,9 @@ def purchase_confirmation(sid):
 @routes.route('/bounties')
 def bounties():
     bounty_list = Post.query.filter_by(flag="Bounty", claimed=False).all()
-    return render_template('bounties.html', user=current_user, bounty_list=bounty_list)
+    lip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, liked=True).all()]
+    dip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, disliked=True).all()]
+    return render_template('bounties.html', user=current_user, bounty_list=bounty_list, lip=lip, dip=dip)
 
 @routes.route('/addbounty', methods=['GET', 'POST'])
 def addbounty():
