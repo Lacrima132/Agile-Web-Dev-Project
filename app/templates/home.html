@@ -1,5 +1,10 @@
-{% extends "base.html" %} {% block title %}
-Bountify {% endblock %} {% block content %}
+{% extends "base.html" %} 
+
+{% block title %}
+Bountify 
+{% endblock %} 
+
+{% block content %}
 <div class="splash invis">
   <h1
     class="jumble splashtitle splashAnimation"
@@ -12,7 +17,7 @@ Bountify {% endblock %} {% block content %}
 <div class="home">
   <!-- <img class="back-img" src="deathstar.png" alt=""> -->
   <div class="scroll">
-    <h1 class="bountify">OUNTIFY</h1>
+    <h1 class="bountify">BOUNTIFY</h1>
     <h1 class="star-text">
       Harness the hunt. <br />
       Unleash your potential. <br />
@@ -25,37 +30,42 @@ Bountify {% endblock %} {% block content %}
       hands amidst the endless expanse of space.
     </p>
     <p class="button-desc">Ready to go?</p>
+    {% if current_user.is_authenticated %}
+    <form action="{{ url_for('routes.browse') }}" method="GET">
+    {% else %}
+    <form action="{{ url_for('auth.login') }}" method="GET">
+    {% endif %}
     <button
-      type="button"
+      type="submit"
       class="btn-prominent"
-      onclick="window.location.href='browse.html';"
     >
       Explore the forum
     </button>
+  </form>
   </div>
 
   <div class="scroll">
     <h1 class="star-text">
-      Look at all those chickens
+      Engage with the Galaxy
     </h1>
     <p class="description">
-      hahahaa no no no no no mama mmia let me go
+      Post and accept bounties, buy and sell weapons, and interact with a community of mercenaries. 
+      Whether you're looking for the next big hunt or the perfect trade, Bountify is your gateway to the Star Wars universe.
     </p>
   </div>
 
   <div class="scroll">
     <h1 class="star-text">
-      Baby i can see your halo
+      Your Next Adventure Awaits
     </h1>
     <p class="description">
-      im the baaaad guy... duh. womp womp
-      wompwompwomp womp womp
+      Join a thriving community where your skills and courage will lead you to great rewards. The galaxy is full of opportunities - seize them now!
     </p>
   </div>
 
   <div class="scroll">
-    <h1 class="star-text">BomBaStiC SIdE eYE</h1>
-    <p class="description">CAN I GET A HOYAAA</p>
+    <h1 class="star-text">Connect with Fellow Mercenaries</h1>
+    <p class="description">Share your experiences, learn from others, and grow your reputation in the galaxy. Your journey is just beginning.</p>
   </div>
 </div>
 

@@ -26,6 +26,8 @@
     <div class="form-group">
       {{ form.submit(class="btn-submit") }}
     </div>
+    <p>Not a user? Sign up <a href="{{ url_for('auth.sign_up') }}">here</a>.</p>
   </form>
+  
 </div>
 {% endblock %}

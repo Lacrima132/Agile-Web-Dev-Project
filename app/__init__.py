@@ -5,6 +5,7 @@ from os import path
 from flask_login import LoginManager
 import os
 from flask_migrate import Migrate
+from config import Config
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -24,8 +25,9 @@ def allowed_size(file):
     file.seek(0)
     return file_size <= max_size
 
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
+    app.config.from_object(config_class)
     app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'default_secret_key')
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['POST_FOLDER'] = 'static/posts'
