@@ -43,7 +43,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="postbubble">
                 <img
-                  src="{{ url_for('static', filename='/images/posts/' + item.img_filename) }}"
+                  src="{{ url_for('static', filename='/images/posts/' + item.img) }}"
                   alt="Post Image"
                 />
                 <div class="screen-overlay overlay-animation">
@@ -88,6 +88,14 @@
                     <div class="postheader">
                       <div class="posttitle">{{ item.title }}</div>
                     </div>
+                    <div class="postcontent">${{ item.price }}</div>
+                    <div class="postcontent"> 
+                      {% if item.user.uid != current_user.uid %}
+                      <a href='/view-other-userpf/{{ item.user.uid }}'>
+                        {% else %}
+                      <a href='/profile'>
+                        {% endif %}
+                        Sold by {{ item.user.username }} </a> </div>
                     <div class="postcontent">{{ item.desc }}</div>
                   </div>
                 </div>
@@ -108,7 +116,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="postbubble">
                 <img
-                  src="{{ url_for('static', filename='/images/sellpics/' + item.img_filename) }}"
+                  src="{{ url_for('static', filename='/images/sellpics/' + item.img) }}"
                   alt="Post Image"
                 />
                 <div class="screen-overlay overlay-animation">

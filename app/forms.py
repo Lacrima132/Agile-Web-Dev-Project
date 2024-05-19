@@ -6,10 +6,12 @@ import re
 from .models import User
 
 def validate_username(form, field):
-    if len(field.data) < 5:
-        raise ValidationError('Username must be at least 5 characters long.')
-    if User.query.filter_by(username=field.data).first():
-        raise ValidationError('Username already in use.')
+    if field.data:  # Only validate if field has data
+        if len(field.data) < 5 or len(field.data) > 15:
+            raise ValidationError('Username must be between 5 and 15 characters in length')
+        if User.query.filter_by(username=field.data).first():
+            raise ValidationError('Username already in use.')
+
 
 def validate_password(form, field):
     password = field.data
@@ -60,7 +62,7 @@ class DiscussionForm(FlaskForm):
 class ProfileEditForm(FlaskForm):
     username = StringField('Username', validators=[validate_username])
     bio = StringField('Bio', validators=[Length(max=250, message="Bio must be less than 250 characters.")])
-    image = FileField('Profile Image')
+    image = FileField('Profile Image', validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
     submit = SubmitField('Submit')
 
 class ChangePasswordForm(FlaskForm):

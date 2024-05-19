@@ -8,7 +8,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
     name = db.Column(db.String(150))
-    avatar = db.Column(db.String(150), default = "pfp.jpeg")
+    avatar = db.Column(db.String(150), default = "pfp.png")
     bio = db.Column(db.String(150), default="Nothing here yet!")
     rank = db.Column(db.String(150), default = "D")
     isHunter = db.Column(db.Boolean, default=False)
@@ -22,9 +22,9 @@ class Post(db.Model): #discussion posts, flag = "discussion"
     uid = db.Column(db.Integer, db.ForeignKey('user.uid'))
     user = db.relationship('User', backref='post')
     title = db.Column(db.String(100))
-    img_filename = db.Column(db.String(100), nullable=False)
+    img = db.Column(db.String(100), nullable=False)
     desc = db.Column(db.String(1000))
-    flag = db.Column(db.String(100))
+    flag = db.Column(db.String(100)) #Bounty, Listing, Discussion
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
     likes = db.Column(db.Integer, default = 0)
     dislikes = db.Column(db.Integer, default = 0)
@@ -60,6 +60,7 @@ class Sell(db.Model):
     sold = db.Column(db.String(100), default="Unsold") #changes to user logged in who bought it
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
     flag = db.Column(db.String(100))
+    com_num = db.Column(db.Integer, default = 0)
     
 class Promote(db.Model):
     id = db.Column(db.Integer, primary_key=True)

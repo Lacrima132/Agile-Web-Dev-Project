@@ -18,7 +18,6 @@
               <div class="screen-overlay overlay-animation">
                 <div class="posttext">
                   <div class="posttitle">
-                    <a href="/post/{{ post.pid }}">
                       {{ post.title }}
                     </a>
                   </div>
@@ -37,19 +36,15 @@
                     <p>{{ post.desc }}</p>
                     <p>Price: ${{ post.price }}</p>
                   </div>
+                  {% if post.user.uid != current_user.uid%}
                   <button class="btn-prominent">
                     <a
                       href="{{ url_for('routes.purchase', sid=post.sid) }}"
                       class="purchase-btn"
                     >Purchase
                     </a>
+                    {% endif %}
                   </button>
-                </div>
-                <div class="reactbar">
-                  <button id="commentButton" class="reactbutton">
-                    <i class="fa fa-commenting-o fa-lg"></i>
-                  </button>
-                  <span id="commentCount" class="reactnumber">0</span>
                 </div>
               </div>
             </div>
