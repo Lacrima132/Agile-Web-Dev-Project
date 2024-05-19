@@ -1,106 +1,73 @@
-{% extends "base.html" %} 
-{% block title %}{{ user.username }}{% endblock %} 
-{% block content %}
-
-<div class="post-container text-center">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sell Your Weapon</title>
-        <style>
-            body {
-                color: #f0f0f0; /* Light grey text for better contrast */
-                background-color: #1a1a1a; /* Dark background */
-                font-family: 'Arial', sans-serif; /* Optional: Set font family */
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-            .post-container {
-                padding: 20px;
-            }
-            h1, p {
-                margin-bottom: 20px;
-            }
-            ul {
-                list-style-type: none;
-                padding: 0;
-            }
-            li {
-                margin-bottom: 20px;
-                border: 1px solid #333;
-                border-radius: 8px;
-                background-color: #2c2c2c; /* Slightly lighter background for the boxes */
-                overflow: hidden;
-                transition: transform 0.3s;
-            }
-            li:hover {
-                transform: scale(1.02); /* Slightly enlarge on hover */
-            }
-            .post-box {
-                display: flex;
-                align-items: center;
-                padding: 20px;
-            }
-            .post-box img {
-                border-radius: 50%;
-                margin-right: 20px;
-                width: 50px;
-                height: 50px;
-                object-fit: cover;
-            }
-            .post-info h2 {
-                margin: 0;
-                font-size: 24px;
-                color: #4CAF50; /* Green color for titles */
-            }
-            .post-info p {
-                margin: 10px 0 0 0;
-                font-size: 16px;
-            }
-            .add-bounty-btn, .activate-bounty-btn {
-                background-color: #4CAF50;
-                color: white;
-                padding: 10px 20px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 16px;
-                margin-bottom: 20px;
-                text-decoration: none; /* Remove underline from links */
-                display: inline-block;
-            }
-            .add-bounty-btn:hover, .activate-bounty-btn:hover {
-                background-color: #45a049;
-            }
-            .activate-bounty-btn {
-                margin-left: auto; /* Align button to the right */
-            }
-        </style>
-    </head>
-<body>
-    <h1>Bounties</h1>
-    <p>Peep your next bounty</p>
-    <a href="{{ url_for('routes.addbounty') }}" class="add-bounty-btn">Add New Bounty</a>
-    <h1>All Bounties</h1>
-    <ul>
-        {% for bounty in bounty_list %}
-            <li>
-                <div class="post-box">
-                    <img src="{{ url_for('static', filename='/images/sellpics/' + bounty.img_filename) }}" class="avatar" alt="avatar">
-                    <div class="post-info">
-                        <h2>{{ bounty.title }}</h2>
-                        <p>{{ bounty.desc }}</p>
-                        <p>${{ bounty.price }}</p>
-                        <form action="{{ url_for('routes.activate_bounty', bounty_id=bounty.pid) }}" method="post">
-                            <button type="submit" class="activate-bounty-btn">Submit Interest</button>
-                        </form>
+{% extends "base.html" %} {% block title %}{{
+    user.username }}{% endblock %} {% block content %}
+    
+    <div class="home">
+        <br>
+         <h1 class="star-text">Bounties</h1>
+          <p class="description">Peep your next bounty</p>
+           <div class="forum-section">
+            <div class="post-container">
+             <div class="row">
+              {% for bounty in bounty_list %}
+               <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="postbubble">
+                    <img src="{{ url_for('static', filename='/images/sellpics/' + bounty.img_filename) }}" alt="bounty image" />
+                    <div class="screen-overlay overlay-animation">
+                        <div class="posttext">
+                          <div class="posttitle">
+                                <a href="#"> <!-- need to fix -->
+                                    {{ bounty.title }}
+                                </a>
+                          </div>
+                          <div class="postauthor">
+                            <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="small_avatar" alt="avatar" style="width: 10px;"/>
+                            {% if post.user.uid != current_user.uid %}
+                            <a href= "#"> <!-- /view-other-userpf/{{ post.user.uid }} -->
+                                {{ post.user.username }}
+                                {% else %}
+                            <a href="/profile">
+                                {{ post.user.username }}
+                                {% endif %}
+                            </a>
+                          </div>
+                         <div class="postcontent">
+                            <p>{{ bounty.desc }}</p>
+                            <p>${{ bounty.price }}</p>
+                            <form action="{{ url_for('routes.activate_bounty', bounty_id=bounty.pid) }}" method="post">
+                                <button type="submit" class="activate-bounty-btn">Submit Interest</button>
+                            </form>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="reactbar">
+                            <button id="likeButton" class="reactbutton like" onclick="toggleLike(this, {{ post.pid }})">
+                              {% if post.pid in lip %}
+                              <i id="likeIcon" class="fa fa-thumbs-up fa-lg"></i>
+                              {% else %}
+                              <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
+                              {% endif %}
+                            </button>
+                            <span id="likeCount" class="reactnumber">{{ post.likes }}</span>
+                            <button id="dislikeButton" class="reactbutton" onclick="toggleLike(this, {{ post.pid }})">
+                              {% if post.pid in dip %}
+                              <i id="dislikeIcon" class="fa fa-thumbs-down fa-lg"></i>
+                              {% else %}
+                              <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
+                              {% endif %}
+                            </button>
+                            <span id="dislikeCount" class="reactnumber">{{ post.dislikes }}</span>
+                            <button id="commentButton" class="reactbutton">
+                              <i class="fa fa-commenting-o fa-lg"></i>
+                            </button>
+                            <span id="commentCount" class="reactnumber">0</span>
+                          </div>
                     </div>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
-</body>
-</div>
-
-{% endblock %}
+                </li>
+            {% endfor %}
+        </ul>
+        
+    </body>
+    </div>
+    
+    {% endblock %}
+    

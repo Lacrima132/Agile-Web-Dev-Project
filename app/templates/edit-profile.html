@@ -1,21 +1,13 @@
-{% extends "base.html" %}
-
-{% block title %}Edit Profile{% endblock %}
-
-{% block content %}
-<div class="form-section">
-  <h1 class="pagetitle-edit">Edit Profile</h1>
-  
-  <!-- Change Password Form -->
-  <form action="{{ url_for('auth.changepassword') }}" method="POST" class="form-edit">
-    <div class="form-group">
-      <input class="btn-submit" type="submit" value="Change Password"/>
-    </div>
-  </form>
-  
-  <br />
-  
-  <!-- Profile Edit Form -->
+{% extends "base.html" %} {% block title %}Edit profile{% endblock %} {% block
+content %}
+<div class="home">
+  <div class="editprofile forum-section">
+    <div class="row">
+      <div class="col-lg-6 col-md-4 col-sm-2">
+        <h1 class="star-text">Edit Profile</h1>
+      </div>
+      <div class="col-lg-6 col-md-8 col-sm-10">
+        <!-- Profile Edit Form -->
   <form method="POST" enctype="multipart/form-data" class="form-edit">
     {{ form.hidden_tag() }}
     <div class="form-group">
@@ -50,7 +42,14 @@
     
     <div class="form-group">
       {{ form.submit(class="btn-submit") }}
+
+        <!-- Change Password Form -->
+      </div>
+      <form action="{{ url_for('auth.changepassword') }}" method="POST" class="form-edit">
+        <div class="form-group">
+          <input class="btn-submit" type="submit" value="Change Password"/>
     </div>
-  </form>
+  </div>
+</div>
 </div>
 {% endblock %}
