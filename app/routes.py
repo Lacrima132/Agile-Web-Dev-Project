@@ -206,6 +206,7 @@ def discussion():
                 flag="Discussion",
                 uid=user_id,
                 img=filename
+                img=filename
             )
             db.session.add(new_disc_post)
             db.session.commit()
@@ -258,15 +259,24 @@ def profile():
 def editprofile():
     form = ProfileEditForm()
     if form.validate_on_submit():
-        if form.username.data:
-            if User.query.filter_by(username=form.username.data).first():
-                flash('Username already in use.', category='error')
-            else:
-                current_user.username = form.username.data
-                flash('Username updated!', category='success')
+        previous_avatar_filename = current_user.avatar
+        avatar = form.image.data
+        username = form.username.data
+        bio = form.bio.data
         
-        if form.bio.data:
-            current_user.bio = form.bio.data
+        if avatar and allowed_file(avatar.filename) and allowed_size(avatar):
+            filename = secure_filename(avatar.filename)
+            save_path = os.path.join('app', 'static', 'images', 'profilepics', filename)
+            avatar.save(save_path)
+            current_user.avatar = filename
+            flash('Profile picture uploaded!', category='success')
+            if previous_avatar_filename != "pfp.png":
+                previous_avatar_path = os.path.join('app', 'static', 'images', 'profilepics', previous_avatar_filename)
+                if os.path.exists(previous_avatar_path):
+                    os.remove(previous_avatar_path)
+        
+        if bio:
+            current_user.bio = bio
             flash('Bio updated!', category='success')
 
         if form.image.data:
@@ -369,7 +379,7 @@ def addbounty():
 
         if allowed_size(bounty_image):
             filename = secure_filename(bounty_image.filename)
-            save_path = os.path.join('app', 'static', 'images', 'posts', filename)
+            save_path = os.path.join('app', 'static', 'images', 'sellpics', filename)
             list_bounty = Post(uid=current_user.get_id(), price=price, title=target, img=filename, desc=target_info, status=target_status, flag="Bounty")
             db.session.add(list_bounty)
             db.session.commit()
