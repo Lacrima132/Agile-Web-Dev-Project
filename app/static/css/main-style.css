@@ -72,8 +72,10 @@ body {
   background-color: black;
   z-index: 200;
   color: #f5433a;
-  display: flex; /* Use flexbox */
-  justify-content: center; /* Center horizontally */
+  display: flex;
+  /* Use flexbox */
+  justify-content: center;
+  /* Center horizontally */
   align-items: center;
 }
 
@@ -87,8 +89,10 @@ body {
   background-color: black;
   z-index: -10;
   color: #f5433a;
-  display: flex; /* Use flexbox */
-  justify-content: center; /* Center horizontally */
+  display: flex;
+  /* Use flexbox */
+  justify-content: center;
+  /* Center horizontally */
   align-items: center;
   transition: all 1s;
 }
@@ -172,7 +176,7 @@ body {
   color: rgba(255, 43, 43, 1);
 }
 
-.topbar-logo{
+.topbar-logo {
   padding: 0.2rem;
   font-family: "Libre Franklin", sans-serif;
   font-size: 2rem;
@@ -180,7 +184,8 @@ body {
   color: rgba(255, 43, 43, 1);
   text-decoration: none;
 }
-.topbar-logo:hover{
+
+.topbar-logo:hover {
   color: rgba(255, 43, 43, 1);
   text-decoration: none;
 }
@@ -209,12 +214,10 @@ body {
   width: 100%;
   top: 0;
   left: 0;
-  background: linear-gradient(
-    rgba(170, 10, 10, 0.2),
-    rgba(170, 10, 10, 0.2) 3px,
-    transparent 3px,
-    transparent 9px
-  );
+  background: linear-gradient(rgba(170, 10, 10, 0.2),
+      rgba(170, 10, 10, 0.2) 3px,
+      transparent 3px,
+      transparent 9px);
   background-size: 100% 9px;
 }
 
@@ -222,6 +225,7 @@ body {
   from {
     background-position: 0% 0%;
   }
+
   to {
     background-position: 0% -100%;
   }
@@ -231,7 +235,7 @@ body {
   animation: pan-overlay 22s infinite linear;
 }
 
-.postbubble > img {
+.postbubble>img {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -253,6 +257,7 @@ body {
 .filterTagClose:hover {
   cursor: pointer;
 }
+
 /* NEW */
 
 .intro-section {
@@ -275,15 +280,20 @@ body {
 .home-card {
   position: relative;
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100%; /* Take up the full height of the container */
+  justify-content: center;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
+  height: 100%;
+  /* Take up the full height of the container */
 }
 
 .home-card-content {
   position: absolute;
-  z-index: 1; /* Ensure content appears above images */
-  text-align: center; /* Center text */
+  z-index: 1;
+  /* Ensure content appears above images */
+  text-align: center;
+  /* Center text */
   transform: translateX(-5rem);
   pointer-events: none;
   background-color: rgba(65, 0, 0, 0.8);
@@ -293,35 +303,39 @@ body {
 }
 
 .home-card-images {
-  width: 100vw; /* Fill the screen width */
+  width: 100vw;
+  /* Fill the screen width */
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(200px, 1fr)
-  ); /* Adjust the column width based on available space */
+  grid-template-columns: repeat(auto-fill,
+      minmax(200px, 1fr));
+  /* Adjust the column width based on available space */
   gap: 5px;
   transform: translateX(-5rem);
 }
 
 .overflow-image {
   overflow: hidden;
-  width: 100%; /* Make the container responsive */
-  max-width: 600px; /* Limit the maximum width of the container */
-  height: auto; /* Allow the height to adjust based on content */
+  width: 100%;
+  /* Make the container responsive */
+  max-width: 600px;
+  /* Limit the maximum width of the container */
+  height: auto;
+  /* Allow the height to adjust based on content */
 }
 
 .overflow-image:hover {
-  transform: scale(1.1); /* Apply the scale transform on hover */
-  transition: transform 0.1s ease-in-out; /* Add smooth transition */
+  transform: scale(1.1);
+  /* Apply the scale transform on hover */
+  transition: transform 0.1s ease-in-out;
+  /* Add smooth transition */
 }
 
 /* Adjust the layout for smaller screens */
 @media screen and (max-width: 768px) {
   .home-card-images {
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(150px, 1fr)
-    ); /* Adjust column width for smaller screens */
+    grid-template-columns: repeat(auto-fill,
+        minmax(150px, 1fr));
+    /* Adjust column width for smaller screens */
   }
 }
 
@@ -397,17 +411,17 @@ body {
 }
 
 .alert {
-	position: absolute;
-	z-index: 100;
-	top: 10%;
-	left: 50%;
-	transform: translate(-49%, -49%);
-	padding: 2rem;
-	border-radius: 10px;
-	color: #f4f4f6;
-	font-size: 1.2rem;
-	font-weight: normal;
-	border-color: transparent;
+  position: absolute;
+  z-index: 100;
+  top: 10%;
+  left: 50%;
+  transform: translate(-49%, -49%);
+  padding: 2rem;
+  border-radius: 10px;
+  color: #f4f4f6;
+  font-size: 1.2rem;
+  font-weight: normal;
+  border-color: transparent;
 }
 
 .alert button {
@@ -426,6 +440,7 @@ body {
 h1 {
   font-size: 70px;
 }
+
 /* Sidebar Styles */
 .sidebar {
   z-index: 100;
@@ -452,8 +467,10 @@ h1 {
   top: 100%;
   left: 0;
   width: 100%;
-  background-color: #343a40; /* Adjust as needed */
-  z-index: 1000; /* Ensure it appears above other content */
+  background-color: #343a40;
+  /* Adjust as needed */
+  z-index: 1000;
+  /* Ensure it appears above other content */
 }
 
 /* Logo Styles */
@@ -509,6 +526,7 @@ ul {
 .sidebar ul li a:hover {
   color: var(--primary-color);
 }
+
 .drop-menu {
   display: none;
   background-color: rgb(48, 0, 0);
@@ -518,8 +536,10 @@ ul {
   max-height: 0;
   overflow: hidden;
   transition: opacity 0.3s ease, max-height 0.3s ease;
-  position: absolute; /* Ensure it does not affect layout */
-  z-index: 1000; /* Make sure it appears above other content */
+  position: absolute;
+  /* Ensure it does not affect layout */
+  z-index: 1000;
+  /* Make sure it appears above other content */
 }
 
 .drop-menu li a {
@@ -530,12 +550,14 @@ ul {
 .dropdown:hover .drop-menu {
   display: block;
   opacity: 1;
-  max-height: 500px; /* Adjust to fit the maximum content height */
+  max-height: 500px;
+  /* Adjust to fit the maximum content height */
 }
 
 /* Sidebar Expansion */
 .sidebar:hover {
-  width: 20rem; /* Adjust expanded width as needed */
+  width: 20rem;
+  /* Adjust expanded width as needed */
 }
 
 /* Show Hidden Text on Hover */
@@ -550,16 +572,19 @@ ul {
 }
 
 .dropdown-menu {
-  min-width: 100vw; /* Set the minimum width to full viewport width */
-  left: 0 !important; /* Ensure the dropdown starts from the left edge */
+  min-width: 100vw;
+  /* Set the minimum width to full viewport width */
+  left: 0 !important;
+  /* Ensure the dropdown starts from the left edge */
   background-color: #2b0000;
   font-size: 1.4rem;
 }
 
-.ms-auto a{
+.ms-auto a {
   color: rgb(255, 255, 255, 0.5);
 }
-.ms-auto a:hover{
+
+.ms-auto a:hover {
   color: rgb(255, 255, 255, 0.8);
 }
 
@@ -572,11 +597,11 @@ ul {
   color: rgb(255, 255, 255, 0.8);
 }
 
-.navbar-nav li a{
+.navbar-nav li a {
   text-decoration: none;
 }
 
-.navbar-collapse{
+.navbar-collapse {
   background-color: #2b0000;
 }
 
@@ -732,6 +757,7 @@ ul {
   width: 100%;
   margin-top: 2%;
 }
+
 /*CHANGES*/
 
 .post-container {
@@ -746,11 +772,9 @@ ul {
   border-radius: 10px;
   padding: 15px;
   margin-bottom: 20px;
-  background: linear-gradient(
-    rgba(35, 5, 5, 1),
-    rgba(70, 10, 10, 1),
-    rgba(150, 10, 10)
-  );
+  background: linear-gradient(rgba(35, 5, 5, 1),
+      rgba(70, 10, 10, 1),
+      rgba(150, 10, 10));
   overflow: hidden;
 }
 
@@ -894,6 +918,7 @@ ul {
   /* border-top: 2px solid #a82018;
   border-bottom: 2px solid #a82018; */
 }
+
 /* 
 .profile-name {
   font-weight: 600;
@@ -908,41 +933,56 @@ ul {
 }
 
 .profile-header {
-  position: relative; /* This makes the header the reference point for the profile picture */
+  position: relative;
+  /* This makes the header the reference point for the profile picture */
   width: 100%;
   height: 30vh;
-  overflow: visible; /* Ensures no overflow */
+  overflow: visible;
+  /* Ensures no overflow */
 }
+
 .profile-header-base {
-  position: relative; /* This makes the header the reference point for the profile picture */
+  position: relative;
+  /* This makes the header the reference point for the profile picture */
   width: 100%;
   height: 10vh;
   background-color: #5d0000;
   overflow: visible;
 }
 
-.profile-header > img {
+.profile-header>img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures the image covers the container without stretching */
+  object-fit: cover;
+  /* Ensures the image covers the container without stretching */
 }
 
 .profile-pic-container {
-  position: absolute; /* Allows positioning relative to .profile-header */
-  bottom: -3.5rem; /* Adjust this value to position the profile picture vertically */
-  left: 25%; /* Position the container approximately one-quarter from the left */
-  transform: translateX(-85%); /* Adjust to fine-tune the horizontal position */
-  width: 12rem; /* Adjust the size as needed */
-  height: 12rem; /* Adjust the size as needed */
-  z-index: 10; /* Ensures it appears above other elements */
+  position: absolute;
+  /* Allows positioning relative to .profile-header */
+  bottom: -3.5rem;
+  /* Adjust this value to position the profile picture vertically */
+  left: 25%;
+  /* Position the container approximately one-quarter from the left */
+  transform: translateX(-85%);
+  /* Adjust to fine-tune the horizontal position */
+  width: 12rem;
+  /* Adjust the size as needed */
+  height: 12rem;
+  /* Adjust the size as needed */
+  z-index: 10;
+  /* Ensures it appears above other elements */
 }
 
 .profile-pic {
   width: 100%;
   height: 100%;
-  border: 6px solid #5d0000; /* Border color */
-  border-radius: 50%; /* Ensure round shape */
-  overflow: hidden; /* Hide overflow */
+  border: 6px solid #5d0000;
+  /* Border color */
+  border-radius: 50%;
+  /* Ensure round shape */
+  overflow: hidden;
+  /* Hide overflow */
   /* box-shadow: 0 0 10px rgba(191, 0, 0, 0.9), 0 0 30px rgba(191, 0, 0, 0.5); Optional: Add shadow */
 }
 
@@ -1059,17 +1099,19 @@ ul {
   padding: 1px 0;
   transform: translate(5%, 5%);
   cursor: pointer;
-  position: relative; /* Ensure pseudo-elements are positioned relative to .lb */
-  overflow: hidden; /* Ensure pseudo-elements do not overflow their parent */
+  position: relative;
+  /* Ensure pseudo-elements are positioned relative to .lb */
+  overflow: hidden;
+  /* Ensure pseudo-elements do not overflow their parent */
 }
 
 .lb:hover::before,
-.lb:hover > .lb-border {
+.lb:hover>.lb-border {
   opacity: 1;
 }
 
 .lb::before,
-.lb > .lb-border {
+.lb>.lb-border {
   content: "";
   position: absolute;
   top: 0;
@@ -1083,20 +1125,16 @@ ul {
 }
 
 .lb::before {
-  background: radial-gradient(
-    800px circle at var(--mouse-x) var(--mouse-y),
-    rgba(255, 30, 30, 0.4),
-    transparent 40%
-  );
+  background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 30, 30, 0.4),
+      transparent 40%);
   z-index: 1;
 }
 
-.lb > .lb-border {
-  background: radial-gradient(
-    400px circle at var(--mouse-x) var(--mouse-y),
-    rgba(252, 18, 18, 0.7),
-    transparent 40%
-  );
+.lb>.lb-border {
+  background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y),
+      rgba(252, 18, 18, 0.7),
+      transparent 40%);
   z-index: 2;
 }
 
@@ -1109,7 +1147,8 @@ ul {
   background-color: rgba(22, 1, 0, 0.75);
   padding: 1px;
   position: relative;
-  z-index: 3; /* Ensure content is above pseudo-elements */
+  z-index: 3;
+  /* Ensure content is above pseudo-elements */
 }
 
 /*  FOOTER  */
@@ -1150,8 +1189,10 @@ ul {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text */
+  background-color: #4caf50;
+  /* Green background */
+  color: white;
+  /* White text */
   padding: 10px 20px;
   border-radius: 5px;
   z-index: 1000;
@@ -1161,7 +1202,8 @@ ul {
 }
 
 .flash-message.error {
-  background-color: #f44336; /* Red background for error */
+  background-color: #f44336;
+  /* Red background for error */
 }
 
 /* NEW STUFF */
@@ -1173,7 +1215,8 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-  background: #000000; /* Color of the track */
+  background: #000000;
+  /* Color of the track */
 }
 
 /* Handle */
@@ -1282,9 +1325,11 @@ ul {
     transform: translateY(100vh) scale(0);
     opacity: 1;
   }
+
   50% {
     transform: translateY(35vh) scale(0.1);
   }
+
   100% {
     transform: translateY(0vh) scale(0.2);
     opacity: 0;
@@ -1309,6 +1354,7 @@ ul {
   display: flex;
   justify-content: space-around;
 }
+
 .view-button {
   flex: 1;
   text-align: center;
@@ -1321,221 +1367,278 @@ ul {
 
 /* USERNAME */
 .responsive-header {
-  font-size: 1rem; /* Base font size for small screens */
+  font-size: 1rem;
+  /* Base font size for small screens */
 }
 
 @media (min-width: 576px) {
   .responsive-header {
-    font-size: 1.3rem; /* Adjust for small screens and up */
+    font-size: 1.3rem;
+    /* Adjust for small screens and up */
   }
 }
 
 @media (min-width: 768px) {
   .responsive-header {
-    font-size: 1.8rem; /* Adjust for medium screens and up */
+    font-size: 1.8rem;
+    /* Adjust for medium screens and up */
   }
 }
 
 @media (min-width: 992px) {
   .responsive-header {
-    font-size: 2.2rem; /* Adjust for large screens and up */
+    font-size: 2.2rem;
+    /* Adjust for large screens and up */
   }
 }
 
 @media (min-width: 1200px) {
   .responsive-header {
-    font-size: 2.5rem; /* Adjust for extra-large screens and up */
+    font-size: 2.5rem;
+    /* Adjust for extra-large screens and up */
   }
 }
 
 /* RANK IMAGE */
 .responsive-img {
-  width: 2.5rem; /* Base font size for small screens */
+  width: 2.5rem;
+  /* Base font size for small screens */
 }
 
 @media (min-width: 576px) {
   .responsive-img {
-    width: 2.8rem; /* Adjust for small screens and up */
+    width: 2.8rem;
+    /* Adjust for small screens and up */
   }
 }
 
 @media (min-width: 768px) {
   .responsive-img {
-    width: 3.2rem; /* Adjust for medium screens and up */
+    width: 3.2rem;
+    /* Adjust for medium screens and up */
   }
 }
 
 @media (min-width: 992px) {
   .responsive-img {
-    width: 4rem; /* Adjust for large screens and up */
+    width: 4rem;
+    /* Adjust for large screens and up */
   }
 }
 
 @media (min-width: 1200px) {
   .responsive-img {
-    width: 4.5rem; /* Adjust for extra-large screens and up */
+    width: 4.5rem;
+    /* Adjust for extra-large screens and up */
   }
 }
 
 .profile-pic-container {
-  width: 6rem; /* Increase size on smaller screens */
-  height: 6rem; /* Increase size on smaller screens */
+  width: 6rem;
+  /* Increase size on smaller screens */
+  height: 6rem;
+  /* Increase size on smaller screens */
   bottom: -1.5rem;
 }
 
 /* PROFILE PICTURE */
 @media (min-width: 576px) {
   .profile-pic-container {
-    width: 17vw; /* Increase size on smaller screens */
-    height: 17vw; /* Increase size on smaller screens */
+    width: 17vw;
+    /* Increase size on smaller screens */
+    height: 17vw;
+    /* Increase size on smaller screens */
     bottom: -1.5rem;
   }
 
   .profile-details {
-    max-width: calc(100% - 10vw); /* Adjust to prevent overflow */
+    max-width: calc(100% - 10vw);
+    /* Adjust to prevent overflow */
     transform: translateX(20%);
   }
 }
 
 @media (min-width: 768px) {
   .profile-pic-container {
-    width: 20vw; /* Increase size on smaller screens */
-    height: 20vw; /* Increase size on smaller screens */
+    width: 20vw;
+    /* Increase size on smaller screens */
+    height: 20vw;
+    /* Increase size on smaller screens */
     bottom: -2rem;
   }
 
   .profile-details {
-    max-width: calc(100% - 10vw); /* Adjust to prevent overflow */
+    max-width: calc(100% - 10vw);
+    /* Adjust to prevent overflow */
     transform: translateX(15%);
   }
 }
 
 @media (min-width: 992px) {
   .profile-pic-container {
-    width: 13rem; /* Increase size on smaller screens */
-    height: 13rem; /* Increase size on smaller screens */
+    width: 13rem;
+    /* Increase size on smaller screens */
+    height: 13rem;
+    /* Increase size on smaller screens */
     bottom: -3.5rem;
   }
+
   .profile-details {
-    max-width: calc(100% - 10vw); /* Adjust to prevent overflow */
+    max-width: calc(100% - 10vw);
+    /* Adjust to prevent overflow */
     transform: translateX(10%);
   }
 }
 
 /* RANK IMAGE */
 .btn-edit {
-  font-size: 0.8rem; /* Base font size for small screens */
+  font-size: 0.8rem;
+  /* Base font size for small screens */
 }
 
 @media (min-width: 576px) {
   .btn-edit {
-    font-size: 1rem; /* Adjust for small screens and up */
+    font-size: 1rem;
+    /* Adjust for small screens and up */
   }
 }
 
 @media (min-width: 768px) {
   .btn-edit {
-    font-size: 1.2rem; /* Adjust for medium screens and up */
+    font-size: 1.2rem;
+    /* Adjust for medium screens and up */
   }
 }
 
 @media (min-width: 992px) {
   .btn-edit {
-    font-size: 1.4rem; /* Adjust for large screens and up */
+    font-size: 1.4rem;
+    /* Adjust for large screens and up */
   }
 }
 
 @media (min-width: 1200px) {
   .btn-edit {
-    font-size: 1.5rem; /* Adjust for extra-large screens and up */
+    font-size: 1.5rem;
+    /* Adjust for extra-large screens and up */
   }
 }
 
 /* RANK IMAGE */
 .view-button {
-  font-size: 1rem; /* Base font size for small screens */
+  font-size: 1rem;
+  /* Base font size for small screens */
 }
 
 @media (min-width: 576px) {
   .view-button {
-    font-size: 1.1rem; /* Adjust for small screens and up */
+    font-size: 1.1rem;
+    /* Adjust for small screens and up */
   }
 }
 
 @media (min-width: 768px) {
   .view-button {
-    font-size: 1.3rem; /* Adjust for medium screens and up */
+    font-size: 1.3rem;
+    /* Adjust for medium screens and up */
   }
 }
 
 @media (min-width: 992px) {
   .view-button {
-    font-size: 1.5rem; /* Adjust for large screens and up */
+    font-size: 1.5rem;
+    /* Adjust for large screens and up */
   }
 }
 
 @media (min-width: 1200px) {
   .view-button {
-    font-size: 1.6rem; /* Adjust for extra-large screens and up */
+    font-size: 1.6rem;
+    /* Adjust for extra-large screens and up */
   }
 }
 
 /* RANK IMAGE */
 .star-text {
-  font-size: 1.7rem; /* Base font size for small screens */
+  font-size: 1.7rem;
+  /* Base font size for small screens */
 }
+
 .description {
-  font-size: 1rem; /* Base font size for small screens */
+  font-size: 1rem;
+  /* Base font size for small screens */
 }
+
 .button-desc {
-  font-size: 0.8rem; /* Base font size for small screens */
+  font-size: 0.8rem;
+  /* Base font size for small screens */
 }
 
 @media (min-width: 576px) {
   .star-text {
-    font-size: 2.1rem; /* Adjust for small screens and up */
+    font-size: 2.1rem;
+    /* Adjust for small screens and up */
   }
+
   .description {
-    font-size: 1rem; /* Adjust for small screens and up */
+    font-size: 1rem;
+    /* Adjust for small screens and up */
   }
+
   .button-desc {
-    font-size: 0.9rem; /* Base font size for small screens */
+    font-size: 0.9rem;
+    /* Base font size for small screens */
   }
 }
 
 @media (min-width: 768px) {
   .star-text {
-    font-size: 2.6rem; /* Adjust for small screens and up */
+    font-size: 2.6rem;
+    /* Adjust for small screens and up */
   }
+
   .description {
-    font-size: 1.1rem; /* Adjust for small screens and up */
+    font-size: 1.1rem;
+    /* Adjust for small screens and up */
   }
+
   .button-desc {
-    font-size: 1rem; /* Base font size for small screens */
+    font-size: 1rem;
+    /* Base font size for small screens */
   }
 }
 
 @media (min-width: 992px) {
   .star-text {
-    font-size: 3.4rem; /* Adjust for small screens and up */
+    font-size: 3.4rem;
+    /* Adjust for small screens and up */
   }
+
   .description {
-    font-size: 1.2rem; /* Adjust for small screens and up */
+    font-size: 1.2rem;
+    /* Adjust for small screens and up */
   }
+
   .button-desc {
-    font-size: 1.1rem; /* Base font size for small screens */
+    font-size: 1.1rem;
+    /* Base font size for small screens */
   }
 }
 
 @media (min-width: 1200px) {
   .star-text {
-    font-size: 4.2rem; /* Adjust for small screens and up */
+    font-size: 4.2rem;
+    /* Adjust for small screens and up */
   }
+
   .description {
-    font-size: 1.4rem; /* Adjust for small screens and up */
+    font-size: 1.4rem;
+    /* Adjust for small screens and up */
   }
+
   .button-desc {
-    font-size: 1.3rem; /* Base font size for small screens */
+    font-size: 1.3rem;
+    /* Base font size for small screens */
   }
 }
 
@@ -1545,9 +1648,16 @@ ul {
   align-items: center;
   justify-content: center;
 }
+
 .count-box {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
   width: 70%;
+}
+
+.promotion {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }

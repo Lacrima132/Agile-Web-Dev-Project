@@ -1,91 +1,212 @@
-{% extends "base.html" %}
-{% block title %}Browse{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}{{ user.username }}{% endblock %} {%
+block content %}
 <div class="intro-section">
-    <div class="forum-section">
-        <!-- Center-align post container -->
-        <div class="post-container text-center">
-            <div class="row justify-content-center">
-                <!-- User Name -->
-                <div class="username">
-                    {{ userinfo.username }}
-                </div>
-            </div>
-
-            <!-- Heading for User Posts -->
-            <div class="user-posts text-center">
-                User Posts
-                {% if not promoted_by_current_user %}
-                <button id="updateButton" class="updateButton" onclick="toggleUpdate(this, {{ userinfo.uid }})">Promote Me</button>
-                {% else %}
-                <button id="updateButton" class="updateButton" onclick="toggleUpdate(this, {{ userinfo.uid }})">Promoted</button>
-                {% endif %}
-                <span id="promotionCount">{{ userinfo.promote }}</span>
-                <img src="../static/images/ranks/{{ userinfo.rank }}.png" class="rank-img" height="30" width="30" />
-            </div>
-            
-            <!-- User Posts -->
-            <div class="row justify-content-center">
-                {% for post in posts %}
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="postbubble">
-                        {% if post.flag == "Discussion" or post.flag == "Bounty" %}
-                        <img src="{{ url_for('static', filename='images/posts/' + post.img) }}" alt="Post Image" />
-                        {% elif post.flag == "Listing" %}
-                        <img src="{{ url_for('static', filename='images/sellpics/' + post.img) }}" alt="Post Image" />
-                        {% endif %}
-                        <div class="screen-overlay overlay-animation">
-                            <div class="posttext">
-                                <div class="posttitle">{{ post.title }}</div>
-                                <div class="postauthor">
-                                    <!-- link to post.html -->
-                                    {% if post.flag != "Listing" %}
-                                    <a href="/post/{{ post.pid }}">
-                                        <button id="postbutton" class="postbutton">View</button>
-                                    </a>
-                                    {% endif %}
-                                </div>
-                                <div class="postcontent">{{ post.desc }}</div>
-                            </div>
-                            {% if post.flag == "Bounty" or post.flag == "Discussion" %}
-                            <div class="reactbar">
-                                <button id="likeButton-{{ post.pid }}" class="reactbutton like" onclick="toggleLike(this, {{ post.pid }})">
-                                    {% if post.pid in lip %}
-                                    <i class="fa fa-thumbs-up fa-lg"></i>
-                                    {% else %}
-                                    <i class="fa fa-thumbs-o-up fa-lg"></i>
-                                    {% endif %}
-                                </button>
-                                <span id="likeCount-{{ post.pid }}" class="reactnumber">{{ post.likes }}</span>
-                                <button id="dislikeButton-{{ post.pid }}" class="reactbutton" onclick="toggleDislike(this, {{ post.pid }})">
-                                    {% if post.pid in dip %}
-                                    <i class="fa fa-thumbs-down fa-lg"></i>
-                                    {% else %}
-                                    <i class="fa fa-thumbs-o-down fa-lg"></i>
-                                    {% endif %}
-                                </button>
-                                <span id="dislikeCount-{{ post.pid }}" class="reactnumber">{{ post.dislikes }}</span>
-                                <button id="commentButton-{{ post.pid }}" class="reactbutton">
-                                    <i class="fa fa-commenting-o fa-lg"></i>
-                                </button>
-                                <span id="commentCount-{{ post.pid }}" class="reactnumber">{{ post.com_num }}</span>
-                            </div>
-                            {% endif %}
-                        </div>
+    <div class="custom-container">
+        <div class="profile-header">
+            <img src="../static/images/profileheader.jpg" alt="profile-header" />
+            <div class="profile-combine">
+                <div class="profile-pic-container">
+                    <div class="profile-pic">
+                        <img src="../static/images/profilepics/{{ user.avatar }}" class="avatar" alt="avatar" />
                     </div>
                 </div>
-                {% endfor %}
+                <div class="profile-details">
+                    <div class="responsive-header">
+                        <img src="../static/images/ranks/{{ user.rank }}.png" class="rank-img responsive-img" />
+                        {{ userinfo.username }}
+                    </div>
+                    <div class="promotion">
+                        {% if not promoted_by_current_user %}
+                        <button id="updateButton" class="updateButton btn-prominent"
+                            onclick="toggleUpdate(this, {{ userinfo.uid }})">Promote
+                            Me</button>
+                        {% else %}
+                        <button id="updateButton" class="updateButton btn-prominent"
+                            onclick="toggleUpdate(this, {{ userinfo.uid }})">Promoted</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="profile-header-base"></div>
+        </div>
+        <div>
+            <div class="profile-box3">
+                <br />
+                <div class="desc-box">
+                    <p class="responsive-header">{{ userinfo.bio }}</p>
+                </div>
+                <div class="count-box">
+                    <p class="description">
+                        Posts: {{ num_posts }}
+                    </p>
+                    <p class="description">
+                        Likes: {{ total_likes }}
+                    </p>
+                    <p class="description">
+                        Promotions: {{ userinfo.promote }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="select-view">
+            <button class="view-button" onclick="openTab(event, 'Posts')" id="defaultOpen">
+                Posts
+            </button>
+            <button class="view-button" onclick="openTab(event, 'Purchased')">
+                Purchased
+            </button>
+            <button class="view-button" onclick="openTab(event, 'Bounties Claimed')">
+                Bounties Claimed
+            </button>
+            <button class="view-button" onclick="openTab(event, 'Listings')">
+                Listings
+            </button>
+        </div>
+        <br>
+
+        <!-- Tab content -->
+        <div id="Posts" class="tabcontent">
+            <div class="forum-section">
+                <div class="post-container">
+                    <div class="row">
+                        {% for item in disc_posts %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="postbubble">
+                                <img src="{{ url_for('static', filename='/images/posts/' + item.img) }}"
+                                    alt="Post Image">
+                                <div class="screen-overlay overlay-animation">
+                                    <div class="posttext">
+                                        <div class="postheader">
+                                            <div class="posttitle">{{ item.title }}</div>
+                                            <form
+                                                action="{{ url_for('routes.delete_post', post_id=item.pid, post_flag=item.flag) }}"
+                                                method="POST">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="reactbutton">
+                                                    <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="postcontent">{{ item.desc }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="Purchased" class="tabcontent" style="display: none">
+            <h3 style="text-align: center">Purchased Posts~</h3>
+            <div class="forum-section">
+                <div class="post-container">
+                    <div class="row">
+                        {% for item in purchased_items %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="postbubble">
+                                <img src="{{ url_for('static', filename='images/sellpics/' + item.img) }}"
+                                    alt="Post Image">
+                                <div class="screen-overlay overlay-animation">
+                                    <div class="posttext">
+                                        <div class="postheader">
+                                            <div class="posttitle">{{ item.title }}</div>
+                                        </div>
+                                        <div class="postcontent">${{ item.price }}</div>
+                                        <div class="postcontent">
+                                            {% if item.user.uid != current_user.uid %}
+                                            <a href="{{ url_for('routes.view_userpf', user_id=item.user.uid) }}"> Sold
+                                                by {{ item.user.username }}</a>
+                                            {% else %}
+                                            <a href="{{ url_for('routes.profile') }}"> Sold by {{ item.user.username
+                                                }}</a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="postcontent">{{ item.desc }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="Bounties-Claimed" class="tabcontent" style="display: none">
+            <h3 style="text-align: center">Bounties Claimed</h3>
+            <div class="forum-section">
+                <div class="post-container">
+                    <div class="row">
+                        {% for item in bounties_claimed %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="postbubble">
+                                <img src="{{ url_for('static', filename='/images/sellpics/' + item.img) }}"
+                                    alt="Post Image">
+                                <div class="screen-overlay overlay-animation">
+                                    <div class="posttext">
+                                        <div class="postheader">
+                                            <div class="posttitle">{{ item.title }}</div>
+                                        </div>
+                                        <div class="postcontent">{{ item.desc }}</div>
+                                        <div class="postdetails">
+                                            <p>Price: {{ item.price }}</p>
+                                            <p>Status: {{ item.status }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="Listings" class="tabcontent" style="display: none">
+            <h3 style="text-align: center">Listings~</h3>
+            <div class="forum-section">
+                <div class="post-container">
+                    <div class="row">
+                        {% for item in sold_items %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="postbubble">
+                                {% if item.flag == "Listing"%}
+                                <img src="{{ url_for('static', filename='images/sellpics/' + item.img) }}"
+                                    alt="Post Image">
+                                {% elif item.flag == "Bounty" %}
+                                <img src="{{ url_for('static', filename='images/posts/' + item.img) }}"
+                                    alt="Post Image">
+                                {% endif %}
+                                <div class="screen-overlay overlay-animation">
+                                    <div class="posttext">
+                                        <div class="postheader">
+                                            <div class="posttitle">{{ item.title }}</div>
+                                            <form
+                                                action="{{ url_for('routes.delete_post', post_id=item.sid if item.flag == 'Listing' else item.pid, post_flag=item.flag) }}"
+                                                method="POST">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="reactbutton">
+                                                    <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="postcontent">{{ item.desc }}</div>
+                                        <div class="postdetails">
+                                            <p>Price: {{ item.price }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <br>
 </div>
-
-<!-- Center-align Profile Picture and Username -->
-<div class="text-center">
-    <!-- User Profile Picture -->
-    <div class="profile-picture">
-        <img src="{{ url_for('static', filename='images/profilepics/' + userinfo.avatar) }}" width="50" height="50" alt="User Profile Picture">
-    </div>
 </div>
-
 {% endblock %}
