@@ -391,4 +391,4 @@ def activate_bounty(bounty_id):
     bounty.claimed=current_user.get_id()
     db.session.commit()
     flash("Bounty Saved to Profile", category='success')
-    return render_template('bounties.html', user=current_user)
+    return redirect(url_for('routes.bounties', user=current_user))
