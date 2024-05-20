@@ -81,13 +81,13 @@ Bountify {% endblock %} {% block content %}
 	<div class="scroll">
 		<h1 class="bountify">BOUNTIFY</h1>
 		<h1 class="star-text">
-			Harness the hunt. <br />
-			Unleash your potential. <br />
+			Harness the hunt. <br>
+			Unleash your potential. <br>
 			Embrace the rewards.
 		</h1>
 		<p class="description">
 			Access a wealth of mercenary and trade
-			opportunities from across the galaxy, <br />
+			opportunities from across the galaxy, <br>
 			putting the power to profit directly in your
 			hands amidst the endless expanse of space.
 		</p>
@@ -95,15 +95,23 @@ Bountify {% endblock %} {% block content %}
 		<p class="button-desc">Ready to go?</p>
     {% if current_user.is_authenticated %}
     <form action="{{ url_for('routes.browse') }}" method="GET">
-    {% else %}
-    <form action="{{ url_for('auth.login') }}" method="GET">
-    {% endif %}
-    <button
-      type="submit"
-      class="btn-prominent"
-    >
+		<button
+      	type="submit"
+      	class="btn-prominent"
+    	>
 			Explore the forum
 		</button>
+	</form>
+    {% else %}
+    <form action="{{ url_for('auth.login') }}" method="GET">
+		<button
+      	type="submit"
+      	class="btn-prominent"
+    	>
+			Explore the forum
+		</button>
+	</form>
+    {% endif %}
 	</div>
 
   <div class="scroll">

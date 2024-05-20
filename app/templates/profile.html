@@ -66,7 +66,7 @@ block content %}
         Listings
       </button>
     </div>
-    <br />
+    <br>
 
     <!-- Tab content -->
     <div id="Posts" class="tabcontent">
@@ -79,7 +79,7 @@ block content %}
                 <img
                   src="{{ url_for('static', filename='/images/posts/' + item.img) }}"
                   alt="Post Image"
-                />
+                >
                 <div class="screen-overlay overlay-animation">
                   <div class="posttext">
                     <div class="postheader">
@@ -88,7 +88,7 @@ block content %}
                         action="{{ url_for('routes.delete_post', post_id=item.pid, post_flag=item.flag) }}"
                         method="POST"
                       >
-                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="reactbutton">
                           <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
                         </button>
@@ -116,7 +116,7 @@ block content %}
                 <img
                   src="{{ url_for('static', filename='images/sellpics/' + item.img) }}"
                   alt="Post Image"
-                />
+                >
                 <div class="screen-overlay overlay-animation">
                   <div class="posttext">
                     <div class="postheader">
@@ -125,11 +125,10 @@ block content %}
                     <div class="postcontent">${{ item.price }}</div>
                     <div class="postcontent"> 
                       {% if item.user.uid != current_user.uid %}
-                      <a href="{{ url_for('routes.view_userpf', user_id=item.user.uid) }}">
+                      <a href="{{ url_for('routes.view_userpf', user_id=item.user.uid) }}"> Sold by {{ item.user.username }}</a>
                       {% else %}
-                      <a href="{{ url_for('routes.profile') }}">
+                      <a href="{{ url_for('routes.profile') }}"> Sold by {{ item.user.username }}</a>
                       {% endif %}
-                        Sold by {{ item.user.username }}</a>
                     </div>
                     <div class="postcontent">{{ item.desc }}</div>
                   </div>
@@ -142,7 +141,7 @@ block content %}
       </div>
     </div>
 
-    <div id="Bounties Claimed" class="tabcontent" style="display: none">
+    <div id="Bounties-Claimed" class="tabcontent" style="display: none">
       <h3 style="text-align: center">Bounties Claimed</h3>
       <div class="forum-section">
         <div class="post-container">
@@ -153,7 +152,7 @@ block content %}
                 <img
                   src="{{ url_for('static', filename='/images/sellpics/' + item.img) }}"
                   alt="Post Image"
-                />
+                >
                 <div class="screen-overlay overlay-animation">
                   <div class="posttext">
                     <div class="postheader">
@@ -186,12 +185,12 @@ block content %}
                 <img
                   src="{{ url_for('static', filename='images/sellpics/' + item.img) }}"
                   alt="Post Image"
-                />
+                >
                 {% elif item.flag == "Bounty" %}
                 <img
                   src="{{ url_for('static', filename='images/posts/' + item.img) }}"
                   alt="Post Image"
-                />
+                >
                 {% endif %}
                 <div class="screen-overlay overlay-animation">
                   <div class="posttext">
@@ -201,7 +200,7 @@ block content %}
                         action="{{ url_for('routes.delete_post', post_id=item.sid if item.flag == 'Listing' else item.pid, post_flag=item.flag) }}"
                         method="POST"
                       >
-                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="reactbutton">
                           <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
                         </button>
@@ -221,7 +220,7 @@ block content %}
       </div>
     </div>
   </div>
-  <br />
+  <br>
 </div>
 </div>
 {% endblock %}

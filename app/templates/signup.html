@@ -8,45 +8,45 @@
     {{ form.hidden_tag() }}
     <h2 class="form-header">Sign Up</h2>
     <div class="form-group">
-      <label for="email">Email:</label>
+      <label>Email:</label>
       {{ form.email(class="form-input-bubble", id="email", placeholder="Email") }}
       {% for error in form.email.errors %}
         <span class="text-danger">{{ error }}</span>
       {% endfor %}
     </div>
-    <br />
+    <br>
     <div class="form-group">
-      <label for="username">Username:</label>
+      <label>Username:</label>
       {{ form.username(class="form-input-bubble", id="username", placeholder="Username") }}
       {% for error in form.username.errors %}
         <span class="text-danger">{{ error }}</span>
       {% endfor %}
     </div>
-    <br />
+    <br>
     <div class="form-group">
-      <label for="password1">Password:</label>
+      <label>Password:</label>
       {{ form.password1(class="form-input-bubble", id="password1", placeholder="Password") }}
       {% for error in form.password1.errors %}
         <span class="text-danger">{{ error }}</span>
       {% endfor %}
     </div>
-    <br />
+    <br>
     <div class="form-group">
-      <label for="password2">Confirm Password:</label>
+      <label>Confirm Password:</label>
       {{ form.password2(class="form-input-bubble", id="password2", placeholder="Confirm Password") }}
       {% for error in form.password2.errors %}
         <span class="text-danger">{{ error }}</span>
       {% endfor %}
     </div>
-    <br />
+    <br>
     <div class="form-group">
-      <label for="is_bounty_hunter">Are you a bounty hunter?</label>
+      <label>Are you a bounty hunter?</label>
       {{ form.is_bounty_hunter(class="form-input-bubble", id="is_bounty_hunter") }}
       {% for error in form.is_bounty_hunter.errors %}
         <span class="text-danger">{{ error }}</span>
       {% endfor %}
     </div>
-    <br />
+    <br>
     <div class="form-group">
       {{ form.submit(class="btn-submit") }}
     </div>

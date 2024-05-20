@@ -15,7 +15,7 @@
                 {% for bounty in bounty_list %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="postbubble">
-                        <img src="{{ url_for('static', filename='images/posts/' + bounty.img) }}" alt="bounty image" />
+                        <img src="{{ url_for('static', filename='images/posts/' + bounty.img) }}" alt="bounty image">
                         <div class="screen-overlay overlay-animation">
                             <div class="posttext">
                                 <div class="posttitle">
@@ -29,7 +29,7 @@
                                     {% endif %}
                                 </div>
                                 <div class="postauthor">
-                                    <img src="{{ url_for('static', filename='images/profilepics/' + bounty.user.avatar) }}" class="small_avatar" alt="avatar" />
+                                    <img src="{{ url_for('static', filename='images/profilepics/' + bounty.user.avatar) }}" class="small-avatar" alt="avatar" />
                                     {% if bounty.user.uid != current_user.uid %}
                                         {{ bounty.user.username }}
                                     {% else %}

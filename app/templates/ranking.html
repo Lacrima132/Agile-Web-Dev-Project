@@ -14,7 +14,7 @@
 			<div class="center">Promotions</div>
 		</div>
 	</div>
-	<br />
+	<br>
 	<!-- Loop through users and display their info -->
 	{% for user in highest_promoted %}
 	<div class="lb">
@@ -27,7 +27,7 @@
 					src="{{ url_for('static', filename='images/profilepics/' ~ user.avatar) }}"
 					alt="Profile Picture"
 					width="50"
-					height="50" />
+					height="50">
 			</div>
 			<div class="center">
 				{{ user.username }}

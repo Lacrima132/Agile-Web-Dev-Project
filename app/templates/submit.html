@@ -3,7 +3,6 @@ endblock %} {% block content %}
 
 <div class="form-section">
   <form
-    action=""
     method="POST"
     enctype="multipart/form-data"
     id="post-submit"
@@ -18,17 +17,17 @@ endblock %} {% block content %}
       type="text"
       id="target"
       name="target"
-    /><br />
+    ><br>
     <label for="image" class="label"
       >Upload Image:</label
     >
-    <br />
+    <br>
     <input
       class="form-input-bubble"
       type="file"
       name="image"
       id="image"
-    /><br />
+    ><br>
     <label class="sr-text" for="tinfo"
       >Post Description:</label
     >
@@ -38,13 +37,12 @@ endblock %} {% block content %}
       id="tinfo"
       name="tinfo"
     ></textarea
-    ><br />
+    ><br>
     <label class="sr-text" for="tags"
       >Tags:</label
     >
     <select
       class="form-input-bubble"
-      type="dropdown"
       id="tags"
       name="tags"
     >
@@ -52,12 +50,12 @@ endblock %} {% block content %}
       <option value="Weapon">Weapon</option>
       <option value="Advice">Advice</option>
     </select>
-    <br />
+    <br>
     <input
       class="btn-submit"
       type="submit"
       value="Submit"
-    />
+    >
   </form>
 </div>
 {% endblock %}

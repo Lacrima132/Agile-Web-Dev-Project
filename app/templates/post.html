@@ -32,7 +32,7 @@
                     <span id="commentCount-{{ post.pid }}" class="reactnumber">{{ comments|length }}</span>
                 </div>
                 <p>{{ post.desc }}</p>
-                <img src="{{ url_for('static', filename='images/posts/' + post.img) }}" alt="Post Image" width="200" height="150" />
+                <img src="{{ url_for('static', filename='images/posts/' + post.img) }}" alt="Post Image" width="200" height="150">
 
     {% for comment in comments %}
     <div class="comment">
