@@ -20,18 +20,20 @@
                             <div class="posttext">
                                 <div class="posttitle">
                                     <a href="/post/{{ bounty.pid }}">
-                                        {{ bounty.title }}  
+                                        {{ bounty.title }}
                                     </a>
                                     {% if bounty.user.uid != current_user.uid %}
-                                    <form action="{{ url_for('routes.activate_bounty', bounty_id=bounty.pid) }}" method="post">
+                                    <form action="{{ url_for('routes.activate_bounty', bounty_id=bounty.pid) }}"
+                                        method="post">
                                         <button type="submit" class="activate-bounty-btn">Submit Interest</button>
                                     </form>
                                     {% endif %}
                                 </div>
                                 <div class="postauthor">
-                                    <img src="{{ url_for('static', filename='images/profilepics/' + bounty.user.avatar) }}" class="small-avatar" alt="avatar" />
+                                    <img src="{{ url_for('static', filename='images/profilepics/' + bounty.user.avatar) }}"
+                                        class="small-avatar" alt="avatar" />
                                     {% if bounty.user.uid != current_user.uid %}
-                                        {{ bounty.user.username }}
+                                    {{ bounty.user.username }}
                                     {% else %}
                                     <a href="/profile">
                                         {{ bounty.user.username }}
@@ -43,22 +45,25 @@
                                     <p>${{ bounty.price }}</p>
                                 </div>
                                 <div class="reactbar">
-                                    <button id="likeButton-{{ bounty.pid }}" class="reactbutton like" onclick="toggleLike(this, {{ bounty.pid }})">
+                                    <button id="likeButton-{{ bounty.pid }}" class="reactbutton like"
+                                        onclick="toggleLike(this, {{ bounty.pid }})">
                                         {% if bounty.pid in lip %}
-                                        <i id="likeIcon-{{ bounty.pid }}" class="fa fa-thumbs-up fa-lg"></i>
+                                        <i class="fa fa-thumbs-up fa-lg"></i>
                                         {% else %}
-                                        <i id="likeIcon-{{ bounty.pid }}" class="fa fa-thumbs-o-up fa-lg"></i>
+                                        <i class="fa fa-thumbs-o-up fa-lg"></i>
                                         {% endif %}
                                     </button>
                                     <span id="likeCount-{{ bounty.pid }}" class="reactnumber">{{ bounty.likes }}</span>
-                                    <button id="dislikeButton-{{ bounty.pid }}" class="reactbutton" onclick="toggleDislike(this, {{ bounty.pid }})">
+                                    <button id="dislikeButton-{{ bounty.pid }}" class="reactbutton"
+                                        onclick="toggleLike(this, {{ bounty.pid }})">
                                         {% if bounty.pid in dip %}
-                                        <i id="dislikeIcon-{{ bounty.pid }}" class="fa fa-thumbs-down fa-lg"></i>
+                                        <i class="fa fa-thumbs-down fa-lg"></i>
                                         {% else %}
-                                        <i id="dislikeIcon-{{ bounty.pid }}" class="fa fa-thumbs-o-down fa-lg"></i>
+                                        <i class="fa fa-thumbs-o-down fa-lg"></i>
                                         {% endif %}
                                     </button>
-                                    <span id="dislikeCount-{{ bounty.pid }}" class="reactnumber">{{ bounty.dislikes }}</span>
+                                    <span id="dislikeCount-{{ bounty.pid }}" class="reactnumber">{{ bounty.dislikes
+                                        }}</span>
                                     <button id="commentButton-{{ bounty.pid }}" class="reactbutton">
                                         <i class="fa fa-commenting-o fa-lg"></i>
                                     </button>
