@@ -370,7 +370,7 @@ def addbounty():
 
         if allowed_size(bounty_image):
             filename = secure_filename(bounty_image.filename)
-            save_path = os.path.join('app', 'static', 'images', 'sellpics', filename)
+            save_path = os.path.join('app', 'static', 'images', 'posts', filename)
             list_bounty = Post(uid=current_user.get_id(), price=price, title=target, img=filename, desc=target_info, status=target_status, flag="Bounty")
             db.session.add(list_bounty)
             db.session.commit()
