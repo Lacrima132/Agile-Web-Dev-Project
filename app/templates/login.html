@@ -5,7 +5,7 @@ endblock %} {% block content %}
 		{{ form.hidden_tag() }}
 		<h2 class="form-header">Login</h2>
 		<div class="form-group">
-			<label class="sr-text" for="email"
+			<label class="sr-text"
 				>Email:</label
 			>
 			{{ form.email(class="form-input-bubble",
@@ -14,9 +14,9 @@ endblock %} {% block content %}
 			<span class="text-danger">{{ error }}</span>
 			{% endfor %}
 		</div>
-		<br />
+		<br>
 		<div class="form-group">
-			<label class="sr-text" for="password"
+			<label class="sr-text"
 				>Password:</label
 			>
 			{{ form.password(class="form-input-bubble",
@@ -25,7 +25,7 @@ endblock %} {% block content %}
 			<span class="text-danger">{{ error }}</span>
 			{% endfor %}
 		</div>
-		<br />
+		<br>
 		<div class="form-group">
 			{{ form.submit(class="btn-submit") }}
 		</div>

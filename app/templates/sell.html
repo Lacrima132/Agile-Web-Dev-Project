@@ -6,7 +6,7 @@ user.username }}{% endblock %} {% block content %}
 		method="POST"
 		enctype="multipart/form-data">
 		{{ form.hidden_tag() }}
-		<label for="weapon_title"
+		<label
 			>{{ form.weapon_title.label }}</label
 		>
 		{{ form.weapon_title(class="form-control") }}
@@ -14,7 +14,7 @@ user.username }}{% endblock %} {% block content %}
 		<span style="color: red">[{{ error }}]</span>
 		{% endfor %}
 
-		<label for="weapon_price"
+		<label
 			>{{ form.weapon_price.label }}</label
 		>
 		{{ form.weapon_price(class="form-control") }}
@@ -22,7 +22,7 @@ user.username }}{% endblock %} {% block content %}
 		<span style="color: red">[{{ error }}]</span>
 		{% endfor %}
 
-		<label for="weapon_description"
+		<label
 			>{{ form.weapon_description.label }}</label
 		>
 		{{
@@ -32,7 +32,7 @@ user.username }}{% endblock %} {% block content %}
 		<span style="color: red">[{{ error }}]</span>
 		{% endfor %}
 
-		<label for="weapon_image"
+		<label
 			>{{ form.weapon_image.label }}</label
 		>
 		{{ form.weapon_image(class="form-control") }}

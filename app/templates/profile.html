@@ -11,28 +11,28 @@
         <div class="profile-box3">
           <h2 class="profile-name">
             {{ user.username }}
-            <img src="{{ url_for('static', filename='images/ranks/' + user.rank + '.png') }}" class="rank-img" />
+            <img src="{{ url_for('static', filename='images/ranks/' + user.rank + '.png') }}" class="rank-img">
           </h2>
           <form action="{{ url_for('routes.editprofile') }}">
-            <input class="btn-edit" type="submit" value="Edit Profile" />
+            <input class="btn-edit" type="submit" value="Edit Profile">
           </form>
         </div>
-        <br />
+        <br>
         <p>{{ user.bio }}</p>
-        <br />
+        <br>
         <p>Posts: {{ num_posts }} Likes: {{ total_likes }} Promotions: {{ user.promote }}</p>
       </div>
     </div>
-    <br />
+    <br>
     <div class="select-view">
       <div class="select-buttons">
         <button class="view-button" onclick="openTab(event, 'Posts')" id="defaultOpen">Posts</button>
         <button class="view-button" onclick="openTab(event, 'Purchased')">Purchased</button>
-        <button class="view-button" onclick="openTab(event, 'Bounties Claimed')">Bounties Claimed</button>
+        <button class="view-button" onclick="openTab(event, 'Bounties-Claimed')">Bounties Claimed</button>
         <button class="view-button" onclick="openTab(event, 'Listings')">Listings</button>
       </div>
     </div>
-    <br />
+    <br>
 
     <!-- Tab content -->
     <div id="Posts" class="tabcontent">
@@ -45,7 +45,7 @@
                 <img
                   src="{{ url_for('static', filename='images/posts/' + item.img) }}"
                   alt="Post Image"
-                />
+                >
                 <div class="screen-overlay overlay-animation">
                   <div class="posttext">
                     <div class="postheader">
@@ -54,7 +54,7 @@
                         action="{{ url_for('routes.delete_post', post_id=item.pid, post_flag=item.flag) }}"
                         method="POST"
                       >
-                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="reactbutton">
                           <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
                         </button>
@@ -82,7 +82,7 @@
                 <img
                   src="{{ url_for('static', filename='images/sellpics/' + item.img) }}"
                   alt="Post Image"
-                />
+                >
                 <div class="screen-overlay overlay-animation">
                   <div class="posttext">
                     <div class="postheader">
@@ -91,11 +91,10 @@
                     <div class="postcontent">${{ item.price }}</div>
                     <div class="postcontent"> 
                       {% if item.user.uid != current_user.uid %}
-                      <a href="{{ url_for('routes.view_userpf', user_id=item.user.uid) }}">
+                      <a href="{{ url_for('routes.view_userpf', user_id=item.user.uid) }}"> Sold by {{ item.user.username }}</a>
                       {% else %}
-                      <a href="{{ url_for('routes.profile') }}">
+                      <a href="{{ url_for('routes.profile') }}"> Sold by {{ item.user.username }}</a>
                       {% endif %}
-                        Sold by {{ item.user.username }}</a>
                     </div>
                     <div class="postcontent">{{ item.desc }}</div>
                   </div>
@@ -108,7 +107,7 @@
       </div>
     </div>
     
-    <div id="Bounties Claimed" class="tabcontent" style="display:none">
+    <div id="Bounties-Claimed" class="tabcontent" style="display:none">
       <h3 style="text-align: center">Bounties Claimed</h3>
       <div class="forum-section">
         <div class="post-container">
@@ -119,7 +118,7 @@
                 <img
                   src="{{ url_for('static', filename='images/posts/' + item.img) }}"
                   alt="Post Image"
-                />
+                >
                 <div class="screen-overlay overlay-animation">
                   <div class="posttext">
                     <div class="postheader">
@@ -152,12 +151,12 @@
                 <img
                   src="{{ url_for('static', filename='images/sellpics/' + item.img) }}"
                   alt="Post Image"
-                />
+                >
                 {% elif item.flag == "Bounty" %}
                 <img
                   src="{{ url_for('static', filename='images/posts/' + item.img) }}"
                   alt="Post Image"
-                />
+                >
                 {% endif %}
                 <div class="screen-overlay overlay-animation">
                   <div class="posttext">
@@ -167,7 +166,7 @@
                         action="{{ url_for('routes.delete_post', post_id=item.sid if item.flag == 'Listing' else item.pid, post_flag=item.flag) }}"
                         method="POST"
                       >
-                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="reactbutton">
                           <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
                         </button>
@@ -187,7 +186,7 @@
       </div>
     </div>
   </div>
-  <br />
+  <br>
 </div>
 
 <script>
@@ -208,16 +207,4 @@
   // Open the default tab
   document.getElementById("defaultOpen").click();
 </script>
-
-<style>
-  .select-buttons {
-    display: flex;
-    justify-content: space-around;
-  }
-  .view-button {
-    flex: 1;
-    text-align: center;
-    margin: 0 10px;
-  }
-</style>
 {% endblock %}
