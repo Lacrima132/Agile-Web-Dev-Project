@@ -1,9 +1,7 @@
 {% extends "base.html" %} {% block title %}
 Bountify {% endblock %} {% block content %}
 <div class="splash invis">
-	<h1
-		class="jumble splashtitle splashAnimation"
-		data-value="BOUNTIFY">
+	<h1 class="jumble splashtitle splashAnimation" data-value="BOUNTIFY">
 		BOUNTIFY
 	</h1>
 </div>
@@ -93,140 +91,108 @@ Bountify {% endblock %} {% block content %}
 		</p>
 
 		<p class="button-desc">Ready to go?</p>
-    {% if current_user.is_authenticated %}
-    <form action="{{ url_for('routes.browse') }}" method="GET">
-		<button
-      	type="submit"
-      	class="btn-prominent"
-    	>
-			Explore the forum
-		</button>
-	</form>
-    {% else %}
-    <form action="{{ url_for('auth.login') }}" method="GET">
-		<button
-      	type="submit"
-      	class="btn-prominent"
-    	>
-			Explore the forum
-		</button>
-	</form>
-    {% endif %}
+		{% if current_user.is_authenticated %}
+		<form action="{{ url_for('routes.browse') }}" method="GET">
+			<button type="submit" class="btn-prominent">
+				Explore the forum
+			</button>
+		</form>
+		{% else %}
+		<form action="{{ url_for('auth.login') }}" method="GET">
+			<button type="submit" class="btn-prominent">
+				Explore the forum
+			</button>
+		</form>
+		{% endif %}
 	</div>
 
-  <div class="scroll">
-	<div class="home-card">
-		<div class="home-card-content">
-			<h1 class="star-text">
-			Engage with the Galaxy
-			</h1>
-			<p class="description">
-			Join millions of user as they post and accept bounties, buy and sell weapons,<br>
-			and interact with a community of like-minded individuals. <br> <br>
-			Whether you're looking for the next big hunt or the perfect trade, <br>
-			Bountify is your gateway to the Star Wars universe.
-			</p>
-		</div>
-		<div class="home-card-images">
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
-		</div>
-		
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
-		</div>
-		<div class="overflow-image">
-			<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
-		</div>
+	<div class="scroll imagegrid">
+		<div class="home-card">
+			<div class="home-card-content">
+				<h1 class="star-text">
+					Engage with the Galaxy
+				</h1>
+				<p class="description">
+					Join millions of user as they post and accept bounties, buy and sell weapons,<br>
+					and interact with a community of like-minded individuals. <br> <br>
+					Whether you're looking for the next big hunt or the perfect trade, <br>
+					Bountify is your gateway to the Star Wars universe.
+				</p>
+			</div>
+			<div class="home-card-images">
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
+				</div>
+
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/lightbringer.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/sith.jpg" alt="Bountify Member">
+				</div>
+				<div class="overflow-image">
+					<img class="image-card" src="../static/images/person.jpg" alt="Bountify Member">
+				</div>
+			</div>
 		</div>
 	</div>
-  </div>
 
-  <div class="scroll">
-    <h1 class="star-text">
-      Your Next Adventure Awaits
-    </h1>
-    <p class="description">
-      Join a thriving community where your skills and courage will lead you to great rewards. <br>
-	  The galaxy is full of opportunities - seize them now!
-    </p>
-  </div>
+	<div class="scroll">
+		<h1 class="star-text">
+			Your Next Adventure Awaits
+		</h1>
+		<p class="description">
+			Join a thriving community where your skills and courage will lead you to great rewards. <br>
+			The galaxy is full of opportunities - seize them now!
+		</p>
+	</div>
 
-  <div class="scroll">
-    <h1 class="star-text">Connect with Fellow Mercenaries</h1>
-    <p class="description">Share your experiences, learn from others, and grow your reputation in the galaxy. Your journey is just beginning.</p>
-  </div>
+	<div class="scroll">
+		<h1 class="star-text">Connect with Fellow Mercenaries</h1>
+		<p class="description">Share your experiences, learn from others, and grow your reputation in the galaxy. Your
+			journey is just beginning.</p>
+	</div>
 </div>
 {% endblock %}

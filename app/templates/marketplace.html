@@ -6,48 +6,48 @@
   <br>
   <div>
     <h1 class="star-text">Welcome to the Marketplace</h1>
-    <p class="description">This marketplace is dedicated to selling weapons. <br> <a href="{{ url_for('routes.sell') }}">Add Item to Market</a> </p>
+    <p class="description">This marketplace is dedicated to selling weapons. <br> <a
+        href="{{ url_for('routes.sell') }}">Add Item to Market</a> </p>
   </div>
-    <div class="forum-section">
-      <div class="post-container">
-          <div class="row">
+  <div class="forum-section">
+    <div class="post-container">
+      <div class="row">
         {% for post in posts %}
         <div class="col-lg-3 col-md-4 col-sm-6">
-            <div class="postbubble">
-              <img src="{{ url_for('static', filename='/images/sellpics/' + post.img) }}" alt="weapon img">
-              <div class="screen-overlay overlay-animation">
-                <div class="posttext">
-                  <div class="posttitle">
-                      {{ post.title }}
-                      <div class="author">
-                        <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="small-avatar" alt="avatar"/>
-                        {% if post.user.uid != current_user.uid %}
-                        <a href= "/view-other-userpf/{{ post.user.uid }}">
-                          {{ post.user.username }}
-                          {% else %}
-                        <a href="/profile">
-                          {{ post.user.username }}
-                          {% endif %}
-                        </a>
-                      </div>
-                  </div>
-                  <div class="postcontent">
-                    <p>$<b>{{ post.price }}</b> - {{ post.desc }}</p>
+          <div class="postbubble">
+            <img src="{{ url_for('static', filename='/images/sellpics/' + post.img) }}" alt="weapon img">
+            <div class="screen-overlay overlay-animation">
+              <div class="posttext">
+                <div class="posttitle">
+                  {{ post.title }}
+                  <div class="author">
+                    <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}"
+                      class="small-avatar" alt="avatar" />
+                    {% if post.user.uid != current_user.uid %}
+                    <a href="/view-other-userpf/{{ post.user.uid }}">
+                      {{ post.user.username }}
+                      {% else %}
+                      <a href="/profile">
+                        {{ post.user.username }}
+                        {% endif %}
+                      </a>
                   </div>
                 </div>
-                <div class="purchase">
-                  <a href="{{ url_for('routes.purchase', sid=post.sid) }}" class="btn-prominent purchase-btn center">
-                    Purchase
-                  </a>
+                <div class="postcontent">
+                  <p>$<b>{{ post.price }}</b> - {{ post.desc }}</p>
                 </div>
               </div>
-            </div>
+              <div class="purchase">
+                <a href="{{ url_for('routes.purchase', sid=post.sid) }}" class="btn-prominent purchase-btn center">
+                  Purchase
+                </a>
+              </div>
             </div>
           </div>
+        </div>
         {% endfor %}
-    </div>
+      </div>
     </div>
   </div>
 </div>
 {% endblock %}
-              
