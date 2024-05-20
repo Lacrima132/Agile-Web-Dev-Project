@@ -59,7 +59,7 @@ block content %}
       <button class="view-button" onclick="openTab(event, 'Purchased')">
         Purchased
       </button>
-      <button class="view-button" onclick="openTab(event, 'Bounties Claimed')">
+      <button class="view-button" onclick="openTab(event, 'Bounties-Claimed')">
         Bounties Claimed
       </button>
       <button class="view-button" onclick="openTab(event, 'Listings')">
@@ -160,8 +160,9 @@ block content %}
                     </div>
                     <div class="postcontent">{{ item.desc }}</div>
                     <div class="postdetails">
-                      <p>Price: {{ item.price }}</p>
-                      <p>Status: {{ item.status }}</p>
+                      <p><b>Price: {{ item.price }}</b></p>
+                      <p><b>Status:</b> {{ item.status }}</p>
+                      <p><b>Contact:</b> {{ item.user.email }}</p>
                     </div>
                   </div>
                 </div>
