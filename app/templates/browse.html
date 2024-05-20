@@ -58,7 +58,11 @@
                                     {% endif %}
                                 </div>
                             </div>
+                            {% if post.flag == "Listing" or post.flag == "Bounty"%}
+                            <div class="postcontent">$<b>{{ post.price }}</b>  - {{ post.desc }}</div>
+                            {% else %}
                             <div class="postcontent">{{ post.desc }}</div>
+                            {% endif %}
                         </div>
                         {% if post.flag == "Bounty" or post.flag == "Discussion"%}
                         <div class="reactbar">

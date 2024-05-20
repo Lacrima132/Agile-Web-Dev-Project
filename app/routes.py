@@ -206,7 +206,6 @@ def discussion():
                 flag="Discussion",
                 uid=user_id,
                 img=filename
-                img=filename
             )
             db.session.add(new_disc_post)
             db.session.commit()
@@ -279,26 +278,18 @@ def editprofile():
             current_user.bio = bio
             flash('Bio updated!', category='success')
 
-        if form.image.data:
-            if allowed_file(form.image.data.filename):
-                filename = secure_filename(form.image.data.filename)
-                save_path = os.path.join('app', 'static', 'images', 'profilepics', filename)
-                form.image.data.save(save_path)
-                
-                # Optional: Remove the old profile picture
-                previous_avatar_filename = current_user.avatar
-                if previous_avatar_filename != "pfp.png":
-                    previous_avatar_path = os.path.join('app', 'static', 'images', 'profilepics', previous_avatar_filename)
-                    if os.path.exists(previous_avatar_path) :
-                        os.remove(previous_avatar_path)
-                
-                current_user.avatar = filename
-                flash('Profile picture uploaded!', category='success')
+        if username and username != current_user.username:
+            if User.query.filter_by(username=username).first():
+                flash('Username already in use.', category='error')
+            else:
+                current_user.username = username
+                flash('Username updated!', category='success')
 
         db.session.commit()
         return redirect(url_for('routes.profile'))
 
     return render_template('edit-profile.html', user=current_user, form=form)
+
 
 
 

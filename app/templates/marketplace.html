@@ -33,8 +33,8 @@
                     </a>
                   </div>
                   <div class="postcontent">
-                    <p>{{ post.desc }}</p>
-                    <p>Price: ${{ post.price }}</p>
+                    <p>$<b>{{ post.price }}</b> - {{ post.desc }}</p>
+        
                   </div>
                   <a href="{{ url_for('routes.purchase', sid=post.sid) }}" class="btn-prominent purchase-btn center">
                     Purchase
