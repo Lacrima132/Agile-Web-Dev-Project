@@ -1,60 +1,76 @@
 {% extends "base.html" %}
-{% block title %} Browse {% endblock %}
+{% block title %}Browse{% endblock %}
 {% block content %}
 <div class="intro-section">
     <div class="forum-section">
         <!-- Center-align post container -->
         <div class="post-container text-center">
             <div class="row justify-content-center">
+                <!-- User Name -->
+                <div class="username">
+                    {{ userinfo.username }}
+                </div>
+            </div>
 
-              <!-- User Name -->
-    <div class="username">
-      {{ userinfo.username }}
-  </div>
-</div>
-
-<!-- Heading for User Posts -->
-<div class="user-posts text-center">
-  User Posts
-  {% if  not promoted_by_current_user %}
-  <button id="updateButton" class="updateButton" onclick="toggleUpdate(this, {{ userinfo.uid }})">Promote Me</button>
-  {% else %}
-  <button id="updateButton" class="updateButton" onclick="toggleUpdate(this, {{ userinfo.uid }})">Promoted</button>
-  {% endif %}
-</button>
-<span id="promotionCount">{{ userinfo.promote }}</span>
-<img src="../static/images/ranks/{{ userinfo.rank }}.png" class="rank-img" />
-</div>
-                <!-- User Posts -->
+            <!-- Heading for User Posts -->
+            <div class="user-posts text-center">
+                User Posts
+                {% if not promoted_by_current_user %}
+                <button id="updateButton" class="updateButton" onclick="toggleUpdate(this, {{ userinfo.uid }})">Promote Me</button>
+                {% else %}
+                <button id="updateButton" class="updateButton" onclick="toggleUpdate(this, {{ userinfo.uid }})">Promoted</button>
+                {% endif %}
+                <span id="promotionCount">{{ userinfo.promote }}</span>
+                <img src="../static/images/ranks/{{ userinfo.rank }}.png" class="rank-img" />
+            </div>
+            
+            <!-- User Posts -->
+            <div class="row justify-content-center">
                 {% for post in posts %}
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="postbubble">
-                        <img src="{{ url_for('static', filename='/images/posts/' + post.img) }}" alt="Post Image" />
+                        {% if post.flag == "Discussion" or post.flag == "Bounty" %}
+                        <img src="{{ url_for('static', filename='images/posts/' + post.img) }}" alt="Post Image" />
+                        {% elif post.flag == "Listing" %}
+                        <img src="{{ url_for('static', filename='images/sellpics/' + post.img) }}" alt="Post Image" />
+                        {% endif %}
                         <div class="screen-overlay overlay-animation">
                             <div class="posttext">
                                 <div class="posttitle">{{ post.title }}</div>
                                 <div class="postauthor">
                                     <!-- link to post.html -->
+                                    {% if post.flag != "Listing" %}
                                     <a href="/post/{{ post.pid }}">
                                         <button id="postbutton" class="postbutton">View</button>
                                     </a>
+                                    {% endif %}
                                 </div>
-                                <div class="postcontent">{{ post.desc}}</div>
+                                <div class="postcontent">{{ post.desc }}</div>
                             </div>
+                            {% if post.flag == "Bounty" or post.flag == "Discussion" %}
                             <div class="reactbar">
-                                <button id="likeButton" class="reactbutton" onclick="toggleLike('likeCount', 'likeIcon', true)">
-                                    <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
+                                <button id="likeButton-{{ post.pid }}" class="reactbutton like" onclick="toggleLike(this, {{ post.pid }})">
+                                    {% if post.pid in lip %}
+                                    <i class="fa fa-thumbs-up fa-lg"></i>
+                                    {% else %}
+                                    <i class="fa fa-thumbs-o-up fa-lg"></i>
+                                    {% endif %}
                                 </button>
-                                <span id="likeCount" class="reactnumber">0</span>
-                                <button id="dislikeButton" class="reactbutton" onclick="toggleLike('dislikeCount', 'dislikeIcon', false)">
-                                    <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
+                                <span id="likeCount-{{ post.pid }}" class="reactnumber">{{ post.likes }}</span>
+                                <button id="dislikeButton-{{ post.pid }}" class="reactbutton" onclick="toggleDislike(this, {{ post.pid }})">
+                                    {% if post.pid in dip %}
+                                    <i class="fa fa-thumbs-down fa-lg"></i>
+                                    {% else %}
+                                    <i class="fa fa-thumbs-o-down fa-lg"></i>
+                                    {% endif %}
                                 </button>
-                                <span id="dislikeCount" class="reactnumber">0</span>
-                                <button id="commentButton" class="reactbutton">
+                                <span id="dislikeCount-{{ post.pid }}" class="reactnumber">{{ post.dislikes }}</span>
+                                <button id="commentButton-{{ post.pid }}" class="reactbutton">
                                     <i class="fa fa-commenting-o fa-lg"></i>
                                 </button>
-                                <span id="commentCount" class="reactnumber">0</span>
+                                <span id="commentCount-{{ post.pid }}" class="reactnumber">{{ post.com_num }}</span>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -68,7 +84,8 @@
 <div class="text-center">
     <!-- User Profile Picture -->
     <div class="profile-picture">
-        <img src="{{ url_for('static', filename='/images/profilepics/' + userinfo.avatar) }}" width="50" height="50" alt="User Profile Picture">
+        <img src="{{ url_for('static', filename='images/profilepics/' + userinfo.avatar) }}" width="50" height="50" alt="User Profile Picture">
     </div>
+</div>
 
 {% endblock %}

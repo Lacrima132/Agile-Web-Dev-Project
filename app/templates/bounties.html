@@ -2,9 +2,99 @@
 {% block title %}{{ user.username }}{% endblock %}
 {% block content %}
     
+<style>
+    .title-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .add-bounty-btn {
+        margin-right: 15px;
+    }
+
+    .postbubble img {
+        width: 100%;
+        height: auto;
+    }
+
+    .postbubble {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .screen-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .postbubble:hover .screen-overlay {
+        opacity: 1;
+    }
+
+    .posttext {
+        padding: 15px;
+    }
+
+    .posttitle a {
+        color: white;
+        font-size: 1.5em;
+        text-decoration: none;
+    }
+
+    .postauthor img.small_avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .postauthor {
+        display: flex;
+        align-items: center;
+    }
+
+    .postauthor a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .postcontent p {
+        margin: 5px 0;
+    }
+
+    .reactbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+    }
+
+    .reactbutton {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    .reactnumber {
+        margin: 0 10px;
+    }
+</style>
+
 <div class="home">
     <br>
-    <h1 class="star-text">Bounties</h1>
+    <div class="title-container">
+        <a href="{{ url_for('routes.addbounty') }}" class="btn btn-primary add-bounty-btn">Add Bounty</a>
+        <h1 class="star-text">Bounties</h1>
+    </div>
     <p class="description">Peep your next bounty</p>
     <div class="forum-section">
         <div class="post-container">
@@ -17,15 +107,18 @@
                             <div class="posttext">
                                 <div class="posttitle">
                                     <a href="/post/{{ bounty.pid }}">
-                                        {{ bounty.title }}
+                                        {{ bounty.title }}  
                                     </a>
+                                    {% if bounty.user.uid != current_user.uid %}
+                                    <form action="{{ url_for('routes.activate_bounty', bounty_id=bounty.pid) }}" method="post">
+                                        <button type="submit" class="activate-bounty-btn">Submit Interest</button>
+                                    </form>
+                                    {% endif %}
                                 </div>
                                 <div class="postauthor">
-                                    <img src="{{ url_for('static', filename='images/profilepics/' + bounty.user.avatar) }}" class="small_avatar" alt="avatar" style="width: 10px;" />
+                                    <img src="{{ url_for('static', filename='images/profilepics/' + bounty.user.avatar) }}" class="small_avatar" alt="avatar" />
                                     {% if bounty.user.uid != current_user.uid %}
-                        
                                         {{ bounty.user.username }}
-                                    </a>
                                     {% else %}
                                     <a href="/profile">
                                         {{ bounty.user.username }}
@@ -35,35 +128,31 @@
                                 <div class="postcontent">
                                     <p>{{ bounty.desc }}</p>
                                     <p>${{ bounty.price }}</p>
-                                    <form action="{{ url_for('routes.activate_bounty', bounty_id=bounty.pid) }}" method="post">
-                                        <button type="submit" class="activate-bounty-btn">Submit Interest</button>
-                                    </form>
                                 </div>
-                                <div class="reactbar" style="opacity: 1; z-index: 100; transform: translateX(-20%);">
-                                  <button id="likeButton" class="reactbutton like" onclick="toggleLike(this, {{ bounty.pid }})">
-                                      {% if bounty.pid in lip %}
-                                      <i id="likeIcon" class="fa fa-thumbs-up fa-lg"></i>
-                                      {% else %}
-                                      <i id="likeIcon" class="fa fa-thumbs-o-up fa-lg"></i>
-                                      {% endif %}
-                                  </button>
-                                  <span id="likeCount" class="reactnumber">{{ bounty.likes }}</span>
-                                  <button id="dislikeButton" class="reactbutton" onclick="toggleDislike(this, {{ bounty.pid }})">
-                                      {% if bounty.pid in dip %}
-                                      <i id="dislikeIcon" class="fa fa-thumbs-down fa-lg"></i>
-                                      {% else %}
-                                      <i id="dislikeIcon" class="fa fa-thumbs-o-down fa-lg"></i>
-                                      {% endif %}
-                                  </button>
-                                  <span id="dislikeCount" class="reactnumber">{{ bounty.dislikes }}</span>
-                                  <button id="commentButton" class="reactbutton">
-                                      <i class="fa fa-commenting-o fa-lg"></i>
-                                  </button>
-                                  <span id="commentCount" class="reactnumber">0</span>
-                              </div>
+                                <div class="reactbar">
+                                    <button id="likeButton-{{ bounty.pid }}" class="reactbutton like" onclick="toggleLike(this, {{ bounty.pid }})">
+                                        {% if bounty.pid in lip %}
+                                        <i id="likeIcon-{{ bounty.pid }}" class="fa fa-thumbs-up fa-lg"></i>
+                                        {% else %}
+                                        <i id="likeIcon-{{ bounty.pid }}" class="fa fa-thumbs-o-up fa-lg"></i>
+                                        {% endif %}
+                                    </button>
+                                    <span id="likeCount-{{ bounty.pid }}" class="reactnumber">{{ bounty.likes }}</span>
+                                    <button id="dislikeButton-{{ bounty.pid }}" class="reactbutton" onclick="toggleDislike(this, {{ bounty.pid }})">
+                                        {% if bounty.pid in dip %}
+                                        <i id="dislikeIcon-{{ bounty.pid }}" class="fa fa-thumbs-down fa-lg"></i>
+                                        {% else %}
+                                        <i id="dislikeIcon-{{ bounty.pid }}" class="fa fa-thumbs-o-down fa-lg"></i>
+                                        {% endif %}
+                                    </button>
+                                    <span id="dislikeCount-{{ bounty.pid }}" class="reactnumber">{{ bounty.dislikes }}</span>
+                                    <button id="commentButton-{{ bounty.pid }}" class="reactbutton">
+                                        <i class="fa fa-commenting-o fa-lg"></i>
+                                    </button>
+                                    <span id="commentCount-{{ bounty.pid }}" class="reactnumber">0</span>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 {% endfor %}
