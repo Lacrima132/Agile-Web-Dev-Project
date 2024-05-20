@@ -45,8 +45,12 @@ Bountify is a dynamic platform designed to facilitate mercenary and trade opport
 ## How to Launch the Website
 
     $ git clone https://github.com/Lacrima132/Agile-Web-Dev-Project.git
-    $ ./installer.sh
-    ctrl + click the link to open the website
+    
+- Either use the call: 
+
+    $ /.installer.sh
+
+- Or manually input the lines in installer.sh into the terminal 
 
 ## How to Run Tests
 

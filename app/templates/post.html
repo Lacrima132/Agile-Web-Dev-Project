@@ -1,16 +1,38 @@
-{% extends "base.html" %} {% block title %} Browse {% endblock %} {% block
-content %}
-<div class="post-container text-center">
-  <div class="comments-container">
-    <h1>Comments</h1>
-    <p>{{ post.title }}</p>
-    <p>{{ post.desc }}</p>
-    <img
-      src="{{ url_for('static', filename='images/posts/' + post.img) }}"
-      alt="Post Image"
-      width="200"
-      height="150"
-    />
+{% extends "base.html" %}
+
+{% block title %}Post{% endblock %}
+
+{% block content %}
+<div class="home">
+    <div class="container">
+        <div class="postbubble">
+            <div class="comments-container">
+                <h1>Comments</h1>
+                <p>{{ post.title }}</p>
+                <div class="reactbar" style="opacity: 1">
+                    <button id="likeButton-{{ post.pid }}" class="reactbutton like" onclick="toggleLike(this, {{ post.pid }})">
+                        {% if post.pid in lip %}
+                        <i class="fa fa-thumbs-up fa-lg"></i>
+                        {% else %}
+                        <i class="fa fa-thumbs-o-up fa-lg"></i>
+                        {% endif %}
+                    </button>
+                    <span id="likeCount-{{ post.pid }}" class="reactnumber">{{ post.likes }}</span>
+                    <button id="dislikeButton-{{ post.pid }}" class="reactbutton" onclick="toggleLike(this, {{ post.pid }})">
+                        {% if post.pid in dip %}
+                        <i class="fa fa-thumbs-down fa-lg"></i>
+                        {% else %}
+                        <i class="fa fa-thumbs-o-down fa-lg"></i>
+                        {% endif %}
+                    </button>
+                    <span id="dislikeCount-{{ post.pid }}" class="reactnumber">{{ post.dislikes }}</span>
+                    <button id="commentButton-{{ post.pid }}" class="reactbutton">
+                        <i class="fa fa-commenting-o fa-lg"></i>
+                    </button>
+                    <span id="commentCount-{{ post.pid }}" class="reactnumber">{{ comments|length }}</span>
+                </div>
+                <p>{{ post.desc }}</p>
+                <img src="{{ url_for('static', filename='images/posts/' + post.img) }}" alt="Post Image" width="200" height="150" />
 
     {% for comment in comments %}
     <div class="comment">

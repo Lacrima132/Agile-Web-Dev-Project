@@ -24,7 +24,7 @@ class Post(db.Model): #discussion posts, flag = "discussion"
     title = db.Column(db.String(100))
     img = db.Column(db.String(100), nullable=False)
     desc = db.Column(db.String(1000))
-    flag = db.Column(db.String(100))
+    flag = db.Column(db.String(100)) #Bounty, Listing, Discussion
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
     likes = db.Column(db.Integer, default = 0)
     dislikes = db.Column(db.Integer, default = 0)
@@ -60,6 +60,7 @@ class Sell(db.Model):
     sold = db.Column(db.String(100), default="Unsold") #changes to user logged in who bought it
     timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
     flag = db.Column(db.String(100))
+    com_num = db.Column(db.Integer, default = 0)
     
 class Promote(db.Model):
     id = db.Column(db.Integer, primary_key=True)

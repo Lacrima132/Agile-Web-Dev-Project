@@ -85,8 +85,8 @@ block content %}
                     <div class="postheader">
                       <div class="posttitle">{{ item.title }}</div>
                       <form
-                        action="{{ url_for('routes.delete_post', post_id=item.pid, post_flag = item.flag) }}"
-                        method="post"
+                        action="{{ url_for('routes.delete_post', post_id=item.pid, post_flag=item.flag) }}"
+                        method="POST"
                       >
                         <input type="hidden" name="_method" value="DELETE" />
                         <button type="submit" class="reactbutton">
@@ -114,13 +114,22 @@ block content %}
             <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="postbubble">
                 <img
-                  src="{{ url_for('static', filename='/images/sellpics/' + item.img) }}"
+                  src="{{ url_for('static', filename='images/sellpics/' + item.img) }}"
                   alt="Post Image"
                 />
                 <div class="screen-overlay overlay-animation">
                   <div class="posttext">
                     <div class="postheader">
                       <div class="posttitle">{{ item.title }}</div>
+                    </div>
+                    <div class="postcontent">${{ item.price }}</div>
+                    <div class="postcontent"> 
+                      {% if item.user.uid != current_user.uid %}
+                      <a href="{{ url_for('routes.view_userpf', user_id=item.user.uid) }}">
+                      {% else %}
+                      <a href="{{ url_for('routes.profile') }}">
+                      {% endif %}
+                        Sold by {{ item.user.username }}</a>
                     </div>
                     <div class="postcontent">{{ item.desc }}</div>
                   </div>
@@ -173,17 +182,24 @@ block content %}
             {% for item in sold_items %}
             <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="postbubble">
+                {% if item.flag == "Listing"%}
                 <img
-                  src="{{ url_for('static', filename='/images/sellpics/' + item.img) }}"
+                  src="{{ url_for('static', filename='images/sellpics/' + item.img) }}"
                   alt="Post Image"
                 />
+                {% elif item.flag == "Bounty" %}
+                <img
+                  src="{{ url_for('static', filename='images/posts/' + item.img) }}"
+                  alt="Post Image"
+                />
+                {% endif %}
                 <div class="screen-overlay overlay-animation">
                   <div class="posttext">
                     <div class="postheader">
                       <div class="posttitle">{{ item.title }}</div>
                       <form
-                        action="{{ url_for('routes.delete_post', post_id=item.sid, post_flag = item.flag) }}"
-                        method="post"
+                        action="{{ url_for('routes.delete_post', post_id=item.sid if item.flag == 'Listing' else item.pid, post_flag=item.flag) }}"
+                        method="POST"
                       >
                         <input type="hidden" name="_method" value="DELETE" />
                         <button type="submit" class="reactbutton">

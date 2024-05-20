@@ -19,7 +19,9 @@ def home():
 @routes.route('/browse', methods=['GET', 'POST'])
 def browse():
     form = SearchForm()
-    posts = Post.query.all()  # Retrieve all posts initially
+    posts = Post.query.filter_by(claimed=False).all()  # Retrieve all posts initially
+    not_sold=Sell.query.filter_by(sold="Unsold").all()
+    posts = posts + not_sold
 
     if form.validate_on_submit():
         keyword = form.keyword.data
@@ -34,19 +36,19 @@ def browse():
 
         posts = filtered_posts
         if len(keyword) == 0:
-            posts = Post.query.all()             
+            posts = posts + not_sold             
         elif len(filtered_posts) == 0:
             flash("No posts match your search", category='error')
     
     bounty_posts = Post.query.filter(Post.flag == "Bounty").all()
-    advice_posts = Post.query.filter(Post.flag == "Advice").all()
-    weapons_posts = Post.query.filter(Post.flag == "Weapons").all()
+    advice_posts = Post.query.filter(Post.flag == "Discussion").all()
+    weapons_posts = Sell.query.filter().all()
 
     lip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, liked=True).all()]
     dip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, disliked=True).all()]
-    print("Liked Post IDs:", lip)
-    for post in posts:
-        print("Post ID:", post.pid, "Liked:", post.pid in lip)
+    # print("Liked Post IDs:", lip)
+    # for post in posts:
+    #     print("Post ID:", post.pid, "Liked:", post.pid in lip)
 
     return render_template('browse.html', user=current_user, form=form, posts=posts, bounty_posts=bounty_posts, weapons_posts=weapons_posts, advice_posts=advice_posts, lip=lip, dip=dip)
 
@@ -107,6 +109,10 @@ def post(post_id):
     comments = Comments.query.filter_by(pid=post_id).all()
     form = CommentForm()
 
+
+    lip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, liked=True).all()]
+    dip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, disliked=True).all()]
+
     if form.validate_on_submit():
         comment_text = form.comment.data
         new_comment = Comments(
@@ -115,17 +121,20 @@ def post(post_id):
             comment=comment_text,
             timestamp=func.now()
         )
-        post.com_num += 1
         db.session.add(new_comment)
         db.session.commit()
         flash('Comment Added!', category='success')
+
+
         return redirect(url_for('routes.post', post_id=post_id))
 
-    return render_template('post.html', user=current_user, post=post, comments=comments, form=form)
+    return render_template('post.html', user=current_user, post=post, comments=comments, form=form, lip=lip, dip=dip)
 @routes.route('/view-other-userpf/<int:user_id>', methods = ['GET','POST'])
 def view_userpf(user_id):
     userinfo = User.query.get_or_404(user_id)
     posts = Post.query.filter_by(uid=user_id).all()
+    # if_liked = Likes.query.filter_by(uid=current_user.get_id(), pid=user_id, liked=True).first()
+    # if_disliked = Likes.query_filter_by(uid=current_user.get_id(), pid=user_id, liked=).first()
     promoted_by_current_user = Promote.query.filter_by(promoted_by=current_user.get_id(), promoted=True, promoting_this_guy=user_id).first()
 
     return render_template('view-other-userpf.html', user=current_user, userinfo=userinfo, posts=posts, promoted_by_current_user=promoted_by_current_user)
@@ -191,6 +200,7 @@ def discussion():
                 flag="Discussion",
                 uid=user_id,
                 img=filename
+                img=filename
             )
             db.session.add(new_disc_post)
             db.session.commit()
@@ -204,7 +214,7 @@ def discussion():
 @routes.route('/post/delete/<int:post_id>/<string:post_flag>', methods=['POST'])
 @login_required
 def delete_post(post_id, post_flag):
-    if post_flag == "Discussion":
+    if post_flag == "Discussion" or post_flag == "Bounty":
         post = Post.query.get_or_404(post_id)
         db.session.delete(post)
         db.session.commit()
@@ -226,19 +236,20 @@ def delete_post(post_id, post_flag):
 @routes.route('/profile')
 def profile():
     user = current_user
-    num_posts = Post.query.filter_by(uid=current_user.get_id()).count()
+    num_posts = Post.query.filter_by(uid=current_user.get_id(), claimed=False).count() + Sell.query.filter_by(uid=current_user.get_id(), sold="Unsold").count()
     total_likes = Post.query.filter_by(uid=current_user.get_id()).with_entities(func.sum(Post.likes)).scalar()
     total_likes = total_likes if total_likes else 0  # Handle case where total_likes is None
-    print(total_likes, num_posts)
     purchased_items = Sell.query.filter_by(sold=current_user.get_id()).all()
     current_user_posts = Post.query.filter_by(uid=current_user.get_id()).all()
     sold_items = Sell.query.filter_by(uid=current_user.get_id(), sold="Unsold").all()
     disc_posts = Post.query.filter_by(uid=current_user.get_id(), flag="Discussion").all()
     bounties_claimed = Post.query.filter_by(claimed=current_user.get_id()).all()
-    print(disc_posts)
-    return render_template('profile.html', user=user, num_posts=num_posts, total_likes=total_likes, current_user_posts=current_user_posts, purchased_items=purchased_items, sold_items=sold_items, disc_posts=disc_posts, bounties_claimed=bounties_claimed)
+    bounties_listed = Post.query.filter_by(uid=current_user.get_id(), flag="Bounty", claimed=False).all()
+    
+    sold_items = sold_items + bounties_listed
+    return render_template('profile.html', user=user, num_posts=num_posts, total_likes=total_likes, current_user_posts=current_user_posts, purchased_items=purchased_items, sold_items=sold_items, disc_posts=disc_posts, bounties_claimed=bounties_claimed, bounties_listed=bounties_listed)
 
-@routes.route('/editprofile', methods =['GET', 'POST'])
+@routes.route('/editprofile', methods=['GET', 'POST'])
 def editprofile():
     form = ProfileEditForm()
     if form.validate_on_submit():
@@ -261,15 +272,29 @@ def editprofile():
         if bio:
             current_user.bio = bio
             flash('Bio updated!', category='success')
-        
-        if username:
-            current_user.username = username
-            flash('Username updated!', category='success')
+
+        if form.image.data:
+            if allowed_file(form.image.data.filename):
+                filename = secure_filename(form.image.data.filename)
+                save_path = os.path.join('app', 'static', 'images', 'profilepics', filename)
+                form.image.data.save(save_path)
+                
+                # Optional: Remove the old profile picture
+                previous_avatar_filename = current_user.avatar
+                if previous_avatar_filename != "pfp.png":
+                    previous_avatar_path = os.path.join('app', 'static', 'images', 'profilepics', previous_avatar_filename)
+                    if os.path.exists(previous_avatar_path) :
+                        os.remove(previous_avatar_path)
+                
+                current_user.avatar = filename
+                flash('Profile picture uploaded!', category='success')
 
         db.session.commit()
-        return redirect(url_for('routes.editprofile'))
+        return redirect(url_for('routes.profile'))
 
     return render_template('edit-profile.html', user=current_user, form=form)
+
+
 
 @routes.route('/aboutus')
 def aboutus():
