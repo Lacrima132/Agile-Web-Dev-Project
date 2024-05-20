@@ -1,36 +1,70 @@
-{% extends "base.html" %}
-{% block title %}{{ user.username }}{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}{{ user.username }}{% endblock %} {%
+block content %}
 <div class="intro-section">
-  <div>
-    <div class="info-bubble">
-      <div class="profile-pic">
-        <img src="{{ url_for('static', filename='images/profilepics/' + user.avatar) }}" class="avatar" alt="avatar">
-      </div>
-      <div class="profile-box2">
-        <div class="profile-box3">
-          <h2 class="profile-name">
-            {{ user.username }}
-            <img src="{{ url_for('static', filename='images/ranks/' + user.rank + '.png') }}" class="rank-img" />
-          </h2>
-          <form action="{{ url_for('routes.editprofile') }}">
-            <input class="btn-edit" type="submit" value="Edit Profile" />
-          </form>
+  <div class="custom-container">
+  <div class="profile-header">
+    <img src="../static/images/profileheader.jpg" alt="profile-header" />
+    <div class="profile-combine">
+      <div class="profile-pic-container">
+        <div class="profile-pic">
+          <img
+            src="../static/images/profilepics/{{ user.avatar }}"
+            class="avatar"
+            alt="avatar"
+          />
         </div>
-        <br />
-        <p>{{ user.bio }}</p>
-        <br />
-        <p>Posts: {{ num_posts }} Likes: {{ total_likes }} Promotions: {{ user.promote }}</p>
+      </div>
+      <div class="profile-details">
+        <div class="star-text">
+          <img
+            src="../static/images/ranks/{{ user.rank }}.png"
+            class="rank-img responsive-img"
+          />
+          {{ user.username }}
+        </div>
+        <form action="{{ url_for('routes.editprofile') }}">
+          <input class="btn-edit" type="submit" value="Edit Profile" />
+        </form>
       </div>
     </div>
-    <br />
-    <div class="select-view">
-      <div class="select-buttons">
-        <button class="view-button" onclick="openTab(event, 'Posts')" id="defaultOpen">Posts</button>
-        <button class="view-button" onclick="openTab(event, 'Purchased')">Purchased</button>
-        <button class="view-button" onclick="openTab(event, 'Bounties Claimed')">Bounties Claimed</button>
-        <button class="view-button" onclick="openTab(event, 'Listings')">Listings</button>
+    <div class="profile-header-base"></div>
+  </div>
+    <div>
+        <div class="profile-box3">
+        <br />
+        <div class="desc-box">
+        <p class="responsive-header">{{ user.bio }}</p>
       </div>
+        <div class="count-box">
+          <p class="description">
+            Posts: {{ num_posts }}
+          </p>
+          <p class="description">
+            Likes: {{ total_likes }}
+          </p>
+          <p class="description">
+            Promotions: {{ current_user.promote }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="select-view">
+      <button
+        class="view-button"
+        onclick="openTab(event, 'Posts')"
+        id="defaultOpen"
+      >
+        Posts
+      </button>
+      <button class="view-button" onclick="openTab(event, 'Purchased')">
+        Purchased
+      </button>
+      <button class="view-button" onclick="openTab(event, 'Bounties Claimed')">
+        Bounties Claimed
+      </button>
+      <button class="view-button" onclick="openTab(event, 'Listings')">
+        Listings
+      </button>
     </div>
     <br />
 
@@ -43,7 +77,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="postbubble">
                 <img
-                  src="{{ url_for('static', filename='images/posts/' + item.img) }}"
+                  src="{{ url_for('static', filename='/images/posts/' + item.img) }}"
                   alt="Post Image"
                 />
                 <div class="screen-overlay overlay-animation">
@@ -71,7 +105,7 @@
       </div>
     </div>
 
-    <div id="Purchased" class="tabcontent" style="display:none">
+    <div id="Purchased" class="tabcontent" style="display: none">
       <h3 style="text-align: center">Purchased Posts~</h3>
       <div class="forum-section">
         <div class="post-container">
@@ -107,8 +141,8 @@
         </div>
       </div>
     </div>
-    
-    <div id="Bounties Claimed" class="tabcontent" style="display:none">
+
+    <div id="Bounties Claimed" class="tabcontent" style="display: none">
       <h3 style="text-align: center">Bounties Claimed</h3>
       <div class="forum-section">
         <div class="post-container">
@@ -117,7 +151,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="postbubble">
                 <img
-                  src="{{ url_for('static', filename='images/posts/' + item.img) }}"
+                  src="{{ url_for('static', filename='/images/sellpics/' + item.img) }}"
                   alt="Post Image"
                 />
                 <div class="screen-overlay overlay-animation">
@@ -139,8 +173,8 @@
         </div>
       </div>
     </div>
-    
-    <div id="Listings" class="tabcontent" style="display:none">
+
+    <div id="Listings" class="tabcontent" style="display: none">
       <h3 style="text-align: center">Listings~</h3>
       <div class="forum-section">
         <div class="post-container">
@@ -189,35 +223,5 @@
   </div>
   <br />
 </div>
-
-<script>
-  function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("view-button");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
-  }
-
-  // Open the default tab
-  document.getElementById("defaultOpen").click();
-</script>
-
-<style>
-  .select-buttons {
-    display: flex;
-    justify-content: space-around;
-  }
-  .view-button {
-    flex: 1;
-    text-align: center;
-    margin: 0 10px;
-  }
-</style>
+</div>
 {% endblock %}

@@ -6,30 +6,20 @@
 <div class="intro-section" style="margin-bottom: 20px;">
     <h1 class="pagetitle">Browse</h1>
     <div class="search-container">
-        <div class="row">
-            <div class="col-12">
-                <form class="form-inline searchbar-box" method="POST">
-                    {{ form.hidden_tag() }}
-                    <div class="input-group w-100">
-                        {{ form.keyword(class="searchbarinput form-control", placeholder="Search") }}
-                        <div class="input-group-append">
-                            {{ form.submit(class="searchbtn") }}
-                            <div class="dropdown">
-                                <button class="searchbtn dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-filter fa-lg"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="filterDropdown">
-                                    <a class="dropdown-item filter-item" href="#" data-filter="recent">Most Recent</a>
-                                    <a class="dropdown-item filter-item" href="#" data-filter="likes">Most Liked</a>
-                                    <a class="dropdown-item filter-item" href="#" data-filter="interacts">Most Interacted</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+      <div class="row">
+        <div class="col-12"><form class="form-inline searchbar-box" method="POST">
+          {{ form.hidden_tag() }}
+          <div class="input-group w-100">
+              {{ form.keyword(class="searchbarinput form-control", placeholder="Search") }}
+              <div class="input-group-append">
+                  <button type="submit" class="searchbtn btn btn-default">
+                      <i class="fa fa-search fa-lg"></i>
+                  </button>
+              </div>
+          </div>
+      </form>
         </div>
-        <div id="filterTagsContainer"></div>
+      </div>
     </div>
 </div>
 
