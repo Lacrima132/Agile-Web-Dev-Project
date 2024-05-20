@@ -148,15 +148,29 @@ function togglePostVisibility() {
     postBubble.addEventListener("mouseenter", function () {
       const postText = this.querySelector(".posttext");
       const reactBar = this.querySelector(".reactbar");
+      const purchase = this.querySelector(".purchase");
       postText.style.opacity = "1";
-      reactBar.style.opacity = "1";
+      if(reactBar) {
+        reactBar.style.opacity = "1";
+      }
+      if(purchase)
+      {
+        purchase.style.opacity = "1";
+      }
     });
 
     postBubble.addEventListener("mouseleave", function () {
       const postText = this.querySelector(".posttext");
       const reactBar = this.querySelector(".reactbar");
+      const purchase = this.querySelector(".purchase");
       postText.style.opacity = "0";
-      reactBar.style.opacity = "0";
+      if(reactBar) {
+        reactBar.style.opacity = "0";
+      }
+      if(purchase)
+      {
+        purchase.style.opacity = "0";
+      }
     });
   });
 }

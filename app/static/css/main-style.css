@@ -812,6 +812,14 @@ ul {
   color: #f4f4f6;
 }
 
+.purchase {
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(-0.4rem);
+  transition: opacity 0.5s;
+}
+
 .reactbar {
   padding-right: 0.8rem;
   width: 100%;
