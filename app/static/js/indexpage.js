@@ -244,43 +244,43 @@ function toggleLike(button, postId) {
     .catch((error) => console.error("Error:", error));
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Your JavaScript code goes here
-  const filterItems = document.querySelectorAll(".filter-item");
-  const filterTagsContainer = document.getElementById("filterTagsContainer");
+// document.addEventListener("DOMContentLoaded", function () {
+//   // Your JavaScript code goes here
+//   const filterItems = document.querySelectorAll(".filter-item");
+//   const filterTagsContainer = document.getElementById("filterTagsContainer");
 
-  if (filterTagsContainer) {
-    filterItems.forEach(function (item) {
-      item.addEventListener("click", function () {
-        const filterName = this.dataset.filter;
-        addFilterTag(filterName);
-      });
-    });
+//   if (filterTagsContainer) {
+//     filterItems.forEach(function (item) {
+//       item.addEventListener("click", function () {
+//         const filterName = this.dataset.filter;
+//         addFilterTag(filterName);
+//       });
+//     });
 
-    function addFilterTag(filterName) {
-      const filterTag = document.createElement("div");
-      filterTag.classList.add("filter-tag");
-      filterTag.innerHTML = `
-        <i class="fa fa-times filterTagClose" aria-hidden="true"></i>
-        ${filterName}
-    `;
-      filterTagsContainer.appendChild(filterTag);
-    }
+//     function addFilterTag(filterName) {
+//       const filterTag = document.createElement("div");
+//       filterTag.classList.add("filter-tag");
+//       filterTag.innerHTML = `
+//         <i class="fa fa-times filterTagClose" aria-hidden="true"></i>
+//         ${filterName}
+//     `;
+//       filterTagsContainer.appendChild(filterTag);
+//     }
 
-    // Add event listener to the filter tags container to handle click events on close icons
-    filterTagsContainer.addEventListener("click", function (event) {
-      if (event.target.classList.contains("filterTagClose")) {
-        // If the clicked element is a close icon, remove its parent (the filter tag)
-        const filterTag = event.target.parentElement;
-        filterTag.remove();
-      }
-    });
-  } else {
-    console.warn(
-      "Element with ID 'filterTagsContainer' not found. Script will not run on this page."
-    );
-  }
-});
+//     // Add event listener to the filter tags container to handle click events on close icons
+//     filterTagsContainer.addEventListener("click", function (event) {
+//       if (event.target.classList.contains("filterTagClose")) {
+//         // If the clicked element is a close icon, remove its parent (the filter tag)
+//         const filterTag = event.target.parentElement;
+//         filterTag.remove();
+//       }
+//     });
+//   } else {
+//     console.warn(
+//       "Element with ID 'filterTagsContainer' not found. Script will not run on this page."
+//     );
+//   }
+// });
 
 function toggleUpdate(button, user_id) {
   var action = button.textContent === "Promoted" ? "demote" : "promote";
@@ -340,7 +340,9 @@ function showMessage(message) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const handleMouseMove = (e) => {
+
+
+    const handleMouseMove = (e) => {
     const { currentTarget: target } = e;
 
     const rect = target.getBoundingClientRect(),

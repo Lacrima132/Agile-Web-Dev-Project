@@ -10,9 +10,9 @@
 
 		<div class="form-group">
 			<label for="target"
-				>{{ form.target.label }}</label
+				>{{ form.target.label  (class="sr-text")}}</label
 			>
-			{{ form.target(class="form-input-bubble") }}
+			{{ form.target(class="form-input-bubble", placeholder="Target") }}
 			{% for error in form.target.errors %}
 			<span style="color: red"
 				>[{{ error }}]</span
@@ -22,7 +22,7 @@
 
 		<div class="form-group">
 			<label for="image"
-				>{{ form.weapon_image.label }}</label
+				>{{ form.weapon_image.label  (class="label")}}</label
 			>
 			{{
 			form.weapon_image(class="form-input-bubble")
@@ -36,9 +36,9 @@
 
 		<div class="form-group">
 			<label for="tinfo"
-				>{{ form.tinfo.label }}</label
+				>{{ form.tinfo.label (class="sr-text")}}</label
 			>
-			{{ form.tinfo(class="form-input-bubble") }}
+			{{ form.tinfo(class="form-input-bubble", placeholder="Target Information") }}
 			{% for error in form.tinfo.errors %}
 			<span style="color: red"
 				>[{{ error }}]</span
@@ -48,9 +48,9 @@
 
 		<div class="form-group">
 			<label for="price"
-				>{{ form.price.label }}</label
+				>{{ form.price.label (class="sr-text")}}</label
 			>
-			{{ form.price(class="form-input-bubble") }}
+			{{ form.price(class="form-input-bubble", placeholder="Price") }}
 			{% for error in form.price.errors %}
 			<span style="color: red"
 				>[{{ error }}]</span
@@ -60,7 +60,7 @@
 
 		<div class="form-group">
 			<label for="category"
-				>{{ form.category_menu.label }}</label
+				>{{ form.category_menu.label (class="label")}}</label
 			>
 			{{
 			form.category_menu(class="form-input-bubble")

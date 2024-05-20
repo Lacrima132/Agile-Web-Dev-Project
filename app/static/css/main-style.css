@@ -10,6 +10,8 @@
   --light-color: #f4f4f6;
   --dark-color: #111;
   --bg-col: rgb(71, 0, 0);
+  --mouse-x: 0;
+  --mouse-y: 0;
 }
 
 body {
@@ -170,6 +172,19 @@ body {
   color: rgba(255, 43, 43, 1);
 }
 
+.topbar-logo{
+  padding: 0.2rem;
+  font-family: "Libre Franklin", sans-serif;
+  font-size: 2rem;
+  font-style: italic;
+  color: rgba(255, 43, 43, 1);
+  text-decoration: none;
+}
+.topbar-logo:hover{
+  color: rgba(255, 43, 43, 1);
+  text-decoration: none;
+}
+
 .button-desc {
   padding-top: 2rem;
   font-size: 18px;
@@ -317,16 +332,6 @@ body {
   pointer-events: none;
   z-index: -5;
 }
-
-/* .overflow-image:nth-child(1) {
-  transform: translateX(-100%);
-}
-.overflow-image:nth-child(2) {
-  transform: translateX(-20%);
-}
-.overflow-image:nth-child(3) {
-  transform: translateX(60%);
-} */
 
 .form-section {
   display: flex;
@@ -538,6 +543,44 @@ ul {
   display: inline;
 }
 
+.navbar-nav {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.4rem;
+}
+
+.dropdown-menu {
+  min-width: 100vw; /* Set the minimum width to full viewport width */
+  left: 0 !important; /* Ensure the dropdown starts from the left edge */
+  background-color: #2b0000;
+  font-size: 1.4rem;
+}
+
+.ms-auto a{
+  color: rgb(255, 255, 255, 0.5);
+}
+.ms-auto a:hover{
+  color: rgb(255, 255, 255, 0.8);
+}
+
+.dropdown-item {
+  color: rgb(255, 255, 255, 0.5);
+}
+
+.dropdown-item:hover {
+  background-color: transparent;
+  color: rgb(255, 255, 255, 0.8);
+}
+
+.navbar-nav li a{
+  text-decoration: none;
+}
+
+.navbar-collapse{
+  background-color: #2b0000;
+}
+
+
 .form-header {
   margin-bottom: 1.25rem;
   text-align: center;
@@ -667,7 +710,14 @@ ul {
 }
 
 .searchbtn {
-  padding: 1rem;
+  display: block;
+  padding: 0.5rem 1rem;
+  font-size: 20px;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+  color: #f4f4f6;
+  background-color: rgba(60, 10, 10);
+  border: none;
 }
 
 .searchbtn:hover {
@@ -843,10 +893,10 @@ ul {
 } */
 
 .profile-box3 {
-  /* margin-top: 2rem; */
+  margin-top: 5.5rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
 }
 
 .profile-header {
@@ -860,7 +910,7 @@ ul {
   width: 100%;
   height: 10vh;
   background-color: #5d0000;
-  overflow: visible; /* Ensures no overflow */
+  overflow: visible;
 }
 
 .profile-header > img {
@@ -917,10 +967,6 @@ ul {
 }
 
 .profile-box2 {
-  /* background: linear-gradient(
-		rgb(156, 3, 3, 0.2),
-		rgb(156, 3, 3, 0.4)
-	); */
   border-radius: 10px;
   padding: 1rem;
 }
@@ -1261,6 +1307,10 @@ ul {
   margin: 0 10px;
 }
 
+.form-group {
+  margin: 1rem 0;
+}
+
 /* USERNAME */
 .responsive-header {
   font-size: 1rem; /* Base font size for small screens */
@@ -1479,4 +1529,17 @@ ul {
   .button-desc {
     font-size: 1.3rem; /* Base font size for small screens */
   }
+}
+
+.desc-box {
+  display: flex;
+  width: 70%;
+  align-items: center;
+  justify-content: center;
+}
+.count-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  width: 70%;
 }

@@ -9,26 +9,23 @@ content %}
     {{ form.hidden_tag() }}
     <h2 class="form-header">Submit General Discussion Post</h2>
     <div class="form-group">
-      {{ form.title.label }} {{ form.title(class="form-input-bubble",
+      {{ form.title.label (class="sr-text")}} {{ form.title(class="form-input-bubble",
       placeholder="Post Title") }} {% for error in form.title.errors %}
       <span class="text-danger">{{ error }}</span>
       {% endfor %}
     </div>
-    <br />
     <div class="form-group">
-      {{ form.image.label }} {{ form.image(class="form-input-bubble") }} {% for
+      {{ form.image.label (class="sr-text") }} {{ form.image(class="form-input-bubble") }} {% for
       error in form.image.errors %}
       <span class="text-danger">{{ error }}</span>
       {% endfor %}
     </div>
-    <br />
     <div class="form-group">
-      {{ form.desc.label }} {{ form.desc(class="form-input-bubble",
+      {{ form.desc.label (class="sr-text")}} {{ form.desc(class="form-input-bubble",id="tinfo",
       placeholder="Description") }} {% for error in form.desc.errors %}
       <span class="text-danger">{{ error }}</span>
       {% endfor %}
     </div>
-    <br />
     <div class="form-group">{{ form.submit(class="btn-submit") }}</div>
   </form>
 </div>

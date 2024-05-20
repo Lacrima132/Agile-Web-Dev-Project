@@ -15,7 +15,7 @@ block content %}
         </div>
       </div>
       <div class="profile-details">
-        <div class="responsive-header">
+        <div class="star-text">
           <img
             src="../static/images/ranks/{{ user.rank }}.png"
             class="rank-img responsive-img"
@@ -29,19 +29,25 @@ block content %}
     </div>
     <div class="profile-header-base"></div>
   </div>
-  <div>
     <div>
-        <div class="profile-box3"></div>
+        <div class="profile-box3">
         <br />
-        <p>{{ user.bio }}</p>
-        <br />
-        <p>
-          Posts: {{ num_posts }} Likes: {{ total_likes }} Promotions: {{
-          current_user.promote }}
-        </p>
+        <div class="desc-box">
+        <p class="responsive-header">{{ user.bio }}</p>
+      </div>
+        <div class="count-box">
+          <p class="description">
+            Posts: {{ num_posts }}
+          </p>
+          <p class="description">
+            Likes: {{ total_likes }}
+          </p>
+          <p class="description">
+            Promotions: {{ current_user.promote }}
+          </p>
+        </div>
       </div>
     </div>
-    <br />
     <div class="select-view">
       <button
         class="view-button"

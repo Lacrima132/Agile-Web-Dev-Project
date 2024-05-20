@@ -7,16 +7,17 @@
     <h1 class="pagetitle">Browse</h1>
     <div class="search-container">
       <div class="row">
-        <div class="col-12">
-          <form class="form-inline searchbar-box" method="POST">
-            {{ form.hidden_tag() }}
-            <div class="input-group w-100">
+        <div class="col-12"><form class="form-inline searchbar-box" method="POST">
+          {{ form.hidden_tag() }}
+          <div class="input-group w-100">
               {{ form.keyword(class="searchbarinput form-control", placeholder="Search") }}
               <div class="input-group-append">
-                {{ form.submit(class="searchbtn") }}
+                  <button type="submit" class="searchbtn btn btn-default">
+                      <i class="fa fa-search fa-lg"></i>
+                  </button>
               </div>
-            </div>
-          </form>
+          </div>
+      </form>
         </div>
       </div>
     </div>
