@@ -19,38 +19,37 @@ def home():
 @routes.route('/browse', methods=['GET', 'POST'])
 def browse():
     form = SearchForm()
-    posts = Post.query.filter_by(claimed=False).all()  # Retrieve all posts initially
-    not_sold=Sell.query.filter_by(sold="Unsold").all()
-    posts = posts + not_sold
+    posts = Post.query.filter_by(claimed=False).all()
+    not_sold = Sell.query.filter_by(sold="Unsold").all()
+    posts += not_sold  # Combine posts and not_sold
 
     if form.validate_on_submit():
-        keyword = form.keyword.data
-        keywords = keyword.split()  # Split the keyword into individual words
-        filtered_posts = []
+        keyword = form.keyword.data.strip()
+        if keyword:  # If keyword is not empty
+            keywords = keyword.split()  # Split the keyword into individual words
+            filtered_posts = []
 
-        for post in posts:
-            for kw in keywords:
-                if kw.lower() in post.title.lower():  # or kw.lower() in post.desc.lower():
-                    filtered_posts.append(post)
-                    break
+            for post in posts:
+                for kw in keywords:
+                    if kw.lower() in post.title.lower():  # or kw.lower() in post.desc.lower():
+                        filtered_posts.append(post)
+                        break
 
-        posts = filtered_posts
-        if len(keyword) == 0:
-            posts = posts + not_sold             
-        elif len(filtered_posts) == 0:
-            flash("No posts match your search", category='error')
-    
+            posts = filtered_posts
+            if not filtered_posts:
+                flash("No posts match your search", category='error')
+        else:
+            posts = Post.query.filter_by(claimed=False).all() + Sell.query.filter_by(sold="Unsold").all()  # Reset to all posts
+
     bounty_posts = Post.query.filter(Post.flag == "Bounty").all()
     advice_posts = Post.query.filter(Post.flag == "Discussion").all()
     weapons_posts = Sell.query.filter().all()
 
     lip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, liked=True).all()]
     dip = [like.pid for like in Likes.query.filter_by(uid=current_user.uid, disliked=True).all()]
-    # print("Liked Post IDs:", lip)
-    # for post in posts:
-    #     print("Post ID:", post.pid, "Liked:", post.pid in lip)
 
     return render_template('browse.html', user=current_user, form=form, posts=posts, bounty_posts=bounty_posts, weapons_posts=weapons_posts, advice_posts=advice_posts, lip=lip, dip=dip)
+
 
 @routes.route('/like_post/<int:post_id>', methods=['POST'])
 def like_post(post_id):
@@ -129,15 +128,22 @@ def post(post_id):
         return redirect(url_for('routes.post', post_id=post_id))
 
     return render_template('post.html', user=current_user, post=post, comments=comments, form=form, lip=lip, dip=dip)
-@routes.route('/view-other-userpf/<int:user_id>', methods = ['GET','POST'])
+@routes.route('/view-other-userpf/<int:user_id>', methods=['GET', 'POST'])
 def view_userpf(user_id):
     userinfo = User.query.get_or_404(user_id)
-    posts = Post.query.filter_by(uid=user_id).all()
-    # if_liked = Likes.query.filter_by(uid=current_user.get_id(), pid=user_id, liked=True).first()
-    # if_disliked = Likes.query_filter_by(uid=current_user.get_id(), pid=user_id, liked=).first()
+    posts = Post.query.filter_by(uid=user_id, claimed=False).all()
+    not_sold = Sell.query.filter_by(uid=user_id, sold="Unsold").all()
+    posts += not_sold  # Combine posts and not_sold
+
+    # Generate these lists based on the currently logged in user
+    lip = [like.pid for like in Likes.query.filter_by(uid=current_user.get_id(), liked=True).all()]
+    dip = [like.pid for like in Likes.query.filter_by(uid=current_user.get_id(), disliked=True).all()]
+
     promoted_by_current_user = Promote.query.filter_by(promoted_by=current_user.get_id(), promoted=True, promoting_this_guy=user_id).first()
 
-    return render_template('view-other-userpf.html', user=current_user, userinfo=userinfo, posts=posts, promoted_by_current_user=promoted_by_current_user)
+    return render_template('view-other-userpf.html', user=current_user, userinfo=userinfo, posts=posts, promoted_by_current_user=promoted_by_current_user, lip=lip, dip=dip)
+
+
 
 @routes.route('/promote_user/<int:user_id>', methods=['POST'])
 def promote_user(user_id):
@@ -252,37 +258,38 @@ def profile():
 def editprofile():
     form = ProfileEditForm()
     if form.validate_on_submit():
-        if form.username.data:
-            if User.query.filter_by(username=form.username.data).first():
-                flash('Username already in use.', category='error')
-            else:
-                current_user.username = form.username.data
-                flash('Username updated!', category='success')
+        previous_avatar_filename = current_user.avatar
+        avatar = form.image.data
+        username = form.username.data
+        bio = form.bio.data
         
-        if form.bio.data:
-            current_user.bio = form.bio.data
+        if avatar and allowed_file(avatar.filename) and allowed_size(avatar):
+            filename = secure_filename(avatar.filename)
+            save_path = os.path.join('app', 'static', 'images', 'profilepics', filename)
+            avatar.save(save_path)
+            current_user.avatar = filename
+            flash('Profile picture uploaded!', category='success')
+            if previous_avatar_filename != "pfp.png":
+                previous_avatar_path = os.path.join('app', 'static', 'images', 'profilepics', previous_avatar_filename)
+                if os.path.exists(previous_avatar_path):
+                    os.remove(previous_avatar_path)
+        
+        if bio:
+            current_user.bio = bio
             flash('Bio updated!', category='success')
 
-        if form.image.data:
-            if allowed_file(form.image.data.filename):
-                filename = secure_filename(form.image.data.filename)
-                save_path = os.path.join('app', 'static', 'images', 'profilepics', filename)
-                form.image.data.save(save_path)
-                
-                # Optional: Remove the old profile picture
-                previous_avatar_filename = current_user.avatar
-                if previous_avatar_filename != "pfp.png":
-                    previous_avatar_path = os.path.join('app', 'static', 'images', 'profilepics', previous_avatar_filename)
-                    if os.path.exists(previous_avatar_path) :
-                        os.remove(previous_avatar_path)
-                
-                current_user.avatar = filename
-                flash('Profile picture uploaded!', category='success')
+        if username and username != current_user.username:
+            if User.query.filter_by(username=username).first():
+                flash('Username already in use.', category='error')
+            else:
+                current_user.username = username
+                flash('Username updated!', category='success')
 
         db.session.commit()
         return redirect(url_for('routes.profile'))
 
     return render_template('edit-profile.html', user=current_user, form=form)
+
 
 
 
@@ -363,7 +370,7 @@ def addbounty():
 
         if allowed_size(bounty_image):
             filename = secure_filename(bounty_image.filename)
-            save_path = os.path.join('app', 'static', 'images', 'posts', filename)
+            save_path = os.path.join('app', 'static', 'images', 'sellpics', filename)
             list_bounty = Post(uid=current_user.get_id(), price=price, title=target, img=filename, desc=target_info, status=target_status, flag="Bounty")
             db.session.add(list_bounty)
             db.session.commit()

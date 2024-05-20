@@ -6,7 +6,7 @@
 <div class="home">
     <div class="container">
         <div class="postbubble">
-            <div class="comments-container">
+            <div class="comments-container">    
                 <h1>Comments</h1>
                 <p>{{ post.title }}</p>
                 <div class="reactbar" style="opacity: 1">
@@ -34,29 +34,30 @@
                 <p>{{ post.desc }}</p>
                 <img src="{{ url_for('static', filename='images/posts/' + post.img) }}" alt="Post Image" width="200" height="150">
 
-                {% for comment in comments %}
-                <div class="comment">
-                    <div class="username">
-                        {{ comment.user.username }} {{ comment.timestamp }}
-                    </div>
-                    <p>{{ comment.comment }}</p>
-                </div>
-                {% endfor %}
-            </div>
-
-            <div class="add-comment">
-                <form method="POST">
-                    {{ form.hidden_tag() }}
-                    <div class="form-group">
-                        {{ form.comment.label }} {{ form.comment(class="form-control", placeholder="Add comments") }}
-                        {% for error in form.comment.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
-                </form>
-            </div>
-        </div>
+    {% for comment in comments %}
+    <div class="comment">
+      <div class="username">
+        {{ comment.user.username }} {{ comment.timestamp }}
+      </div>
+      <p>{{ comment.comment }}</p>
     </div>
+    {% endfor %}
+  </div>
+
+  <!-- Comment Section -->
+  <div class="add-comment">
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.comment.label }} {{ form.comment(class="form-control",
+        placeholder="Add comments") }} {% for error in form.comment.errors %}
+        <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+      </div>
+      <button type="submit" class="btn btn-primary">
+        {{ form.submit.label }}
+      </button>
+    </form>
+  </div>
 </div>
 {% endblock %}

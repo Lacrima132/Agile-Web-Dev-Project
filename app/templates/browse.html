@@ -6,98 +6,88 @@
 <div class="intro-section" style="margin-bottom: 20px;">
     <h1 class="pagetitle">Browse</h1>
     <div class="search-container">
-        <div class="row">
-            <div class="col-12">
-                <form class="form-inline searchbar-box" method="POST">
-                    {{ form.hidden_tag() }}
-                    <div class="input-group w-100">
-                        {{ form.keyword(class="searchbarinput form-control", placeholder="Search") }}
-                        <div class="input-group-append">
-                            {{ form.submit(class="searchbtn") }}
-                            <div class="dropdown">
-                                <button class="searchbtn dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-filter fa-lg"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="filterDropdown">
-                                    <a class="dropdown-item filter-item" href="#" data-filter="recent">Most Recent</a>
-                                    <a class="dropdown-item filter-item" href="#" data-filter="likes">Most Liked</a>
-                                    <a class="dropdown-item filter-item" href="#" data-filter="interacts">Most Interacted</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+      <div class="row">
+        <div class="col-12">
+        <form class="form-inline searchbar-box" method="POST">
+          {{ form.hidden_tag() }}
+          <div class="input-group w-100">
+              {{ form.keyword(class="searchbarinput form-control", placeholder="Search") }}
+              <div class="input-group-append">
+                  <button type="submit" class="searchbtn btn btn-default">
+                      <i class="fa fa-search fa-lg"></i>
+                  </button>
+              </div>
+          </div>
+      </form>
         </div>
-        <div id="filterTagsContainer"></div>
+      </div>
     </div>
-</div>
-
-<div class="forum-section">
-    <div class="post-container">
-        <div class="row">
-            {% for post in posts %}
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="postbubble">
-                    {% if post.flag == "Bounty" or post.flag == "Discussion"%}
-                    <img src="{{ url_for('static', filename='images/posts/' + post.img) }}" alt="{{ post.img }}">
-                    {% elif post.flag == "Listing" %}
-                    <img src="{{ url_for('static', filename='images/sellpics/' + post.img) }}" alt="{{ post.img }}">
-                    {% endif %}
-                    <div class="screen-overlay overlay-animation">
-                        <div class="posttext">
-                            <div class="posttitle">
-                                {% if post.flag == "Bounty" or post.flag == "Discussion"%}
-                                <a href="/post/{{ post.pid }}">
-                                    {{ post.title }}
-                                </a>
-                                {% elif post.flag == "Listing" %}
-                                  {{ post.title }}
-                                {% endif %}
-                                <br>
-                                <div class="author">
-                                    <img src="{{ url_for('static', filename='images/profilepics/' + post.user.avatar) }}" class="small-avatar" alt="avatar">
-                                    {% if post.user.uid != current_user.uid %}
-                                    <a href="/view-other-userpf/{{ post.user.uid }}">
-                                        {{ post.user.username }}
-                                    </a>
-                                    {% else %}
-                                    <a href="/profile">
-                                        {{ post.user.username }}
-                                    </a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="postcontent">{{ post.desc }}</div>
-                        </div>
+    <div class="forum-section">
+        <div class="post-container">
+            <div class="row">
+                {% for post in posts %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="postbubble">
                         {% if post.flag == "Bounty" or post.flag == "Discussion"%}
-                        <div class="reactbar">
-                            <button id="likeButton-{{ post.pid }}" class="reactbutton like" onclick="toggleLike(this, {{ post.pid }})">
-                                {% if post.pid in lip %}
-                                <i class="fa fa-thumbs-up fa-lg"></i>
-                                {% else %}
-                                <i class="fa fa-thumbs-o-up fa-lg"></i>
-                                {% endif %}
-                            </button>
-                            <span id="likeCount-{{ post.pid }}" class="reactnumber">{{ post.likes }}</span>
-                            <button id="dislikeButton-{{ post.pid }}" class="reactbutton" onclick="toggleLike(this, {{ post.pid }})">
-                                {% if post.pid in dip %}
-                                <i class="fa fa-thumbs-down fa-lg"></i>
-                                {% else %}
-                                <i class="fa fa-thumbs-o-down fa-lg"></i>
-                                {% endif %}
-                            </button>
-                            <span id="dislikeCount-{{ post.pid }}" class="reactnumber">{{ post.dislikes }}</span>
-                            <button id="commentButton-{{ post.pid }}" class="reactbutton">
-                                <i class="fa fa-commenting-o fa-lg"></i>
-                            </button>
-                            <span id="commentCount-{{ post.pid }}" class="reactnumber">0</span>
-                        </div>
+                        <img src="{{ url_for('static', filename='images/posts/' + post.img) }}" alt="{{ post.img }}" />
+                        {% elif post.flag == "Listing" %}
+                        <img src="{{ url_for('static', filename='images/sellpics/' + post.img) }}" alt="{{ post.img }}" />
                         {% endif %}
+                        <div class="screen-overlay overlay-animation">
+                            <div class="posttext">
+                                <div class="posttitle">
+                                    {% if post.flag == "Bounty" or post.flag == "Discussion"%}
+                                    <a href="/post/{{ post.pid }}">
+                                        {{ post.title }}
+                                    </a>
+                                    {% elif post.flag == "Listing" %}
+                                    {{ post.title }}
+                                    {% endif %}
+                                    <br>
+                                    <div class="author">
+                                        <img src="{{ url_for('static', filename='images/profilepics/' + post.user.avatar) }}" class="small-avatar" alt="avatar" />
+                                        {% if post.user.uid != current_user.uid %}
+                                        <a href="/view-other-userpf/{{ post.user.uid }}">
+                                            {{ post.user.username }}
+                                        </a>
+                                        {% else %}
+                                        <a href="/profile">
+                                            {{ post.user.username }}
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="postcontent">{{ post.desc }}</div>
+                            </div>
+                            {% if post.flag == "Bounty" or post.flag == "Discussion"%}
+                            <div class="reactbar">
+                                <button id="likeButton-{{ post.pid }}" class="reactbutton like" onclick="toggleLike(this, {{ post.pid }})">
+                                    {% if post.pid in lip %}
+                                    <i class="fa fa-thumbs-up fa-lg"></i>
+                                    {% else %}
+                                    <i class="fa fa-thumbs-o-up fa-lg"></i>
+                                    {% endif %}
+                                </button>
+                                <span id="likeCount-{{ post.pid }}" class="reactnumber">{{ post.likes }}</span>
+                                <button id="dislikeButton-{{ post.pid }}" class="reactbutton" onclick="toggleLike(this, {{ post.pid }})">
+                                    {% if post.pid in dip %}
+                                    <i class="fa fa-thumbs-down fa-lg"></i>
+                                    {% else %}
+                                    <i class="fa fa-thumbs-o-down fa-lg"></i>
+                                    {% endif %}
+                                </button>
+                                <span id="dislikeCount-{{ post.pid }}" class="reactnumber">{{ post.dislikes }}</span>
+                                <button id="commentButton-{{ post.pid }}" class="reactbutton">
+                                    <i class="fa fa-commenting-o fa-lg"></i>
+                                </button>
+                                <span id="commentCount-{{ post.pid }}" class="reactnumber">0</span>
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 </div>

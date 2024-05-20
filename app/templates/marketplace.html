@@ -4,10 +4,10 @@
 
 <div class="home">
   <br>
+  <div>
     <h1 class="star-text">Welcome to the Marketplace</h1>
-    <p class="description">This marketplace is dedicated to selling weapons.</p>
-
-    <a href="{{ url_for('routes.sell') }}" class="add-market-btn">Add Item to Market</a>
+    <p class="description">This marketplace is dedicated to selling weapons. <br> <a href="{{ url_for('routes.sell') }}">Add Item to Market</a> </p>
+  </div>
     <div class="forum-section">
       <div class="post-container">
           <div class="row">
@@ -19,32 +19,29 @@
                 <div class="posttext">
                   <div class="posttitle">
                       {{ post.title }}
-                  </div>
-                  <div class="author">
-                    <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="small_avatar" alt="avatar" style="width: 10px;">
-                    {% if post.user.uid != current_user.uid %}
-                    <a href= "/view-other-userpf/{{ post.user.uid }}">
-                      {{ post.user.username }}
-                    </a>
-                      {% else %}
-                    <a href="/profile">
-                      {{ post.user.username }}
-                    </a>
-                      {% endif %}
+                      <div class="author">
+                        <img src="{{ url_for('static', filename='/images/profilepics/' + post.user.avatar) }}" class="small-avatar" alt="avatar"/>
+                        {% if post.user.uid != current_user.uid %}
+                        <a href= "/view-other-userpf/{{ post.user.uid }}">
+                          {{ post.user.username }}
+                          {% else %}
+                        <a href="/profile">
+                          {{ post.user.username }}
+                          {% endif %}
+                        </a>
+                      </div>
                   </div>
                   <div class="postcontent">
-                    <p>{{ post.desc }}</p>
-                    <p>Price: ${{ post.price }}</p>
+                    <p>$<b>{{ post.price }}</b> - {{ post.desc }}</p>
                   </div>
-                  {% if post.user.uid != current_user.uid%}
-                    <a
-                      href="{{ url_for('routes.purchase', sid=post.sid) }}"
-                      class="btn-prominent purchase-btn"
-                    >Purchase
-                    </a>
-                  {% endif %}
+                </div>
+                <div class="purchase">
+                  <a href="{{ url_for('routes.purchase', sid=post.sid) }}" class="btn-prominent purchase-btn center">
+                    Purchase
+                  </a>
                 </div>
               </div>
+            </div>
             </div>
           </div>
         {% endfor %}
