@@ -1,23 +1,23 @@
 {% extends "base.html" %} {% block title %}Purchase Time{% endblock %} {% block
 content %}
-
-<div class="post-container text-center">
-  <h1>Purchase Confirm</h1>
-  <p>Are you sure you want to buy this?</p>
-  <p>{{post_wanted.title}}</p>
-  <p>{{post_wanted.price}}</p>
-  <img
-    src="{{ url_for('static', filename='/images/sellpics/' + post_wanted.img) }}"
-    class="avatar"
-    alt="avatar"
-    width="25"
-    height="25"
-  >
-  <form
-    action="{{ url_for('routes.purchase_confirmation', sid=post_wanted.sid) }}"
-    method="POST"
-  >
-    <input type="submit" value="Yass queen!!!" class="purchase-btn">
-  </form>
+<div class="home">
+  <div class="purchase-page">
+    <div class="purchase-container">
+      <h1 class="star-text">Purchase Confirm</h1>
+      <p class="description">Are you sure you want to buy this?</p>
+      <p class="description">{{post_wanted.title}}</p>
+      <p class="description">${{post_wanted.price}}</p>
+      <div class="purchase-pic-container">
+        <div class="profile-pic">
+          <img src="{{ url_for('static', filename='/images/sellpics/' + post_wanted.img) }}" class="avatar"
+            alt="avatar">
+        </div>
+      </div>
+      <br>
+      <form action="{{ url_for('routes.purchase_confirmation', sid=post_wanted.sid) }}" method="POST">
+        <input type="submit" value="Give it to me!" class="btn-prominent">
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock %}

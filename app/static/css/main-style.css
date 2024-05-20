@@ -986,6 +986,17 @@ ul {
   /* box-shadow: 0 0 10px rgba(191, 0, 0, 0.9), 0 0 30px rgba(191, 0, 0, 0.5); Optional: Add shadow */
 }
 
+.purchase-pic-container {
+  /* Adjust to fine-tune the horizontal position */
+  width: 12rem;
+  /* Adjust the size as needed */
+  height: 12rem;
+  /* Adjust the size as needed */
+  z-index: 10;
+  /* Ensures it appears above other elements */
+}
+
+
 .avatar {
   width: 100%;
   height: 100%;
@@ -1666,4 +1677,24 @@ ul {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+}
+
+.purchase-page {
+  margin-top: 2rem;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.purchase-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-page {
+  min-height: 100vh;
 }
